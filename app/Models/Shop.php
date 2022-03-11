@@ -11,10 +11,30 @@ class Shop extends Model
 
     protected $fillable=['name','description'];
 
+    public const ACTIVE = 'active';
+	public const INACTIVE = 'inactive';
+
+	public const STATUSES = [
+		self::ACTIVE => 'Active',
+		self::INACTIVE => 'Inactive',
+	];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+	 * Scope active product
+	 *
+	 * @param Eloquent $query query builder
+	 *
+	 * @return Eloquent
+	 */
+	public function scopeActive($query)
+	{
+		return $query->where('is_active', self::ACTIVE);
+	}
 
     public function products()
     {
