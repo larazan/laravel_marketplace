@@ -11,8 +11,16 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShipmentController;
 use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CkeditorFileUploadController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController as Product;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ArticleController as Article;
+use App\Http\Controllers\OrderController as Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +33,35 @@ use App\Http\Controllers\CkeditorFileUploadController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/products', [Product::class, 'index']);
+Route::get('/product/{slug}', [Product::class, 'show']);
+Route::get('/products/quick-view/{slug}', [Product::class, 'quickView']);
+
+// Route::get('/carts', [CartController::class, 'index']);
+// Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
+// Route::post('/carts', [CartController::class, 'store']);
+// Route::post('/carts/update', [CartController::class, 'update']);
+
+// Route::get('orders/checkout', [Order::class, 'checkout']);
+// Route::post('orders/checkout', [Order::class, 'doCheckout']);
+// Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
+// Route::post('orders/set-shipping', [Order::class, 'setShipping']);
+// Route::get('orders/received/{orderID}', [Order::class, 'received']);
+// Route::get('orders/cities', [Order::class, 'cities']);
+// Route::get('orders', [Order::class, 'index']);
+// Route::get('orders/{orderID}', [Order::class, 'show']);
+
+// Route::post('payments/notification', [PaymentController::class, 'notification']);
+// Route::get('payments/completed', [PaymentController::class, 'completed']);
+// Route::get('payments/failed', [PaymentController::class, 'failed']);
+// Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
+
+// Route::resource('favorites', [FavoriteController::class]);
+
+Route::get('/blogs', [Article::class, 'index']);
+Route::get('/blog/{slug}', [Article::class, 'show']);
 
 Route::group(
 	['prefix' => 'admin'],
@@ -71,6 +105,7 @@ Route::group(
 		Route::get('reports/payment', [ReportController::class , 'payment']);
 
 		Route::resource('brands', BrandController::class);
+		Route::resource('shops', ShopController::class);
 
 		Route::resource('articles', ArticleController::class);
         Route::resource('category_articles', CategoryArticleController::class);

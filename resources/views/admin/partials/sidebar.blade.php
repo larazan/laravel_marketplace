@@ -66,7 +66,27 @@
 					</ul>
 				</li>
                 
-                <li  class="has-sub {{ ($currentAdminMenu == 'article') ? 'expand active' : ''}}">
+                <li  class="has-sub {{ ($currentAdminMenu == 'marketplace') ? 'expand active' : ''}}">
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#shop"
+						aria-expanded="false" aria-controls="article">
+						<i class="mdi mdi-newspaper"></i>
+						<span class="nav-text">Shops</span> <b class="caret"></b>
+					</a>
+					<ul  class="collapse {{ ($currentAdminMenu == 'marketplace') ? 'show' : ''}}"  id="shop"
+						data-parent="#sidebar-menu">
+						<div class="sub-menu">
+							<li class="{{ ($currentAdminSubMenu == 'shop') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/shops')}}">
+								<span class="nav-text">Shops List</span>
+								</a>
+							</li>
+							
+							
+						</div>
+					</ul>
+				</li>
+
+				<li  class="has-sub {{ ($currentAdminMenu == 'article') ? 'expand active' : ''}}">
 					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#article"
 						aria-expanded="false" aria-controls="article">
 						<i class="mdi mdi-newspaper"></i>
