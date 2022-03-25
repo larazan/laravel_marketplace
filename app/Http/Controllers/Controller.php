@@ -24,4 +24,9 @@ class Controller extends BaseController
 	{
 		return view('frontend/'. $view, $data);
     }
+
+    protected function loadDashboard($view, $data = [])
+	{
+		return view('backend/'. $view, $data);
+    }
 }

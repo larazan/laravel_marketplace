@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\AttributeController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ArticleController as Article;
 use App\Http\Controllers\OrderController as Order;
+use App\Http\Controllers\UserDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,7 +66,14 @@ Route::get('/blogs', [Article::class, 'index']);
 Route::get('/blog/{slug}', [Article::class, 'show']);
 
 Route::group(
-	['prefix' => 'admin'],
+	['prefix' => 'user', 'middleware' => ['auth']],
+	function () {
+		Route::get('dashboard', [UserDashboardController::class, 'index']);
+	}
+);
+
+Route::group(
+	['prefix' => 'admin', 'middleware' => ['auth']],
 	function () {
 		Route::get('dashboard', [DashboardController::class, 'index']);
 		Route::resource('categories', CategoryController::class);
@@ -114,6 +123,7 @@ Route::group(
 	}
 );
 
+Auth::routes();
 Route::post('ckeditor', [CkeditorFileUploadController::class, 'store'])->name('ckeditor.upload');
 
 

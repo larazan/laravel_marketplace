@@ -25,32 +25,33 @@
                                         <h1 class="mb-5">Login</h1>
                                         <p class="mb-30">Don't have an account? <a href="page-register.html">Create here</a></p>
                                     </div>
-                                    <form method="post">
+                                    <form method="POST" action="{{ route('login') }}">
+                                    @csrf
                                         <div class="form-group">
-                                            <input type="text" required="" name="email" placeholder="Username or Email *" />
+                                            <input type="text" required="" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('E-Mail Address') }}" />
+                                            @error('email')
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
                                         </div>
                                         <div class="form-group">
-                                            <input required="" type="password" name="password" placeholder="Your password *" />
+                                            <input required="" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{ __('Password') }}" />
+                                            @error('password')
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
                                         </div>
-                                        <div class="login_footer form-group">
-                                            <div class="chek-form">
-                                                <input type="text" required="" name="email" placeholder="Security code *" />
-                                            </div>
-                                            <span class="security-code">
-                                                <b class="text-new">8</b>
-                                                <b class="text-hot">6</b>
-                                                <b class="text-sale">7</b>
-                                                <b class="text-best">5</b>
-                                            </span>
-                                        </div>
+                                       
                                         <div class="login_footer form-group mb-50">
                                             <div class="chek-form">
                                                 <div class="custome-checkbox">
-                                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
+                                                    <input class="form-check-input" type="checkbox" {{ old('remember') ? 'checked' : '' }} name="checkbox" id="exampleCheckbox1" value="" />
                                                     <label class="form-check-label" for="exampleCheckbox1"><span>Remember me</span></label>
                                                 </div>
                                             </div>
-                                            <a class="text-muted" href="#">Forgot password?</a>
+                                            <a class="text-muted" href="{{ route('password.request') }}">Forgot password?</a>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>

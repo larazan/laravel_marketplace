@@ -1,24 +1,16 @@
 <div class="col-lg-1-5 primary-sidebar sticky-sidebar">
-    <div class="sidebar-widget widget-category-2 mb-30">
-        <h5 class="section-title style-1 mb-30">Category</h5>
-        <ul>
-            <li>
-                <a href="shop-grid-right.html"> Milks & Dairies</a><span class="count">30</span>
-            </li>
-            <li>
-                <a href="shop-grid-right.html"> Clothing</a><span class="count">35</span>
-            </li>
-            <li>
-                <a href="shop-grid-right.html"> Pet Foods </a><span class="count">42</span>
-            </li>
-            <li>
-                <a href="shop-grid-right.html"> Baking material</a><span class="count">68</span>
-            </li>
-            <li>
-                <a href="shop-grid-right.html"> Fresh Fruit</a><span class="count">87</span>
-            </li>
-        </ul>
-    </div>
+    @if ($categories)
+        <div class="sidebar-widget widget-category-2 mb-30">
+            <h5 class="section-title style-1 mb-30">Category</h5>
+            <ul>
+                @foreach ($categories as $category)
+                    <li>
+                        <a href="{{ url('products?category='. $category->slug) }}"> {{ $category->name }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <!-- Fillter By Price -->
     <div class="sidebar-widget price_range range mb-30">
         <h5 class="section-title style-1 mb-30">Fill by price</h5>
