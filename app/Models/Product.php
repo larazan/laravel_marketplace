@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -260,5 +260,14 @@ class Product extends Model
 	public function simple()
 	{
 		return $this->type == 'simple';
+	}
+
+	public function loadProduct()
+	{
+		$result = DB::table(DB::raw('products p'))
+		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, brands.name as nama_kategori"))
+		->join('product_brands', 'product_brands.product_id', '=', 'p.id')
+		->join('brands', 'brands.id', '=', 'product_brands.brand_id')->get();
+		return $result;
 	}
 }

@@ -10,4 +10,18 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function __construct() {
+        $this->initAdminMenu();
+    }
+
+    private function initAdminMenu() {
+        $this->data['currentAdminMenu'] = 'dashboard';
+        $this->data['currentAdminSubMenu'] = '';
+    }
+
+    protected function loadTheme($view, $data = [])
+	{
+		return view('frontend/'. $view, $data);
+    }
 }

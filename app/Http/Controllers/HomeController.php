@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -13,21 +12,21 @@ class HomeController extends Controller
      *
      * @return void
      */
-
-    public function index()
+    public function __construct()
     {
-        return view('home')->with([
-            'title'     => 'Beranda',
-            'desc'      => null,
-            'token'     => null,
-        ]);
+        $this->middleware('auth');
     }
 
-    // public function pdf()
-    // {
-    //     $mpdf = new \Mpdf\Mpdf();
-    //     $mpdf->WriteHTML('<h1>Hello world!</h1>');
-    //     $mpdf->Output();
-    // }
-
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        $m_product = new Product();
+        $data['product'] = $m_product->loadProduct();
+        
+        return view('frontend.home', $data);
+    }
 }
