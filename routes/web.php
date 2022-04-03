@@ -41,6 +41,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [Product::class, 'index']);
 Route::get('/product/{slug}', [Product::class, 'show']);
 Route::get('/products/quick-view/{slug}', [Product::class, 'quickView']);
+Route::get('/produk/json_grid', [Product::class, 'loadBarang'])->name('json_grid');
 
 // Route::get('/carts', [CartController::class, 'index']);
 // Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
@@ -116,6 +117,13 @@ Route::group(
 		
 	}
 );
+
+// Route::group(
+// 	['prefix' => 'produk', 'middleware' => ['auth']],
+// 	function () {
+// 		Route::get('json_grid', [Product::class , 'loadBarang']);
+// 	}
+// );
 
 Route::post('ckeditor', [CkeditorFileUploadController::class, 'store'])->name('ckeditor.upload');
 

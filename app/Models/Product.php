@@ -262,12 +262,26 @@ class Product extends Model
 		return $this->type == 'simple';
 	}
 
-	public function loadProduct()
+	public function loadProduct($start, $length, $searchProdukAndUkm='', $count=false, $sort=false, $field=false, $id_ukm=false, $id_kategori=false, $condition=false, $hargaMinimal=false, $hargaMaksimal=false, $searchProduk='', $id_user='', $id_kecamatan='',  $kategori_produk=null, $id_jenis=false, $product_type = 0)
 	{
+		// DB::getQueryLog();
 		$result = DB::table(DB::raw('products p'))
-		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, brands.name as nama_kategori"))
+		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, brands.name as nama_kategori, img.medium as gambar"))
 		->join('product_brands', 'product_brands.product_id', '=', 'p.id')
-		->join('brands', 'brands.id', '=', 'product_brands.brand_id')->get();
+		->join('brands', 'brands.id', '=', 'product_brands.brand_id')
+		->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id, medium FROM product_images GROUP BY product_id, medium  )
+               img'), 
+        function($join)
+        {
+           $join->on('p.id', '=', 'img.product_id');
+        });
+
+		if($count == true){
+            $result = $result->count();
+        }else{
+            $result  = $result->offset($start)->limit($length)->get();
+        }
+		// DB::getQueryLog(); die();
 		return $result;
 	}
 }

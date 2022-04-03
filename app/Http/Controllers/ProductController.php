@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+// namespace App\Helpers;
 
 use Illuminate\Http\Request;
 
@@ -10,6 +11,7 @@ use App\Models\AttributeOption;
 use App\Models\Category;
 use App\Models\Brand;
 
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -19,48 +21,48 @@ class ProductController extends Controller
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
-		parent::__construct();
+	// public function __construct()
+	// {
+	// 	parent::__construct();
 
-		$this->data['q'] = null;
+	// 	$this->data['q'] = null;
 
-		$this->data['brands'] = Brand::orderBy('id', 'DESC')->get();
+	// 	$this->data['brands'] = Brand::orderBy('id', 'DESC')->get();
 
-		$this->data['categories'] = Category::parentCategories()
-			->orderBy('name', 'DESC')
-			->get();
+	// 	$this->data['categories'] = Category::parentCategories()
+	// 		->orderBy('name', 'DESC')
+	// 		->get();
 		
-		$this->data['minPrice'] = Product::min('price');
-		$this->data['maxPrice'] = Product::max('price');
+	// 	$this->data['minPrice'] = Product::min('price');
+	// 	$this->data['maxPrice'] = Product::max('price');
 
-		$this->data['colors'] = AttributeOption::whereHas(
-			'attribute',
-			function ($query) {
-					$query->where('code', 'color')
-						->where('is_filterable', 1);
-			}
-		)
-		->orderBy('name', 'DESC')->get();
+	// 	$this->data['colors'] = AttributeOption::whereHas(
+	// 		'attribute',
+	// 		function ($query) {
+	// 				$query->where('code', 'color')
+	// 					->where('is_filterable', 1);
+	// 		}
+	// 	)
+	// 	->orderBy('name', 'DESC')->get();
 
-		$this->data['sizes'] = AttributeOption::whereHas(
-			'attribute',
-			function ($query) {
-				$query->where('code', 'size')
-					->where('is_filterable', 1);
-			}
-		)->orderBy('name', 'DESC')->get();
+	// 	$this->data['sizes'] = AttributeOption::whereHas(
+	// 		'attribute',
+	// 		function ($query) {
+	// 			$query->where('code', 'size')
+	// 				->where('is_filterable', 1);
+	// 		}
+	// 	)->orderBy('name', 'DESC')->get();
 								
-		$this->data['sorts'] = [
-			url('products') => 'Default',
-			url('products?sort=price-DESC') => 'Price - Low to High',
-			url('products?sort=price-desc') => 'Price - High to Low',
-			url('products?sort=created_at-desc') => 'Newest to Oldest',
-			url('products?sort=created_at-DESC') => 'Oldest to Newest',
-		];
+	// 	$this->data['sorts'] = [
+	// 		url('products') => 'Default',
+	// 		url('products?sort=price-DESC') => 'Price - Low to High',
+	// 		url('products?sort=price-desc') => 'Price - High to Low',
+	// 		url('products?sort=created_at-desc') => 'Newest to Oldest',
+	// 		url('products?sort=created_at-DESC') => 'Oldest to Newest',
+	// 	];
 
-		$this->data['selectedSort'] = url('products');
-	}
+	// 	$this->data['selectedSort'] = url('products');
+	// }
 
 	/**
 	 * Display a listing of the resource.
@@ -289,5 +291,64 @@ class ProductController extends Controller
 		$this->data['product'] = $product;
 		
 		return $this->loadTheme('products.quick_view', $this->data);
+	}
+
+	public function loadBarang(Request $request)
+	{
+		ini_set('max_execution_time', '0');
+		ini_set('memory_limit', '100048M');
+		
+		$m_product = new Product();
+		$responseCode = 200;
+
+		$page = preg_replace('/[^0-9]/u', '', $request->get('page'));
+    	$perpage = preg_replace('/[^0-9]/u', '', $request->get('size'));
+		// $perpage = 15;
+		$keyword = strtoupper($request->get('keyword'));
+		$pattern = '/[^a-zA-Z0-9 !@#$%^&*\/\.\,\(\)-_:;?\+=]/u';
+        $search = preg_replace($pattern, '', $keyword);
+
+		$sort = 0;
+		$deductor = ($sort == 0)? 2 : 1;
+		// $deductor = 1;
+		$start = ($page - 1) * $perpage;
+
+		if($page >= 0){
+			$result = $m_product->loadProduct($start,$perpage, null, false);
+
+			$total = $m_product->loadProduct($start,$perpage, null, true);
+		}else{
+			$result = [];
+            $total = 0;
+		}
+		// dd('kesini');
+		$responseData['barang'] = $result;
+
+		$rowStart = ($deductor == 2)? ($start + $perpage + 1) : ($start + 1);
+		$rowEnd = ($rowStart + count($result)) - 1;
+		$rowTotal = (($total >= $perpage && $deductor == 2)? ($total + $perpage) : $total);
+		$total_page = ceil($rowTotal / $perpage);
+
+		$pagination = [
+			'page' => $page,
+			'total_page' => $total_page,
+			'size' => $perpage,
+			'row' => count($result),
+			'start' => $start,
+			'rowStart' => $rowStart,
+			'rowEnd' => $rowEnd
+		];
+
+		$responseData['meta'] = [
+			'search' => $search,
+			'total' => $rowTotal,
+			'pagination' => $pagination,
+			'sort' => $sort,
+			// 'field' => $field
+		];
+
+
+		$response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response, $responseCode);
 	}
 }

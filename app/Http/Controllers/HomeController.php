@@ -24,9 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $m_product = new Product();
-        $data['product'] = $m_product->loadProduct();
+        // $m_product = new Product();
+        // $data['product'] = $m_product->loadProduct();
         
-        return view('frontend.home', $data);
+        return view('frontend.home');
     }
 }
