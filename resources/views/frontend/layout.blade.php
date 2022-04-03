@@ -185,8 +185,8 @@
                         // </ul>';
 
             if(page > 1){
-                template +=  '<li class="page-item">\
-                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-left" data-num="'+(page - 1)+'" onclick="setPage('+(page - 1)+')"></i></a>\
+                template +=  '<li class="page-item" data-num="'+(page - 1)+'" onclick="setPage('+(page - 1)+')">\
+                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-left" ></i></a>\
                             </li>';
             }
 
