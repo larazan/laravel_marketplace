@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HashUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,10 +10,11 @@ use Carbon\Carbon;
 
 class Article extends Model
 {
-    use HasFactory;
+    use HasFactory, HashUuid;
 
      //
      protected $fillable = [
+         'uuid',
         'title',
         'slug',
         'article_type',
@@ -21,6 +23,12 @@ class Article extends Model
         'body',
         'user_id',
     ];
+
+    protected $primaryKey = 'uuid';
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
 
     protected $appends = [
         'category_ids', 'tags_input', 'tag_ids', 'featured_image', 'status'
@@ -42,6 +50,8 @@ class Article extends Model
     public $casts = [
         'published_at' => 'datetime:d, M Y H:i',
     ];
+
+    
 
     public function user()
     {

@@ -23,6 +23,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    public const UPLOAD_DIR = 'uploads/shops';
+    public const EXTRA_LARGE = '1920x643';
+	public const SMALL = '135x75';
+
     /**
      * The attributes that should be hidden for serialization.
      *

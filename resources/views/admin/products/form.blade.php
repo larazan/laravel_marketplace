@@ -26,7 +26,7 @@
                         {!! Form::open(['url' => 'admin/products']) !!}
                     @endif
                         <div class="form-group">
-                            {!! Form::label('type', 'Type') !!}
+                            {!! Form::label('type', 'Type', ['class' => 'form-label']) !!}
                             {!! Form::select('type', $types , !empty($product) ? $product->type : null, ['class' => 'form-control product-type', 'placeholder' => '-- Choose Product Type --', 'disabled' => !empty($product)]) !!}
                         </div>
                         <div class="form-group">

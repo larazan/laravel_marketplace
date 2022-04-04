@@ -10,9 +10,13 @@ class Shop extends Model
     use HasFactory;
 
     protected $fillable=['name','description'];
+	public const UPLOAD_DIR = 'uploads/shops';
 
     public const ACTIVE = 'active';
 	public const INACTIVE = 'inactive';
+
+	public const EXTRA_LARGE = '1920x643';
+	public const SMALL = '135x75';
 
 	public const STATUSES = [
 		self::ACTIVE => 'Active',

@@ -5,11 +5,11 @@
 <section class="content-main">
     <div class="content-header">
         <div>
-            <h2 class="content-title card-title">Products List</h2>
+            <h2 class="content-title card-title">Product Images</h2>
             <p>Lorem ipsum dolor sit amet.</p>
         </div>
         <div>
-            <a href="{{ url('user/products/create') }}" class="btn btn-primary btn-sm rounded">Create new</a>
+            <a href="{{ url('admin/products/'.$productID.'/add-image') }}" class="btn btn-primary btn-sm rounded">Add new</a>
         </div>
     </div>
     @include('backend.partials.flash')
@@ -44,41 +44,31 @@
         </header>
         <!-- card-header end// -->
         <div class="card-body">
-        @php
-            $i = 1
-            @endphp
-            @forelse ($products as $product)
+        @forelse ($productImages as $image)
             <article class="itemlist">
                 <div class="row align-items-center">
-                    <div class="col col-check flex-grow-0">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" />
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                         <a class="itemside" href="#">
                             <div class="left">
                                 <img src="{{ URL::asset('dashboard/assets/imgs/items/1.jpg') }}" class="img-sm img-thumbnail" alt="Item" />
                             </div>
-                            <div class="info">
-                                <h6 class="mb-0">{{ $product->name }}</h6>
+                            <div class="left">
+                                <img src="{ asset('storage/'.$image->path) }}" class="img-sm img-thumbnail" alt="Item" />
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-2 col-sm-2 col-4 col-price"><span>{{ number_format($product->price) }}</span></div>
-                    <div class="col-lg-2 col-sm-2 col-4 col-status">
-                    {{ $product->statusLabel() }}
-                        <span class="badge rounded-pill alert-success">Active</span>
-                    </div>
+                    
                     <div class="col-lg-1 col-sm-2 col-4 col-date">
-                        <span>{{ $product->sku }}</span>
+                        <span>{{ $image->created_at }}</span>
                     </div>
                     <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
                         <a href="{{ url('user/products/'. $product->id .'/edit') }}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> Edit </a>
                         <a href="#" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> Delete </a>
-                        {!! Form::open(['url' => 'user/products/'. $product->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
+                        
+                        {!! Form::open(['url' => 'admin/products/images/'. $image->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
                         {!! Form::hidden('_method', 'DELETE') !!}
-                        <!-- {!! Form::submit('Delete', ['class' => 'btn btn-sm font-sm btn-light rounded']) !!} -->
+                        <!-- {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!} -->
                         {!! Html::decode(Form::submit('Delete', '<i class="material-icons md-delete_forever"></i>', ['class' => 'btn btn-sm font-sm btn-light rounded'])) !!}
                         {!! Form::close() !!}
                     </div>
@@ -96,7 +86,6 @@
         <!-- card-body end// -->
     </div>
     <!-- card end// -->
-    {{ $products->links('backend.partials.paginator') }}
 </section>
 
 @endsection

@@ -23,6 +23,13 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ArticleController as Article;
 use App\Http\Controllers\OrderController as Order;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\Dashboard\DashboardController as DDashboard;
+use App\Http\Controllers\Dashboard\OrderController as DOrder;
+use App\Http\Controllers\Dashboard\ProductController as DProduct;
+use App\Http\Controllers\Dashboard\TransactionController;
+use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\ShopController as DShop;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +75,29 @@ Route::get('/blog/{slug}', [Article::class, 'show']);
 Route::group(
 	['prefix' => 'user', 'middleware' => ['auth']],
 	function () {
-		Route::get('dashboard', [UserDashboardController::class, 'index']);
+		// Route::get('dashboard', [UserDashboardController::class, 'index']);
+		Route::get('dashboard', [DDashboard::class, 'index']);
+		Route::get('orders', [DOrder::class, 'index']);
+		Route::get('orders/detail/{orderID}', [DOrder::class, 'detail']);
+		
+		Route::resource('products', DProduct::class);
+		Route::get('products/{productID}/images', [DProduct::class, 'images'])->name('products.images');
+		Route::get('products/{productID}/add-image', [DProduct::class, 'addImage'])->name('products.add_image');
+		Route::post('products/images/{productID}', [DProduct::class , 'uploadImage'])->name('products.upload_image');
+		Route::delete('products/images/{imageID}', [DProduct::class , 'removeImage'])->name('products.remove_image');
+
+		Route::get('transactions', [TransactionController::class, 'index']);
+		Route::get('transactions/detail/{transactionID}', [TransactionController::class, 'detail']);
+		
+		Route::get('profile', [ProfileController::class, 'index']);
+		Route::get('profile/edit/{userID}', [ProfileController::class, 'edit']);
+		Route::put('profile/update/{userID}', [ProfileController::class, 'update']);
+		
+		Route::get('settings', [SettingController::class, 'index']);
+		
+		Route::get('shop', [DShop::class, 'index']);
+		Route::get('shop/edit/{shopID}', [DShop::class, 'edit']);
+		Route::put('shop/update/{shopID}', [DShop::class, 'update']);
 	}
 );
 
