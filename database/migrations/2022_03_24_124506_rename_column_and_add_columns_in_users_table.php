@@ -24,6 +24,8 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
 			$table->integer('province_id')->nullable()->after('address2');
 			$table->integer('city_id')->nullable()->after('province_id');
 			$table->integer('postcode')->nullable()->after('city_id');
+            $table->string('original')->nullabel()->after('postcode');
+            $table->string('small')->nullabel()->after('original');
         });
     }
 
@@ -36,6 +38,17 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
+            $table->renameColumn('first_name', 'name');
+			$table->dropColumn('last_name');
+			$table->dropColumn('phone');
+			$table->dropColumn('company');
+			$table->dropColumn('address1');
+			$table->dropColumn('address2');
+			$table->dropColumn('province_id');
+			$table->dropColumn('city_id');
+			$table->dropColumn('postcode');
+			$table->dropColumn('original');
+			$table->dropColumn('small');
         });
     }
 }

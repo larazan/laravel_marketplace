@@ -35,5 +35,7 @@
         <!-- Main Script -->
         <script src="{{ URL::asset('dashboard/assets/js/main.js?v=1.1') }}" type="text/javascript"></script>
         <script src="{{ URL::asset('dashboard/assets/js/custom-chart.js') }}" type="text/javascript"></script>
+    
+        @yield('scripts')
     </body>
 </html>

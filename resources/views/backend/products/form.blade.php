@@ -28,36 +28,39 @@
             @endif
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="mb-4">
-                        {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
-                        {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'name']) !!}
-                    </div>
-                    <div class="mb-4">
-                        {!! Form::label('sku', 'SKU', ['class' => 'form-label']) !!}
-                        {!! Form::text('sku', null, ['class' => 'form-control', 'id' => 'sku', 'placeholder' => 'sku']) !!}
-                    </div>
-                    <div class="row gx-2">
-                        <div class="col-md-6 mb-3">
+                    <div class="row gx-3">
+                    @include('backend.products.menu')
+                        <div class="mb-4">
+                            {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'name']) !!}
+                        </div>
+                        <div class="mb-4">
+                            {!! Form::label('sku', 'SKU', ['class' => 'form-label']) !!}
+                            {!! Form::text('sku', null, ['class' => 'form-control', 'id' => 'sku', 'placeholder' => 'sku']) !!}
+                        </div>
+                    
+                        <div class="col-6 mb-3">
                             {!! Form::label('weight', 'Weight', ['class' => 'form-label']) !!}
                             {!! Form::text('weight', null, ['class' => 'form-control', 'placeholder' => 'weight']) !!}
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-6 mb-3">
                             {!! Form::label('qty', 'Qty Inventory', ['class' => 'form-label']) !!}
                             {!! Form::text('qty', null, ['class' => 'form-control', 'placeholder' => 'qty']) !!}
                         </div>
-                    </div>
+                   
                     <div class="mb-4">
                         {!! Form::label('brand', 'Brand', ['class' => 'form-label']) !!}
                         {!! Form::text('brand', null, ['class' => 'form-control', 'placeholder' => 'brand']) !!}
                     </div>
                     <div class="mb-4">
                         {!! Form::label('category_ids', 'Category', ['class' => 'form-label']) !!}
-                        {!! General::selectMultiLevel('category_ids[]', $categories, ['class' => 'form-control form-select', 'id' => 'category_ids', 'multiple' => true, 'selected' => !empty(old('category_ids')) ? old('category_ids') : $categoryIDs, 'placeholder' => '-- Choose Category --']) !!}
+                        {!! General::selectMultiLevel('category_ids[]', $categories, ['class' => 'form-control select-multiple', 'id' => 'category_ids', 'multiple' => true, 'selected' => !empty(old('category_ids')) ? old('category_ids') : $categoryIDs, 'placeholder' => '-- Choose Category --']) !!}
                     </div>
                     <div class="mb-4">
                         {!! Form::label('price', 'Price', ['class' => 'form-label']) !!}
-                        {!! Form::text('variants['. $variant->id .'][price]', $variant->price, ['class' => 'form-control', 'required' => true]) !!}
+                        {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'price']) !!}
                     </div>
+                </div>
                 </div>
             </div>
             <!-- card end// -->

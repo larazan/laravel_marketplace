@@ -20,13 +20,8 @@
                 </div> -->
                 <!--  col.// -->
                 <div class="col-xl-4 text-md-end">
-                    <select class="form-select w-auto d-inline-block">
-                        <option>Actions</option>
-                        <option>Disable shop</option>
-                        <option>Analyze</option>
-                        <option>Something</option>
-                    </select>
-                    <a href="#" class="btn btn-primary"> View live <i class="material-icons md-launch"></i> </a>
+                    <a href="#" class="btn btn-light rounded font-sm mr-5 text-body hover-up">Reset Password</a>
+                    <a href="{{  url('user/profile/edit')}}" class="btn btn-primary">Update Profile</a>
                 </div>
                 <!--  col.// -->
             </div>

@@ -20,7 +20,7 @@
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
                                         <h1 class="mb-5">Create an Account</h1>
-                                        <p class="mb-30">Already have an account? <a href="page-login.html">Login</a></p>
+                                        <p class="mb-30">Already have an account? <a href="{{ route('login') }}">Login</a></p>
                                     </div>
                                     <form method="POST" action="{{ route('register') }}">
                                     @csrf

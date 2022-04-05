@@ -44,7 +44,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $this->data['products'] = Product::orderBy('name', 'DESC')->paginate(10);
+		$auth_id = Auth::user()->id;
+        $this->data['products'] = Product::active()->where('user_id', $auth_id)->orderBy('name', 'DESC')->paginate(10);
 
         return $this->loadDashboard('products.index', $this->data);
     }

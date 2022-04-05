@@ -23,7 +23,7 @@
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
                                         <h1 class="mb-5">Login</h1>
-                                        <p class="mb-30">Don't have an account? <a href="page-register.html">Create here</a></p>
+                                        <p class="mb-30">Don't have an account? <a href="{{ route('register') }}">Create here</a></p>
                                     </div>
                                     <form method="POST" action="{{ route('login') }}">
                                     @csrf
@@ -47,7 +47,7 @@
                                         <div class="login_footer form-group mb-50">
                                             <div class="chek-form">
                                                 <div class="custome-checkbox">
-                                                    <input class="form-check-input" type="checkbox" {{ old('remember') ? 'checked' : '' }} name="checkbox" id="exampleCheckbox1" value="" />
+                                                    <input class="form-check-input" type="checkbox" {{ old('remember') ? 'checked' : '' }} name="remember" id="exampleCheckbox1" value="1" />
                                                     <label class="form-check-label" for="exampleCheckbox1"><span>Remember me</span></label>
                                                 </div>
                                             </div>

@@ -29,4 +29,6 @@ class OrderController extends Controller
 
         return $this->loadDashboard('orders.detail', $this->data);
     }
+
+    
 }

@@ -58,7 +58,7 @@ Route::get('/products/quick-view/{slug}', [Product::class, 'quickView']);
 // Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
 // Route::post('orders/set-shipping', [Order::class, 'setShipping']);
 // Route::get('orders/received/{orderID}', [Order::class, 'received']);
-// Route::get('orders/cities', [Order::class, 'cities']);
+Route::get('orders/cities', [Order::class, 'cities']);
 // Route::get('orders', [Order::class, 'index']);
 // Route::get('orders/{orderID}', [Order::class, 'show']);
 
@@ -90,8 +90,8 @@ Route::group(
 		Route::get('transactions/detail/{transactionID}', [TransactionController::class, 'detail']);
 		
 		Route::get('profile', [ProfileController::class, 'index']);
-		Route::get('profile/edit/{userID}', [ProfileController::class, 'edit']);
-		Route::put('profile/update/{userID}', [ProfileController::class, 'update']);
+		Route::get('profile/edit', [ProfileController::class, 'edit']);
+		Route::put('profile/update', [ProfileController::class, 'update']);
 		
 		Route::get('settings', [SettingController::class, 'index']);
 		

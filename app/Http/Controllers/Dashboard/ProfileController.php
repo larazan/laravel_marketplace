@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -34,11 +35,15 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        // $user = User::findOrFail($id);
-
-		// $this->data['user'] = $user;
+        $user = Auth::user();
+        $id = Auth::id();
+		
+		$this->data['provinces'] = $this->getProvinces();
+		$this->data['cities'] = isset(Auth::user()->province_id) ? $this->getCities(Auth::user()->province_id) : [];
+		$this->data['user'] = $user;
+        
         return $this->loadDashboard('profiles.form', $this->data);
     }
 
@@ -73,14 +78,14 @@ class ProfileController extends Controller
 		// 	$resizedImage['large'] = $largeImageFilePath;
 		// }
 
-		$extraLargeImageFilePath  = $folder . '/xlarge/' . $fileName;
-		$size = explode('x', User::EXTRA_LARGE);
-		list($width, $height) = $size;
+		// $extraLargeImageFilePath  = $folder . '/xlarge/' . $fileName;
+		// $size = explode('x', User::EXTRA_LARGE);
+		// list($width, $height) = $size;
 
-		$extraLargeImageFile = Image::make($image)->fit($width, $height)->stream();
-		if (Storage::put('public/' . $extraLargeImageFilePath, $extraLargeImageFile)) {
-			$resizedImage['extra_large'] = $extraLargeImageFilePath;
-		}
+		// $extraLargeImageFile = Image::make($image)->fit($width, $height)->stream();
+		// if (Storage::put('public/' . $extraLargeImageFilePath, $extraLargeImageFile)) {
+		// 	$resizedImage['extra_large'] = $extraLargeImageFilePath;
+		// }
 
 		return $resizedImage;
 	}
@@ -131,21 +136,23 @@ class ProfileController extends Controller
             $resizedImage = $this->_resizeImage($image, $fileName, $folder);
 
 			$params['original'] = $filePath;
-            $params['extra_large'] = $resizedImage['extra_large'];
+            // $params['extra_large'] = $resizedImage['extra_large'];
             $params['small'] = $resizedImage['small'];
 
 			unset($params['image']);
 		} else {
             $params['original'] = '';
-            $params['extra_large'] = '';
+            // $params['extra_large'] = '';
             $params['small'] = '';
         }
 
-		$brand = User::findOrFail($id);
-		if ($brand->update($params)) {
+		// Get the user
+        $id = Auth::id();
+        $user = User::findOrFail($id);
+		if ($user->update($params)) {
 			Session::flash('success', 'User has been updated.');
 		}
 
-		return redirect('user/shop');
+		return redirect('user/profile');
     }
 }

@@ -12,39 +12,83 @@
                             
                             <div class="col-lg-9">
                                 <section class="content-body p-xl-4">
-                                {!! Form::model($user, ['method' => 'PUT', 'route' => ['users.update',  $user->id ] ]) !!}
+                                    <!-- {!! Form::model($user, ['url' => ['profile']]) !!} -->
+                                    {!! Form::model($user, ['method' => 'PUT', 'route' => ['users.update',  $user->id ] ]) !!}
+                                    @csrf    
                                         <div class="row">
                                             <div class="col-lg-8">
                                                 <div class="row gx-3">
                                                     <div class="col-6 mb-3">
                                                         {!! Form::label('first_name', 'First Name', ['class' => 'form-label']) !!}
-                                                        {!! Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => 'First Name']) !!}
+                                                        {!! Form::text('first_name', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'First Name']) !!}
                                                         @if ($errors->has('first_name')) <p class="help-block">{{ $errors->first('first_name') }}</p> @endif
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-6 mb-3">
                                                         {!! Form::label('last_name', 'Last Name', ['class' => 'form-label']) !!}
-                                                        {!! Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => 'Last Name']) !!}
+                                                        {!! Form::text('last_name', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Last Name']) !!}
                                                         @if ($errors->has('last_name')) <p class="help-block">{{ $errors->first('last_name') }}</p> @endif
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-lg-6 mb-3">
+                                                        {!! Form::label('company', 'Company', ['class' => 'form-label']) !!}
+                                                        {!! Form::text('company', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Company']) !!}
+                                                        @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
+                                                        
+                                                    </div>
+                                                    <!-- col .// -->
+                                                    <div class="col-lg-6 mb-3">
                                                         {!! Form::label('email', 'Email', ['class' => 'form-label']) !!}
-                                                        {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
+                                                        {!! Form::text('email', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Email']) !!}
                                                         @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
                                                         
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-lg-6 mb-3">
                                                         {!! Form::label('phone', 'Phone', ['class' => 'form-label']) !!}
-                                                        {!! Form::text('phone', null, ['class' => 'form-control', 'placeholder' => 'Phone']) !!}
+                                                        {!! Form::text('phone', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Phone']) !!}
                                                         @if ($errors->has('phone')) <p class="help-block">{{ $errors->first('phone') }}</p> @endif
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-lg-12 mb-3">
-                                                    {!! Form::label('address', 'Address', ['class' => 'form-label']) !!}
-                                                        {!! Form::textarea('address', null, ['class' => 'form-control', 'placeholder' => 'Address']) !!}
-                                                        @if ($errors->has('address')) <p class="help-block">{{ $errors->first('address') }}</p> @endif
+                                                        {!! Form::label('address', 'Address1', ['class' => 'form-label']) !!}
+                                                        {!! Form::textarea('address1', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Address']) !!}
+                                                        @if ($errors->has('address1')) <p class="help-block">{{ $errors->first('address1') }}</p> @endif
+                                                    </div>
+                                                    <!-- col .// -->
+                                                    <div class="col-lg-12 mb-3">
+                                                        {!! Form::label('address', 'Address2', ['class' => 'form-label']) !!}
+                                                        {!! Form::textarea('address2', null, ['class' => 'form-control', 'placeholder' => 'Address (optional)']) !!}
+                                                        @if ($errors->has('address2')) <p class="help-block">{{ $errors->first('address2') }}</p> @endif
+                                                    </div>
+
+                                                     <!-- col .// -->
+                                                     <div class="col-lg-12 mb-3">
+                                                        {!! Form::label('province', 'Provinsi', ['class' => 'form-label']) !!}
+                                                        {!! Form::select('province_id', $provinces, Auth::user()->province_id, ['class' => 'form-select', 'id' => 'user-province-id', 'placeholder' => '- Please Select - ', 'required' => true]) !!}
+                                                        @error('province_id')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <!-- col .// -->
+                                                    <div class="col-lg-12 mb-3">
+                                                        {!! Form::label('city', 'Kota', ['class' => 'form-label']) !!}
+                                                        {!! Form::select('city_id', $cities, null, ['class' => 'form-select', 'id' => 'user-city-id', 'placeholder' => '- Please Select -', 'required' => true])!!}
+											            @error('city_id')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <!-- col .// -->
+                                                    <div class="col-lg-12 mb-3">
+                                                        {!! Form::label('postcode', 'Address', ['class' => 'form-label']) !!}
+                                                        {!! Form::number('postcode', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Postcode']) !!}
+                                                        @if ($errors->has('postcode')) <p class="help-block">{{ $errors->first('postcode') }}</p> @endif
                                                     </div>
                                                     
                                                 </div>
@@ -52,12 +96,11 @@
                                             </div>
                                             <!-- col.// -->
                                             <aside class="col-lg-4">
-                                                <figure class="text-lg-center">
-                                                    <img class="img-lg mb-3 img-avatar" src="assets/imgs/people/avatar-1.png" alt="User Photo" />
-                                                    <figcaption>
-                                                        <a class="btn btn-light rounded font-md" href="#"> <i class="icons material-icons md-backup font-md"></i> Upload </a>
-                                                    </figcaption>
-                                                </figure>
+                                            {!! Form::label('gambar', 'Foto', ['class' => 'form-label']) !!}
+                                            <div class="input-upload">
+                                                <img class="img-preview img-fluid col-sm-5" id="img-preview" style="display: block;">
+                                                {!! Form::file('featured_image', ['class' => 'form-control', 'placeholder' => 'post image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
+                                            </div>
                                             </aside>
                                             <!-- col.// -->
                                         </div>
@@ -97,5 +140,44 @@
                 </div>
                 <!-- card end// -->
             </section>
+
+@endsection
+
+@section('scripts')
+<script>
+    (function($) {
+        $('#user-province-id').on('change', function (e) {
+            var province_id = e.target.value;
+            console.log('pilih');
+            $.get('/orders/cities?province_id=' + province_id, function(data){
+                $('#user-city-id').empty();
+                $('#user-city-id').append('<option value>- Please Select -</option>');
+
+                $.each(data.cities, function(city_id, city){
+                
+                $('#user-city-id').append('<option value="'+city_id+'">'+ city + '</option>');
+
+            });
+            });
+        });
+})
+</script>
+
+<script>
+		function previewImage() {
+			console.log('image preview');
+			const image = document.querySelector('#image');
+			const imagePreview = document.querySelector('.img-preview');
+
+			imagePreview.style.display = 'block';
+
+			const oFReader = new FileReader();
+			oFReader.readAsDataURL(image.files[0]);
+
+			oFReader.onload = function(oFREvent) {
+				imagePreview.src = oFREvent.target.result;
+			}
+		}
+	</script>
 
 @endsection

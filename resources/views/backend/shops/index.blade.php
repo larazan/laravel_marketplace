@@ -3,9 +3,6 @@
 @section('content')
 
 <section class="content-main">
-    <div class="content-header">
-        <a href="javascript:history.back()"><i class="material-icons md-arrow_back"></i> Go back </a>
-    </div>
     <div class="card mb-4">
         <div class="card-header bg-brand-2" style="height: 150px"></div>
         <div class="card-body">
@@ -22,13 +19,8 @@
                 </div>
                 <!--  col.// -->
                 <div class="col-xl-4 text-md-end">
-                    <select class="form-select w-auto d-inline-block">
-                        <option>Actions</option>
-                        <option>Disable shop</option>
-                        <option>Analyze</option>
-                        <option>Something</option>
-                    </select>
-                    <a href="#" class="btn btn-primary"> View live <i class="material-icons md-launch"></i> </a>
+                    
+                    <a href="#" class="btn btn-primary">Update</a>
                 </div>
                 <!--  col.// -->
             </div>
