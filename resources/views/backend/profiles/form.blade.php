@@ -13,7 +13,7 @@
                             <div class="col-lg-9">
                                 <section class="content-body p-xl-4">
                                     <!-- {!! Form::model($user, ['url' => ['profile']]) !!} -->
-                                    {!! Form::model($user, ['method' => 'PUT', 'route' => ['users.update',  $user->id ] ]) !!}
+                                    {!! Form::model($user, ['method' => 'PUT', 'route' => ['updateProfile'] ]) !!}
                                     @csrf    
                                         <div class="row">
                                             <div class="col-lg-8">
@@ -57,8 +57,8 @@
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-lg-12 mb-3">
-                                                        {!! Form::label('address', 'Address2', ['class' => 'form-label']) !!}
-                                                        {!! Form::textarea('address2', null, ['class' => 'form-control', 'placeholder' => 'Address (optional)']) !!}
+                                                        {!! Form::label('address', 'Address2 (optional)', ['class' => 'form-label']) !!}
+                                                        {!! Form::textarea('address2', null, ['class' => 'form-control', 'placeholder' => 'Address']) !!}
                                                         @if ($errors->has('address2')) <p class="help-block">{{ $errors->first('address2') }}</p> @endif
                                                     </div>
 
@@ -90,18 +90,19 @@
                                                         {!! Form::number('postcode', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Postcode']) !!}
                                                         @if ($errors->has('postcode')) <p class="help-block">{{ $errors->first('postcode') }}</p> @endif
                                                     </div>
-                                                    
+
+                                                    <!-- col .// -->
+                                                    <div class="col-lg-12 mb-3">
+                                                        {!! Form::label('gambar', 'Foto', ['class' => 'form-label']) !!}
+                                                        <img class="img-preview img-fluid col-sm-5 mb-3" id="img-preview" style="display: block;">
+                                                        {!! Form::file('featured_image', ['class' => 'form-control', 'placeholder' => 'post image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
+                                                    </div>
+
                                                 </div>
                                                 <!-- row.// -->
                                             </div>
                                             <!-- col.// -->
-                                            <aside class="col-lg-4">
-                                            {!! Form::label('gambar', 'Foto', ['class' => 'form-label']) !!}
-                                            <div class="input-upload">
-                                                <img class="img-preview img-fluid col-sm-5" id="img-preview" style="display: block;">
-                                                {!! Form::file('featured_image', ['class' => 'form-control', 'placeholder' => 'post image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
-                                            </div>
-                                            </aside>
+                                           
                                             <!-- col.// -->
                                         </div>
                                         <!-- row.// -->
@@ -145,7 +146,7 @@
 
 @section('scripts')
 <script>
-    (function($) {
+   
         $('#user-province-id').on('change', function (e) {
             var province_id = e.target.value;
             console.log('pilih');
@@ -160,7 +161,7 @@
             });
             });
         });
-})
+
 </script>
 
 <script>

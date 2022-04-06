@@ -20,8 +20,8 @@
                 </div> -->
                 <!--  col.// -->
                 <div class="col-xl-4 text-md-end">
-                    <a href="#" class="btn btn-light rounded font-sm mr-5 text-body hover-up">Reset Password</a>
-                    <a href="{{  url('user/profile/edit')}}" class="btn btn-primary">Update Profile</a>
+                    <a href="{{  url('user/profile/reset') }}" class="btn btn-light rounded font-sm mr-5 text-body hover-up">Reset Password</a>
+                    <a href="{{  url('user/profile/edit') }}" class="btn btn-primary">Update Profile</a>
                 </div>
                 <!--  col.// -->
             </div>
@@ -33,14 +33,14 @@
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <h6>First Name</h6>
                     <p>
-                       Ratri 
+                        {{ $user->first_name }}
                     </p>
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <h6>Last Name</h6>
                     <p>
-                        Wiranti
+                        {{ $user->last_name }}
                     </p>
                 </div>
                 <!--  col.// -->
@@ -48,16 +48,16 @@
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <h6>Contacts</h6>
                     <p>
-                        info@example.com <br />
-                        (229) 555-0109, (808) 555-0111
+                    {{ $user->email }} <br />
+                    {{ $user->phone }}
                     </p>
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <h6>Address</h6>
                     <p>
-                        Address: Ranchview Dr. Richardson <br />
-                        Postal code: 62639
+                    {{ $user->address1 }} <br />
+                        Postal code: {{ $user->postcode }}
                     </p>
                 </div>
                 <!--  col.// -->

@@ -11,10 +11,10 @@
         <div class="col-9">
             <div class="content-header">
                 <h2 class="content-title">{{ $formTitle }} Product</h2>
-                <div>
+                <!-- <div>
                     <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
                     <button class="btn btn-md rounded font-sm hover-up">Publich</button>
-                </div>
+                </div> -->
             </div>
         </div>
         @include('admin.partials.flash', ['$errors' => $errors])
@@ -88,15 +88,7 @@
                 </div>
             </div>
             <!-- card end// -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div>
-                        <label class="form-label">Images</label>
-                        <input class="form-control" type="file" />
-                    </div>
-                </div>
-            </div>
-            <!-- card end// -->
+            
         </div>
         <div class="col-lg-3">
             <div class="card mb-4">
@@ -107,7 +99,7 @@
                         {!! Form::select('status', $statuses , null, ['class' => 'form-select', 'placeholder' => '-- Set Status --']) !!}
                     </div>
 
-                    <button class="btn btn-primary" type="submit">Continue to next</button>
+                    <button class="btn btn-primary" type="submit">Submit</button>
                 </div>
             </div>
             <!-- card end// -->

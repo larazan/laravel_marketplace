@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HashUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, HashUuid;
 
     // protected $fillable = ['name', 'description', 'price', 'image_url'];
     protected $fillable = [
+		'uuid',
 		'parent_id',
 		'user_id',
 		'sku',
@@ -26,6 +28,12 @@ class Product extends Model
 		'description',
 		'status',
 	];
+
+	// protected $primaryKey = 'uuid';
+
+    // protected $keyType = 'string';
+
+    // public $incrementing = false;
 
 	public const DRAFT = 0;
 	public const ACTIVE = 1;

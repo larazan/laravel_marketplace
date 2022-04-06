@@ -91,7 +91,9 @@ Route::group(
 		
 		Route::get('profile', [ProfileController::class, 'index']);
 		Route::get('profile/edit', [ProfileController::class, 'edit']);
-		Route::put('profile/update', [ProfileController::class, 'update']);
+		Route::put('profile/update', [ProfileController::class, 'update'])->name('updateProfile');
+		Route::get('profile/reset', [ProfileController::class, 'reset']);
+		Route::post('profile/change-password', [ProfileController::class, 'changePassword'])->name('changePasswordPost');
 		
 		Route::get('settings', [SettingController::class, 'index']);
 		

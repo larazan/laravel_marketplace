@@ -12,28 +12,28 @@
                             
                             <div class="col-lg-9">
                                 <section class="content-body p-xl-4">
-                                {!! Form::model($user, ['method' => 'PUT', 'route' => ['users.update',  $user->id ] ]) !!}
+                                    <form class="form-horizontal" method="POST" action="{{ route('changePasswordPost') }}">
+                                    {{ csrf_field() }}
                                         <div class="row">
                                             <div class="col-lg-8">
                                                 <div class="row gx-3">
                                                     
                                                     <!-- col .// -->
                                                     <div class="col-lg-6 mb-3">
-                                                        {!! Form::label('password', 'Password Lama', ['class' => 'form-label']) !!}
-                                                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) !!}
-                                                        @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
+                                                        {!! Form::label('current-password', 'Password Lama', ['class' => 'form-label']) !!}
+                                                        {!! Form::password('current-password', ['class' => 'form-control', 'required' => true, 'placeholder' => 'Password']) !!}
+                                                        @if ($errors->has('current-password')) <p class="help-block">{{ $errors->first('current-password') }}</p> @endif
                                                     </div>
 
                                                     <div class="col-lg-6 mb-3">
-                                                        {!! Form::label('password', 'New Password', ['class' => 'form-label']) !!}
-                                                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'New Password']) !!}
-                                                        @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
+                                                        {!! Form::label('new-password', 'New Password', ['class' => 'form-label']) !!}
+                                                        {!! Form::password('new-password', ['class' => 'form-control', 'required' => true, 'placeholder' => 'New Password']) !!}
+                                                        @if ($errors->has('new-password')) <p class="help-block">{{ $errors->first('new-password') }}</p> @endif
                                                     </div>
 
                                                     <div class="col-lg-6 mb-3">
-                                                        {!! Form::label('password', 'Confirm Password', ['class' => 'form-label']) !!}
-                                                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Confirm Password']) !!}
-                                                        @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
+                                                        {!! Form::label('new-password-confirm', 'Confirm Password', ['class' => 'form-label']) !!}
+                                                        {!! Form::password('new-password_confirmation', ['class' => 'form-control', 'required' => true, 'placeholder' => 'Confirm Password']) !!}
                                                     </div>
                                                   
                                                     
@@ -41,15 +41,7 @@
                                                 <!-- row.// -->
                                             </div>
                                             <!-- col.// -->
-                                            <aside class="col-lg-4">
-                                                <figure class="text-lg-center">
-                                                    <img class="img-lg mb-3 img-avatar" src="assets/imgs/people/avatar-1.png" alt="User Photo" />
-                                                    <figcaption>
-                                                        <a class="btn btn-light rounded font-md" href="#"> <i class="icons material-icons md-backup font-md"></i> Upload </a>
-                                                    </figcaption>
-                                                </figure>
-                                            </aside>
-                                            <!-- col.// -->
+                                            
                                         </div>
                                         <!-- row.// -->
                                         <br />

@@ -28,6 +28,7 @@ class OrderController extends Controller
 	 */
 	public function cities(Request $request)
 	{
+		// print('bla');
 		$cities = $this->getCities($request->query('province_id'));
 		return response()->json(['cities' => $cities]);
 	}

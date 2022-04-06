@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -25,7 +27,11 @@ class ProfileController extends Controller
 
     public function index()
     {
-        //
+        $id = Auth::id();
+        $user = User::findOrFail($id);
+
+        $this->data['user'] = $user;
+
         return $this->loadDashboard('profiles.index', $this->data);
     }
 
@@ -154,5 +160,36 @@ class ProfileController extends Controller
 		}
 
 		return redirect('user/profile');
+    }
+
+    public function reset() 
+    {
+        $user = Auth::user();
+        $this->data['user'] = $user;
+        return $this->loadDashboard('profiles.password', $this->data);
+    }
+
+    public function changePasswordPost(Request $request) {
+        if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Your current password does not matches with the password.");
+        }
+
+        if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
+            // Current password and new password same
+            return redirect()->back()->with("error","New Password cannot be same as your current password.");
+        }
+
+        $validatedData = $request->validate([
+            'current-password' => 'required',
+            'new-password' => 'required|string|min:8|confirmed',
+        ]);
+
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new-password'));
+        $user->save();
+
+        return redirect()->back()->with("success","Password successfully changed!");
     }
 }

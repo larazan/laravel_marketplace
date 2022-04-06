@@ -24,8 +24,8 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
 			$table->integer('province_id')->nullable()->after('address2');
 			$table->integer('city_id')->nullable()->after('province_id');
 			$table->integer('postcode')->nullable()->after('city_id');
-            $table->string('original')->nullabel()->after('postcode');
-            $table->string('small')->nullabel()->after('original');
+            $table->string('original')->nullable()->after('postcode');
+            $table->string('small')->nullable()->after('original');
         });
     }
 
