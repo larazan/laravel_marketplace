@@ -6,7 +6,7 @@
         <div class="container">
             <div class="breadcrumb">
                 <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                <span></span> Pages <span></span> My Account
+                <span></span> Login 
             </div>
         </div>
     </div>
@@ -26,24 +26,24 @@
                                         <p class="mb-30">Don't have an account? <a href="{{ route('register') }}">Create here</a></p>
                                     </div>
                                     <form method="POST" action="{{ route('login') }}">
-                                    @csrf
+                                        @csrf
                                         <div class="form-group">
                                             <input type="text" required="" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('E-Mail Address') }}" />
                                             @error('email')
-											<span class="invalid-feedback" role="alert">
-												<strong>{{ $message }}</strong>
-											</span>
-										@enderror
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <input required="" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{ __('Password') }}" />
                                             @error('password')
-											<span class="invalid-feedback" role="alert">
-												<strong>{{ $message }}</strong>
-											</span>
-										@enderror
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
-                                       
+
                                         <div class="login_footer form-group mb-50">
                                             <div class="chek-form">
                                                 <div class="custome-checkbox">

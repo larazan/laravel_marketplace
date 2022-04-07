@@ -20,11 +20,11 @@
         @include('admin.partials.flash', ['$errors' => $errors])
         <div class="col-lg-6">
             @if (!empty($product))
-                {!! Form::model($product, ['url' => ['admin/products', $product->id], 'method' => 'PUT']) !!}
+                {!! Form::model($product, ['url' => ['user/products', $product->id], 'method' => 'PUT']) !!}
                 {!! Form::hidden('id') !!}
                 {!! Form::hidden('type') !!}
             @else
-                {!! Form::open(['url' => 'admin/products']) !!}
+                {!! Form::open(['url' => 'user/products']) !!}
             @endif
             <div class="card mb-4">
                 <div class="card-body">
