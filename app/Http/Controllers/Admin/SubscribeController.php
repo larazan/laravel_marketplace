@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 use App\Models\Subscribe;
 
 class SubscribeController extends Controller
@@ -38,6 +38,13 @@ class SubscribeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subscribe  = Subscribe::findOrFail($id);
+
+	
+		if ($subscribe->delete()) {
+			Session::flash('success', 'Slide has been deleted');
+		}
+
+		return redirect('admin/subscribes');
     }
 }

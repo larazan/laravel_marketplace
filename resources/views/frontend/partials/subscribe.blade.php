@@ -9,9 +9,10 @@
                             needs from our shop
                         </h2>
                         <p class="mb-45">Start You'r Daily Shopping with <span class="text-brand">Nest Mart</span></p>
-                        <form class="form-subcriber d-flex">
-                            <input type="email" placeholder="Your emaill address" />
-                            <button class="btn" type="submit">Subscribe</button>
+                        <div id="statusSubscribe" style="display: none;"></div>
+                        <form action="javascript:void(0)" class="form-subcriber d-flex">
+                            <input onfocus="enableSubscriber();" onfocusout="enableSubscriber();" type="email" class="email subscriber_email" placeholder="Your emaill address" />
+                            <button onclick="checkSubscriber(); addSubscriber();" value="Subscribe" name="subscribe" class="btn" type="submit">Subscribe</button>
                         </form>
                     </div>
                     <img src="{{ asset('frontend/assets/imgs/banner/banner-9.png') }}" alt="newsletter" />

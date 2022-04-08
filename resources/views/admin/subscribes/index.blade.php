@@ -38,7 +38,7 @@
                                                 {!! Form::hidden('_method', 'DELETE') !!}
                                                 {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
                                                 {!! Form::close() !!}
-                                            @endcan
+                                            
                                         </td>
                                     </tr>
                                 @empty
