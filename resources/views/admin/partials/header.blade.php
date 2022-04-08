@@ -66,8 +66,8 @@
         <!-- User Account -->
         <li class="dropdown user-menu">
           <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-            <img src="{{ URL::asset('admin/assets/img/user/user.png') }}" class="user-image" alt="User Image" />
-            <span class="d-none d-lg-inline-block">Abdus Salam</span>
+            <img src="{{ Avatar::create(Auth::user()->first_name.' '.Auth::user()->last_name)->toBase64() }}" class="user-image" alt="User Image" />
+            <span class="d-none d-lg-inline-block">{{ Auth::user()->first_name.' '.Auth::user()->last_name }}</span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
             <!-- User image -->

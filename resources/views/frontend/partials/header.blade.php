@@ -68,7 +68,7 @@
                 <div class="container">
                     <div class="header-wrap">
                         <div class="logo logo-width-1">
-                            <a href="index.html"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                            <a href="/"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
                         </div>
                         <div class="header-right">
                             <div class="search-style-2">
@@ -115,10 +115,11 @@
 										@include('frontend.partials.mini_cart')
 									</div>
 									<div class="header-action-icon-2">
+                                        @if (Auth::check())
 										<a href="page-account.html">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
 										</a>
-										<a href="page-account.html"><span class="lable ml-0">Account</span></a>
+										<a href="{{ url('user/dashboard')}}"><span class="lable ml-0">Account</span></a>
 										<div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
 											<ul>
 												<li><a href="{{ url('user/dashboard')}}"><i class="fi fi-rs-user mr-10"></i>My Account</a></li>
@@ -126,9 +127,25 @@
 												<li><a href="page-account.html"><i class="fi fi-rs-label mr-10"></i>My Voucher</a></li>
 												<li><a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a></li>
 												<li><a href="page-account.html"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a></li>
-												<li><a href="page-login.html"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a></li>
+												<li>
+                                                    <!-- <a href="page-login.html"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a> -->
+                                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();"><i class="fi fi-rs-sign-out mr-10"></i>
+                                                        {{ __('Logout') }}
+                                                    </a>
+
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                    </form>
+                                                </li>
 											</ul>											
 										</div>
+                                        @else
+                                        <a href="page-account.html">
+											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
+										</a>
+										<a href="{{ url('login')}}"><span class="lable ml-0">Login</span></a>
+                                        @endif
 									</div>
 								</div>
 							</div>
@@ -140,7 +157,7 @@
                 <div class="container">
                     <div class="header-wrap header-space-between position-relative">
                         <div class="logo logo-width-1 d-block d-lg-none">
-                            <a href="index.html"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                            <a href="/"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
                         </div>
                         <div class="header-nav d-none d-lg-flex">
                             <div class="main-categori-wrap d-none d-lg-block">
@@ -213,7 +230,7 @@
                                     <ul>
                                         <li class="hot-deals"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-hot.svg') }}" alt="hot deals" /><a href="shop-grid-right.html">Hot Deals</a></li>
                                         <li>
-                                            <a class="active" href="index.html">Home</a>
+                                            <a class="active" href="/">Home</a>
                                             
                                         </li>
                                         <li>
@@ -377,7 +394,7 @@
             <div class="mobile-header-wrapper-inner">
                 <div class="mobile-header-top">
                     <div class="mobile-header-logo">
-                        <a href="index.html"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                        <a href="/"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
                     </div>
                     <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                         <button class="close-style search-close">
@@ -398,9 +415,9 @@
                         <nav>
                             <ul class="mobile-menu font-heading">
                                 <li class="menu-item-has-children">
-                                    <a href="index.html">Home</a>
+                                    <a href="/">Home</a>
                                     <ul class="dropdown">
-                                        <li><a href="index.html">Home 1</a></li>
+                                        <li><a href="/">Home 1</a></li>
                                         <li><a href="index-2.html">Home 2</a></li>
                                         <li><a href="index-3.html">Home 3</a></li>
                                         <li><a href="index-4.html">Home 4</a></li>

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
-use App\Models\Subscription;
 
-class UserSubscriptionController extends Controller
+class UserSubscribeController extends Controller
 {
     //
     public function postSubscribe(Request $request) {
@@ -17,7 +17,7 @@ class UserSubscriptionController extends Controller
         $params = $request->except('_token');
         $params['status'] = 'active';
 
-        Subscription::create($params);
+        Subscribe::create($params);
 
         return response()->json(['success' => true]);
     }
@@ -43,12 +43,12 @@ class UserSubscriptionController extends Controller
             // print_r($data);
             // die;
 
-            $subscriberCount = Subscription::where('email', $data['subscriber_email'])->count();
+            $subscriberCount = Subscribe::where('email', $data['subscriber_email'])->count();
             if ($subscriberCount > 0) {
                 echo "exists";
             } else {
                 // add email to table
-                $newsletter = new Subscription;
+                $newsletter = new Subscribe;
                 $newsletter->email = $data['subscriber_email'];
                 $newsletter->status = 1;
                 $newsletter->save();

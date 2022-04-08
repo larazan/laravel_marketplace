@@ -14,6 +14,9 @@ use App\Http\Controllers\Admin\ShipmentController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SubscribeController;
+
+
 use App\Http\Controllers\CkeditorFileUploadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController as Product;
@@ -23,6 +26,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ArticleController as Article;
 use App\Http\Controllers\OrderController as Order;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\UserSubscribeController;
+
 use App\Http\Controllers\Dashboard\DashboardController as DDashboard;
 use App\Http\Controllers\Dashboard\OrderController as DOrder;
 use App\Http\Controllers\Dashboard\ProductController as DProduct;
@@ -71,6 +76,10 @@ Route::get('orders/cities', [Order::class, 'cities']);
 
 Route::get('/blogs', [Article::class, 'index']);
 Route::get('/blog/{slug}', [Article::class, 'show']);
+
+Route::post('/subscriber', [UserSubscribeController::class, 'postSubscribe']);
+Route::post('/check-subscriber-email', [UserSubscribeController::class, 'checkSubscriber']);
+Route::post('/add-subscriber-email', [UserSubscribeController::class, 'addSubscriber']);
 
 Route::group(
 	['prefix' => 'user', 'middleware' => ['auth']],
@@ -150,7 +159,7 @@ Route::group(
 		Route::resource('articles', ArticleController::class);
         Route::resource('category_articles', CategoryArticleController::class);
 
-		
+		Route::get('subscribes', [SubscribeController::class, 'index']);
 	}
 );
 

@@ -38,7 +38,9 @@
                             </div>
                         </li>
                         <li class="dropdown nav-item">
-                            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="{{ URL::asset('dashboard/assets/imgs/people/avatar-2.png') }}" alt="User" /></a>
+                            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> 
+                                <img class="img-xs rounded-circle" src="{{ Avatar::create(Auth::user()->first_name.' '.Auth::user()->last_name)->toBase64() }}" alt="User" />
+                            </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
                                 <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
                                 <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>

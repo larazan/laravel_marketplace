@@ -60,5 +60,7 @@
         <!-- Template  JS -->
         <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
         <script src="{{ asset('frontend/assets/js/shop.js?v=4.0') }}"></script>
+
+        @yield('scripts')
     </body>
 </html>
