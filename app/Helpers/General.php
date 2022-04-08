@@ -177,4 +177,83 @@ class General
 
 		return $showAttributes;
 	}
+
+	function helpResponse($code, $data = NULL, $msg = '', $status = '', $note = NULL)
+	{
+		switch ($code)
+		{
+			case '200':
+				$s = 'OK';
+				$m = 'Sukses';
+				break;
+			case '201':
+			case '202':
+				$s = 'Saved';
+				$m = 'Data berhasil disimpan';
+				break;
+			case '204':
+				$s = 'No Content';
+				$m = 'Data tidak ditemukan';
+				break;
+			case '304':
+				$s = 'Not Modified';
+				$m = 'Data gagal disimpan';
+				break;
+			case '400':
+				$s = 'Bad Request';
+				$m = 'Fungsi tidak ditemukan';
+				break;
+			case '401':
+				$s = 'Unauthorized';
+				$m = 'Silahkan login terlebih dahulu';
+				break;
+			case '403':
+				$s = 'Forbidden';
+				$m = 'Anda tidak dapat mengakses halaman ini, silahkan hubungi Administrator';
+				break;
+			case '404':
+				$s = 'Not Found';
+				$m = 'Halaman tidak ditemukan';
+				break;
+			case '414':
+				$s = 'Request URI Too Long';
+				$m = 'Data yang dikirim terlalu panjang';
+				break;
+			case '500':
+				$s = 'Internal Server Error';
+				$m = 'Maaf, terjadi kesalahan dalam mengolah data';
+				break;
+			case '502':
+				$s = 'Bad Gateway';
+				$m = 'Tidak dapat terhubung ke server';
+				break;
+			case '503':
+				$s = 'Service Unavailable';
+				$m = 'Server tidak dapat diakses';
+				break;
+			default:
+				$s = 'Undefined';
+				$m = 'Undefined';
+				break;
+		}
+
+		$status = ($status != '') ? $status : $s;
+		$msg = ($msg != '') ? $msg : $m;
+		$result = array(
+			"status" => $status,
+			"code" => $code,
+			"message" => $msg,
+			"data" => $data,
+			"note" => $note
+		);
+
+		// setHeader($code, $status);
+
+		return $result;
+	}
+
+	// function setHeader($code = '200', $status = '')
+	// {
+	// 	header($_SERVER['SERVER_PROTOCOL'] . ' ' . $code . ' ' . $status);
+	// }
 }

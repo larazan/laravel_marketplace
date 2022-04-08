@@ -1,6 +1,7 @@
-@extends('frontend.layout')
+@extends('frontend.layout') 
 
 @section('content')
+
 <main class="main pages">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -10,13 +11,13 @@
             </div>
         </div>
     </div>
-    <div class="page-content pt-150 pb-150">
+    <div class="page-content pt-50 pb-50">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
                     <div class="row">
                         <div class="col-lg-6 pr-30 d-none d-lg-block">
-                            <img class="border-radius-15" src="assets/imgs/page/login-1.png" alt="" />
+                            <img class="border-radius-15" src="frontend/assets/imgs/page/login-1.png" alt="" />
                         </div>
                         <div class="col-lg-6 col-md-8">
                             <div class="login_wrap widget-taber-content background-white">

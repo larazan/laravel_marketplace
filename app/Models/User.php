@@ -18,7 +18,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+<<<<<<< HEAD
         'first_name', 'last_name', 'email', 'phone', 'password', 'company', 'address1', 'address2', 'province_id', 'city_id', 'postcode',
+=======
+        'name',
+        'email',
+        'password',
+        'phone',
+>>>>>>> 5e4051f627d112163aa20e25ffb99e802286585a
     ];
 
     public const UPLOAD_DIR = 'uploads/user';
