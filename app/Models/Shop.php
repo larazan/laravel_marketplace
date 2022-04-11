@@ -9,7 +9,7 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable=['name','description'];
+    protected $fillable=['name','description','original','small'];
 	public const UPLOAD_DIR = 'uploads/shops';
 
     public const ACTIVE = 'active';

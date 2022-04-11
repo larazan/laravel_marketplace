@@ -92,11 +92,11 @@
                                                     </div>
 
                                                     <!-- col .// -->
-                                                    <div class="col-lg-12 mb-3">
+                                                    <!-- <div class="col-lg-12 mb-3">
                                                         {!! Form::label('gambar', 'Foto', ['class' => 'form-label']) !!}
                                                         <img class="img-preview img-fluid col-sm-5 mb-3" id="img-preview" style="display: block;">
                                                         {!! Form::file('featured_image', ['class' => 'form-control', 'placeholder' => 'post image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
-                                                    </div>
+                                                    </div> -->
 
                                                 </div>
                                                 <!-- row.// -->

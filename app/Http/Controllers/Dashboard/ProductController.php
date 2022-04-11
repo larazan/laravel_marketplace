@@ -46,7 +46,7 @@ class ProductController extends Controller
     {
 		$auth_id = Auth::user()->id;
         $this->data['products'] = Product::active()->where('user_id', $auth_id)->orderBy('name', 'DESC')->paginate(10);
-
+		// var_dump($this->data); exit();
         return $this->loadDashboard('products.index', $this->data);
     }
 
@@ -57,6 +57,8 @@ class ProductController extends Controller
      */
     public function create()
     {
+		$this->data['currentForm'] = 'detail';
+
         $categories = Category::orderBy('name', 'DESC')->get();
 		$brands = Brand::pluck('name', 'id');
 		$configurableAttributes = $this->_getConfigurableAttributes();
@@ -134,6 +136,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+		$this->data['currentForm'] = 'detail';
+
         if (empty($id)) {
 			return redirect('admin/products/create');
 		}
@@ -211,8 +215,10 @@ class ProductController extends Controller
     }
 
     public function images($id) {
+		$this->data['currentForm'] = 'image';
+
         if (empty($id)) {
-            return redirect('admin/products/create');
+            return redirect('user/products/create');
         }
 
         $product = Product::findOrFail($id);
@@ -225,6 +231,8 @@ class ProductController extends Controller
 
     public function addImage($id)
 	{
+		$this->data['currentForm'] = 'image';
+
 		if (empty($id)) {
 			return redirect('user/products');
 		}
@@ -326,4 +334,31 @@ class ProductController extends Controller
 
 		return redirect('user/products/' . $image->product->id . '/images');
 	}
+
+	public function deleteImage($id = null) {
+        $productImage = ProductImage::where(['id' => $id])->first();
+		$path = 'storage/';
+		
+        if (file_exists($path.$productImage->path)) {
+            unlink($path.$productImage->path);
+		}
+		
+		if (file_exists($path.$productImage->extra_large)) {
+            unlink($path.$productImage->extra_large);
+        }
+
+        if (file_exists($path.$productImage->large)) {
+            unlink($path.$productImage->large);
+		}
+		
+		if (file_exists($path.$productImage->medium)) {
+            unlink($path.$productImage->medium);
+        }
+
+        if (file_exists($path.$productImage->small)) {
+            unlink($path.$productImage->small);
+        }
+
+        return true;
+    }
 }

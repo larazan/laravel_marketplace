@@ -1,6 +1,18 @@
+<!-- {{ var_dump($products) }} -->
+
 @extends('backend.layout')
 
 @section('content')
+
+@forelse ($products as $product)
+    {{ $product->id }}
+    {{ $product->name }}
+    {{ $product->slug }}
+    {{ number_format($product->price) }}
+    {{ $product->statusLabel() }}
+    {{ $product->sku }}
+    @empty
+@endforelse
 
 <section class="content-main">
     <div class="content-header">
@@ -29,7 +41,7 @@
                         <option>Automobile</option>
                     </select>
                 </div>
-                <!-- <div class="col-md-2 col-6">
+                <div class="col-md-2 col-6">
                     <input type="date" value="02.05.2021" class="form-control" />
                 </div>
                 <div class="col-md-2 col-6">
@@ -39,7 +51,7 @@
                         <option>Disabled</option>
                         <option>Show all</option>
                     </select>
-                </div> -->
+                </div>
             </div>
         </header>
         <!-- card-header end// -->
@@ -58,11 +70,7 @@
                     <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                         <a class="itemside" href="#">
                             <div class="left">
-                            @if ($product->productImages->first())
-                                <img src="{{ asset('storage/'.$product->productImages->first()->small) }}" class="img-sm img-thumbnail" alt="{{ $product->name }}">
-                            @else
                                 <img src="{{ URL::asset('dashboard/assets/imgs/items/1.jpg') }}" class="img-sm img-thumbnail" alt="Item" />
-                            @endif
                             </div>
                             <div class="info">
                                 <h6 class="mb-0">{{ $product->name }}</h6>
@@ -71,13 +79,8 @@
                     </div>
                     <div class="col-lg-2 col-sm-2 col-4 col-price"><span>{{ number_format($product->price) }}</span></div>
                     <div class="col-lg-2 col-sm-2 col-4 col-status">
-                        @if ($product->statusLabel() === 'active')
-                            <span class="badge rounded-pill alert-success">{{ $product->statusLabel() }}</span>
-                        @elseif ($product->statusLabel() === 'deactive')
-                            <span class="badge rounded-pill alert-danger">{{ $product->statusLabel() }}</span>
-                        @else
-                            <span class="badge rounded-pill alert-warning">{{ $product->statusLabel() }}</span>
-                        @endif
+                        
+                        <span class="badge rounded-pill alert-success">{{ $product->statusLabel() }}</span>
                     </div>
                     <div class="col-lg-1 col-sm-2 col-4 col-date">
                         <span>{{ $product->sku }}</span>

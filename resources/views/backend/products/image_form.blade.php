@@ -17,12 +17,15 @@
                 </div>
                 {!! Form::open(['url' => ['user/products/images', $product->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <div class="card-body">
-                    <div class="input-upload">
-                        <img src="assets/imgs/theme/upload.svg" alt="" />
-                        {!! Form::file('image', ['class' => 'form-control', 'placeholder' => 'product image']) !!}
+                    <div class="input-upload mb-3">
+                    <img class="img-preview img-fluid col-sm-5 mb-3" id="img-preview" style="display: block;">
+                        {!! Form::file('image', ['class' => 'form-control', 'placeholder' => 'product image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
                     </div>
+
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <a href="{{ url('user/products/'.$productID.'/images') }}" class="btn btn-secondary btn-default">Back</a>
                 </div>
-                <button class="btn btn-primary" type="submit">Save</button>
+                
                 {!! Form::close() !!}
             </div>
             <!-- card end// -->
@@ -31,5 +34,26 @@
         </div>
     </div>
 </section>
+
+@endsection
+
+@section('scripts')
+
+<script>
+		function previewImage() {
+			console.log('image preview');
+			const image = document.querySelector('#image');
+			const imagePreview = document.querySelector('.img-preview');
+
+			imagePreview.style.display = 'block';
+
+			const oFReader = new FileReader();
+			oFReader.readAsDataURL(image.files[0]);
+
+			oFReader.onload = function(oFREvent) {
+				imagePreview.src = oFREvent.target.result;
+			}
+		}
+	</script>
 
 @endsection

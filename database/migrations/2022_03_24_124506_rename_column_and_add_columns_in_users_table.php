@@ -24,8 +24,7 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
 			$table->integer('province_id')->nullable()->after('address2');
 			$table->integer('city_id')->nullable()->after('province_id');
 			$table->integer('postcode')->nullable()->after('city_id');
-            $table->string('original')->nullable()->after('postcode');
-            $table->string('small')->nullable()->after('original');
+            
         });
     }
 
@@ -47,8 +46,6 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
 			$table->dropColumn('province_id');
 			$table->dropColumn('city_id');
 			$table->dropColumn('postcode');
-			$table->dropColumn('original');
-			$table->dropColumn('small');
         });
     }
 }

@@ -19,8 +19,12 @@
                 </div>
                 <!--  col.// -->
                 <div class="col-xl-4 text-md-end">
-                    
-                    <a href="#" class="btn btn-primary">Update</a>
+                    @if (!empty($shop))
+                        <a href="{{ url('user/shop/edit') }}" class="btn btn-primary">Update</a>
+                    @else
+                        <a href="{{ url('user/shop/create') }}" class="btn btn-primary">Create</a>   
+                    @endif
+                
                 </div>
                 <!--  col.// -->
             </div>

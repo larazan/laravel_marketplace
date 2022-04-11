@@ -22,7 +22,7 @@ class ProfileController extends Controller
 
 		$this->middleware('auth');
         $this->data['currentDashboardMenu'] = 'profiles';
-		$this->data['currentDashboardSubMenu'] = 'users';
+		$this->data['currentDashboardSubMenu'] = '';
 	}
 
     public function index()

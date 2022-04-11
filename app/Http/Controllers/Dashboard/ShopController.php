@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ShopRequest;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Shop;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 
@@ -20,16 +22,84 @@ class ShopController extends Controller
 		parent::__construct();
 
 		$this->middleware('auth');
-        $this->data['currentDashboardMenu'] = 'profiles';
-		$this->data['currentDashboardSubMenu'] = 'shops';
+        $this->data['currentDashboardMenu'] = 'vendors';
+		$this->data['currentDashboardSubMenu'] = '';
 	}
     
     public function index() {
+        $user_id = Auth::id();
+        $user = User::findOrFail($user_id);
+
+        if (Shop::where('user_id', $user_id)->first()) {
+            $id = Shop::where('user_id', $user_id);
+            $shop = Shop::findOrFail($id);
+        } else {
+            $shop = null;
+        }
+        
+        $this->data['user'] = $user;
+        $this->data['shop'] = $shop;
+
         return $this->loadDashboard('shops.index', $this->data);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $this->data['shop'] = null;
+
+		return $this->loadDashboard('shops.form', $this->data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+     public function store(ShopRequest $request)
+     {
+        $params = $request->except('_token');
+        $params['slug'] = Str::slug($params['name']);
+        $params['is_active'] = true;
+        $image = $request->file('image');
+		
+		if ($image) {
+            $name = Str::slug($params['name']) . '_' . time();
+            $fileName = $name . '.' . $image->getClientOriginalExtension();
+
+            $folder = Shop::UPLOAD_DIR;
+
+            $filePath = $image->storeAs($folder . '/original', $fileName, 'public');
+            $resizedImage = $this->_resizeImage($image, $fileName, $folder);
+
+			$params['original'] = $filePath;
+            // $params['extra_large'] = $resizedImage['extra_large'];
+            $params['small'] = $resizedImage['small'];
+
+			unset($params['image']);
+		} else {
+            $params['original'] = '';
+            // $params['extra_large'] = '';
+            $params['small'] = '';
+        }
+
+		if (Shop::create($params)) {
+			Session::flash('success', 'Shop has been created.');
+		} else {
+			Session::flash('error', 'Shop could not be created');
+		}
+
+		return redirect('user/shop');
+     }
+
     public function show() {
-        return $this->loadDashboard('shops.form', $this->data);
+        // return $this->loadDashboard('shops.form', $this->data);
     }
 
     /**
@@ -38,11 +108,13 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
+        $user_id = Auth::id();
+        // $id = Shop::where('user_id', $user_id)->firstOrFail();
         // $shop = Shop::findOrFail($id);
 
-		// $this->data['shop'] = $shop;
+        // $this->data['shop'] = $shop;
 
         return $this->loadDashboard('shops.form', $this->data);
     }
@@ -78,32 +150,32 @@ class ShopController extends Controller
 		// 	$resizedImage['large'] = $largeImageFilePath;
 		// }
 
-		$extraLargeImageFilePath  = $folder . '/xlarge/' . $fileName;
-		$size = explode('x', Shop::EXTRA_LARGE);
-		list($width, $height) = $size;
+		// $extraLargeImageFilePath  = $folder . '/xlarge/' . $fileName;
+		// $size = explode('x', Shop::EXTRA_LARGE);
+		// list($width, $height) = $size;
 
-		$extraLargeImageFile = Image::make($image)->fit($width, $height)->stream();
-		if (Storage::put('public/' . $extraLargeImageFilePath, $extraLargeImageFile)) {
-			$resizedImage['extra_large'] = $extraLargeImageFilePath;
-		}
+		// $extraLargeImageFile = Image::make($image)->fit($width, $height)->stream();
+		// if (Storage::put('public/' . $extraLargeImageFilePath, $extraLargeImageFile)) {
+		// 	$resizedImage['extra_large'] = $extraLargeImageFilePath;
+		// }
 
 		return $resizedImage;
 	}
 
     public function deleteImage($id = null) {
-        $brandImage = Shop::where(['id' => $id])->first();
+        $shopImage = Shop::where(['id' => $id])->first();
 		$path = 'storage/';
 		
-        if (file_exists($path.$brandImage->original)) {
-            unlink($path.$brandImage->original);
+        if (file_exists($path.$shopImage->original)) {
+            unlink($path.$shopImage->original);
 		}
 		
-		if (file_exists($path.$brandImage->extra_large)) {
-            unlink($path.$brandImage->extra_large);
-        }
+		// if (file_exists($path.$shopImage->extra_large)) {
+        //     unlink($path.$shopImage->extra_large);
+        // }
 
-        if (file_exists($path.$brandImage->small)) {
-            unlink($path.$brandImage->small);
+        if (file_exists($path.$shopImage->small)) {
+            unlink($path.$shopImage->small);
         }
 
         return true;
@@ -136,18 +208,18 @@ class ShopController extends Controller
             $resizedImage = $this->_resizeImage($image, $fileName, $folder);
 
 			$params['original'] = $filePath;
-            $params['extra_large'] = $resizedImage['extra_large'];
+            // $params['extra_large'] = $resizedImage['extra_large'];
             $params['small'] = $resizedImage['small'];
 
 			unset($params['image']);
 		} else {
             $params['original'] = '';
-            $params['extra_large'] = '';
+            // $params['extra_large'] = '';
             $params['small'] = '';
         }
 
-		$brand = Shop::findOrFail($id);
-		if ($brand->update($params)) {
+		$shop = Shop::findOrFail($id);
+		if ($shop->update($params)) {
 			Session::flash('success', 'Shop has been updated.');
 		}
 

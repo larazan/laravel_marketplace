@@ -37,15 +37,19 @@
                         </a>
                        
                     </li>
-                    <li class="menu-item has-submenu {{ ($currentDashboardMenu == 'profiles') ? 'active' : ''}}">
-                        <a class="menu-link" href="#">
+                    <li class="menu-item {{ ($currentDashboardMenu == 'profiles') ? 'active' : ''}}">
+                        <a class="menu-link" href="{{ url('user/profile')}}">
                             <i class="icon material-icons md-person"></i>
                             <span class="text">Profile</span>
                         </a>
-                        <div class="submenu">
-                            <a href="{{ url('user/profile')}}" class="{{ ($currentDashboardSubMenu == 'users') ? 'active' : ''}}">User Profile</a>
-                            <a href="{{ url('user/shop')}}" class="{{ ($currentDashboardSubMenu == 'shops') ? 'active' : ''}}">Shop Information</a>
-                        </div>
+                        
+                    </li>
+                    <li class="menu-item {{ ($currentDashboardMenu == 'vendors') ? 'active' : ''}}">
+                        <a class="menu-link" href="{{ url('user/shop') }}">
+                            <i class="icon material-icons md-store"></i>
+                            <span class="text">Shop</span>
+                        </a>
+                        
                     </li>
                     
                    

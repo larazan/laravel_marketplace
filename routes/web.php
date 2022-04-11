@@ -111,8 +111,10 @@ Route::group(
 		Route::get('settings', [SettingController::class, 'index']);
 		
 		Route::get('shop', [DShop::class, 'index']);
-		Route::get('shop/edit/{shopID}', [DShop::class, 'edit']);
-		Route::put('shop/update/{shopID}', [DShop::class, 'update']);
+		Route::get('shop/create', [DShop::class, 'create']);
+		Route::post('shop/store', [DShop::class, 'store']);
+		Route::get('shop/edit', [DShop::class, 'edit']);
+		Route::put('shop/update', [DShop::class, 'update'])->name('updateShop');
 	}
 );
 

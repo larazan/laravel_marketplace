@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             // $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedBigInteger('user_id');
+            // $table->unsignedBigInteger('shop_id');
             $table->string('sku');
             $table->string('type');
             $table->string('name');
@@ -34,6 +35,7 @@ class CreateProductsTable extends Migration
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('shop_id')->references('id')->on('shops');
             $table->foreign('parent_id')->references('id')->on('products');
         });
     }

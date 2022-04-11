@@ -12,7 +12,14 @@
                 
                 <div class="col-lg-9">
                     <section class="content-body p-xl-4">
-                        <form>
+                        
+                        @if (!empty($shop))
+                            {!! Form::model($shop, ['url' => ['user/shop/update', $shop->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::hidden('id') !!}
+                        @else
+                            {!! Form::open(['url' => 'user/shop/update', 'enctype' => 'multipart/form-data']) !!}
+                        @endif
+
                             <div class="row border-bottom mb-4 pb-4">
                                 <div class="col-md-5">
                                     <h5>Shop name</h5>
@@ -20,8 +27,7 @@
                                 <!-- col.// -->
                                 <div class="col-md-7">
                                     <div class="mb-3">
-                                        <!-- <label class="form-label">Home page title</label> -->
-                                        <input class="form-control" type="text" name="" placeholder="Type here" />
+                                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
                                     </div>
                                     
                                 </div>
@@ -37,7 +43,8 @@
                                 <div class="col-md-7">
                                     
                                     <div class="mb-3">
-                                    <textarea type="text" class="form-control"></textarea>
+                                        {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+                                        @if ($errors->has('description')) <p class="help-block">{{ $errors->first('description') }}</p> @endif
                                     </div>
                                 </div>
                                 <!-- col.// -->
@@ -45,13 +52,25 @@
                             <!-- row.// -->
                             <div class="row border-bottom mb-4 pb-4">
                                 <div class="col-md-5">
-                                    <h5>Currency</h5>
-                                    <p class="text-muted" style="max-width: 90%">Lorem ipsum dolor sit amet, consectetur adipisicing something about this</p>
+                                    <h5>Image</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    
+                                    <div class="mb-3">
+                                    <img class="img-preview img-fluid col-sm-5 mb-3" id="img-preview" style="display: block;">
+                                    {!! Form::file('featured_image', ['class' => 'form-control', 'placeholder' => 'post image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
+                                    </div>
                                 </div>
                                 <!-- col.// -->
+                            </div>
+                            <!-- row.// -->
+                            <!-- <div class="row border-bottom mb-4 pb-4">
+                                <div class="col-md-5">
+                                    <h5>Status</h5>
+                                </div>
+                                
                                 <div class="col-md-7">
                                     <div class="mb-3" style="max-width: 200px">
-                                        <label class="form-label">Main currency </label>
                                         <select class="form-select">
                                             <option>US Dollar</option>
                                             <option>EU Euro</option>
@@ -61,12 +80,12 @@
                                     </div>
                                     
                                 </div>
-                                <!-- col.// -->
-                            </div>
+                                
+                            </div> -->
                             <!-- row.// -->
                             <button class="btn btn-primary" type="submit">Save all changes</button> &nbsp;
                             <button class="btn btn-light rounded font-md" type="reset">Reset</button>
-                        </form>
+                        {!! Form::close() !!}
                     </section>
                     <!-- content-body .// -->
                 </div>
@@ -78,5 +97,25 @@
     </div>
     <!-- card .//end -->
 </section>
+
+@endsection
+
+@section('scripts')
+<script>
+		function previewImage() {
+			console.log('image preview');
+			const image = document.querySelector('#image');
+			const imagePreview = document.querySelector('.img-preview');
+
+			imagePreview.style.display = 'block';
+
+			const oFReader = new FileReader();
+			oFReader.readAsDataURL(image.files[0]);
+
+			oFReader.onload = function(oFREvent) {
+				imagePreview.src = oFREvent.target.result;
+			}
+		}
+	</script>
 
 @endsection

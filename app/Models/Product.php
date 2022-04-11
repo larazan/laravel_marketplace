@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
-    use HasFactory, HashUuid;
+    use HasFactory;
 
     // protected $fillable = ['name', 'description', 'price', 'image_url'];
     protected $fillable = [
-		'uuid',
 		'parent_id',
 		'user_id',
+		'shop_id',
 		'sku',
 		'type',
 		'name',
