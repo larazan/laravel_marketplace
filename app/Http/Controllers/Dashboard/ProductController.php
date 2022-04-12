@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\Product;
 use App\Models\Category;
@@ -117,6 +118,18 @@ class ProductController extends Controller
 		return redirect('user/products/'. $product->id .'/edit/');
     }
 
+	private function _isProduct($id)
+	{
+		// $auth_id = Auth::user()->id;
+        $product = Product::forUser(Auth::user())->where('id', $id);
+
+		if ($product) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
     /**
      * Display the specified resource.
      *
@@ -134,15 +147,21 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+	
     public function edit($id)
     {
 		$this->data['currentForm'] = 'detail';
+		$product = Product::findOrFail($id);
 
         if (empty($id)) {
-			return redirect('admin/products/create');
+			return redirect('user/products/create');
 		}
 
-        $product = Product::findOrFail($id);
+		if (! Gate::forUser(Auth::user())->allows('update-product', $product)) {
+			return redirect('user/products');
+		}
+		
+
 		$product->qty = isset($product->productInventory) ? $product->productInventory->qty : null;
         $categories = Category::orderBy('name', 'ASC')->get();
 		$brands = Brand::pluck('name', 'id');
@@ -223,6 +242,10 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
+		if (! Gate::forUser(Auth::user())->allows('update-product-image', $product)) {
+			return redirect('user/products');
+		}
+
         $this->data['productID'] = $product->id;
         $this->data['productImages'] = $product->productImages;
 
@@ -238,6 +261,10 @@ class ProductController extends Controller
 		}
 
 		$product = Product::findOrFail($id);
+
+		if (! Gate::forUser(Auth::user())->allows('add-product-image', $product)) {
+			return redirect('user/products');
+		}
 
 		$this->data['productID'] = $product->id;
 		$this->data['product'] = $product;
