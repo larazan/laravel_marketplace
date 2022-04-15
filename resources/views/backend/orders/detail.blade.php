@@ -6,7 +6,7 @@
     <div class="content-header">
         <div>
             <h2 class="content-title card-title">Order detail</h2>
-            <p>Details for Order ID: 3453012</p>
+            <p>Details for Order ID: #{{ $order->code }}</p>
         </div>
     </div>
     <div class="card">
@@ -14,7 +14,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
                     <span> <i class="material-icons md-calendar_today"></i> <b>Wed, Aug 13, 2020, 4:34PM</b> </span> <br />
-                    <small class="text-muted">Order ID: 3453012</small>
+                    <small class="text-muted">Order ID: #{{ $order->code }}</small>
                 </div>
                 <div class="col-lg-6 col-md-6 ms-auto text-md-end">
                     <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200">
@@ -40,31 +40,37 @@
                         <div class="text">
                             <h6 class="mb-1">Customer</h6>
                             <p class="mb-1">
-                                John Alexander <br />
-                                alex@example.com <br />
-                                +998 99 22123456
+                            {{ $order->customer_first_name }} {{ $order->customer_last_name }} <br />
+                            Email: {{ $order->customer_email }} <br />
+                            Phone: {{ $order->customer_phone }} <br />
+                            Postcode: {{ $order->customer_postcode }}
                             </p>
                             <a href="#">View profile</a>
                         </div>
                     </article>
                 </div>
                 <!-- col// -->
+                @if ($order->shipment)
                 <div class="col-md-4">
                     <article class="icontext align-items-start">
                         <span class="icon icon-sm rounded-circle bg-primary-light">
                             <i class="text-primary material-icons md-local_shipping"></i>
                         </span>
                         <div class="text">
-                            <h6 class="mb-1">Order info</h6>
-                            <p class="mb-1">
-                                Shipping: Fargo express <br />
-                                Pay method: card <br />
-                                Status: new
-                            </p>
+                            <h6 class="mb-1">Shipment Address</h6>
+                            <address>
+                                {{ $order->shipment->first_name }} {{ $order->shipment->last_name }}
+                                <br> {{ $order->shipment->address1 }}
+                                <br> {{ $order->shipment->address2 }}
+                                <br> Email: {{ $order->shipment->email }}
+                                <br> Phone: {{ $order->shipment->phone }}
+                                <br> Postcode: {{ $order->shipment->postcode }}
+                            </address>
                             <a href="#">Download info</a>
                         </div>
                     </article>
                 </div>
+                @endif
                 <!-- col// -->
                 <div class="col-md-4">
                     <article class="icontext align-items-start">
@@ -72,11 +78,17 @@
                             <i class="text-primary material-icons md-place"></i>
                         </span>
                         <div class="text">
-                            <h6 class="mb-1">Deliver to</h6>
-                            <p class="mb-1">
-                                City: Tashkent, Uzbekistan <br />Block A, House 123, Floor 2 <br />
-                                Po Box 10000
-                            </p>
+                            <h6 class="mb-1">Details</h6>
+                            <address>
+								ID: <span class="text-dark">#{{ $order->code }}</span>
+								<br> {{ \General::datetimeFormat($order->order_date) }}
+								<br> Status: {{ $order->status }} {{ $order->isCancelled() ? '('. \General::datetimeFormat($order->cancelled_at) .')' : null}}
+								@if ($order->isCancelled())
+									<br> Cancellation Note : {{ $order->cancellation_note}}
+								@endif
+								<br> Payment Status: {{ $order->payment_status }}
+								<br> Shipped by: {{ $order->shipping_service_name }}
+							</address>
                             <a href="#">View profile</a>
                         </div>
                     </article>
@@ -90,89 +102,30 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th width="40%">Product</th>
-                                    <th width="20%">Unit Price</th>
-                                    <th width="20%">Quantity</th>
-                                    <th width="20%" class="text-end">Total</th>
+                                    <th>#</th>
+                                    <th>Product</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Cost</th>
+                                    <th class="text-end">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            @forelse ($order->orderItems as $item)
                                 <tr>
-                                    <td>
-                                        <a class="itemside" href="#">
-                                            <div class="left">
-                                                <img src="{{ URL::asset('dashboard/assets/imgs/items/1.jpg') }}" width="40" height="40" class="img-xs" alt="Item" />
-                                            </div>
-                                            <div class="info">Haagen-Dazs Caramel Cone Ice</div>
-                                        </a>
-                                    </td>
-                                    <td>$44.25</td>
-                                    <td>2</td>
-                                    <td class="text-end">$99.50</td>
+                                    <td>{{ $item->sku }}</td>
+									<td>{{ $item->name }}</td>
+                                    <td>{!! \General::showAttributes($item->attributes) !!}</td>
+                                    <td>{{ $item->qty }}</td>
+                                    <td>{{ \General::priceFormat($item->base_price) }}</td>
+                                    <td>{{ \General::priceFormat($item->sub_total) }}</td>
                                 </tr>
+                            @empty
                                 <tr>
-                                    <td>
-                                        <a class="itemside" href="#">
-                                            <div class="left">
-                                                <img src="{{ URL::asset('dashboard/assets/imgs/items/2.jpg') }}" width="40" height="40" class="img-xs" alt="Item" />
-                                            </div>
-                                            <div class="info">Seeds of Change Organic</div>
-                                        </a>
-                                    </td>
-                                    <td>$7.50</td>
-                                    <td>2</td>
-                                    <td class="text-end">$15.00</td>
+                                    <td colspan="6">Order item not found!</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <a class="itemside" href="#">
-                                            <div class="left">
-                                                <img src="{{ URL::asset('dashboard/assets/imgs/items/3.jpg') }}" width="40" height="40" class="img-xs" alt="Item" />
-                                            </div>
-                                            <div class="info">All Natural Italian-Style</div>
-                                        </a>
-                                    </td>
-                                    <td>$43.50</td>
-                                    <td>2</td>
-                                    <td class="text-end">$102.04</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a class="itemside" href="#">
-                                            <div class="left">
-                                                <img src="{{ URL::asset('dashboard/assets/imgs/items/4.jpg') }}" width="40" height="40" class="img-xs" alt="Item" />
-                                            </div>
-                                            <div class="info">Sweet & Salty Kettle Corn</div>
-                                        </a>
-                                    </td>
-                                    <td>$99.00</td>
-                                    <td>3</td>
-                                    <td class="text-end">$297.00</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <article class="float-end">
-                                            <dl class="dlist">
-                                                <dt>Subtotal:</dt>
-                                                <dd>$973.35</dd>
-                                            </dl>
-                                            <dl class="dlist">
-                                                <dt>Shipping cost:</dt>
-                                                <dd>$10.00</dd>
-                                            </dl>
-                                            <dl class="dlist">
-                                                <dt>Grand total:</dt>
-                                                <dd><b class="h5">$983.00</b></dd>
-                                            </dl>
-                                            <dl class="dlist">
-                                                <dt class="text-muted">Status:</dt>
-                                                <dd>
-                                                    <span class="badge rounded-pill alert-success text-success">Payment done</span>
-                                                </dd>
-                                            </dl>
-                                        </article>
-                                    </td>
-                                </tr>
+                            @endforelse
+                                
                             </tbody>
                         </table>
                     </div>

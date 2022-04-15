@@ -9,6 +9,15 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+
+use App\Exports\ReportRevenueExport;
+use App\Exports\ReportProductExport;
+use App\Exports\ReportInventoryExport;
+use App\Exports\ReportPaymentExport;
+
 class ReportController extends Controller
 {
     /**

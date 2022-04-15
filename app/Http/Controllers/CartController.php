@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductInventory;
 
 use Illuminate\Support\Facades\Session; 
+use App\Exceptions\OutOfStockException;
 
 class CartController extends Controller
 {
@@ -167,7 +168,7 @@ class CartController extends Controller
 	private function _checkProductInventory($product, $itemQuantity)
 	{
 		if ($product->productInventory->qty < $itemQuantity) {
-			throw new \App\Exceptions\OutOfStockException('The product '. $product->sku .' is out of stock');
+			throw new OutOfStockException('The product '. $product->sku .' is out of stock');
 		}
 	}
 

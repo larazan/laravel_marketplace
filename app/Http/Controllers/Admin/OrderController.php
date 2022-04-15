@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
-use \App\Exceptions\OutOfStockException;
+use App\Exceptions\OutOfStockException;
 
 class OrderController extends Controller
 {

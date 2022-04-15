@@ -42,36 +42,31 @@
                     <thead>
                         <tr>
                             <th>#ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Payment</th>
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
                             <th scope="col" class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @forelse ($orders as $order)
                         <tr>
-                            <td>0901</td>
-                            <td><b>Marvin McKinney</b></td>
-                            <td>marvin@example.com</td>
-                            <td>$9.00</td>
-                            <td><span class="badge rounded-pill alert-warning">Pending</span></td>
-                            <td>03.12.2020</td>
+                            <td>{{ $order->code }}</td>
+                            <!-- <td><b>Marvin McKinney</b></td> -->
+                            <td>{{\General::priceFormat($order->grand_total) }}</td>
+                            <td>{{ $order->payment_status }}</td>
+                            <td><span class="badge rounded-pill alert-warning">{{ $order->status }}</span></td>
+                            <td>{{\General::datetimeFormat($order->order_date) }}</td>
                             <td class="text-end">
-                                <a href="#" class="btn btn-md rounded font-sm">Detail</a>
-                                <div class="dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">View detail</a>
-                                        <a class="dropdown-item" href="#">Edit info</a>
-                                        <a class="dropdown-item text-danger" href="#">Delete</a>
-                                    </div>
-                                </div>
-                                <!-- dropdown //end -->
+                                <a href="{{ url('orders/'. $order->id) }}" class="btn btn-md rounded font-sm">Detail</a>
                             </td>
                         </tr>
-                        
+                        @empty
+                            <tr>
+                                <td colspan="5">No records found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -80,20 +75,7 @@
         <!-- card-body end// -->
     </div>
     <!-- card end// -->
-    <div class="pagination-area mt-15 mb-50">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-start">
-                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                <li class="page-item"><a class="page-link" href="#">16</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    {{ $orders->links('backend.partials.paginator') }}
 </section>
 
 @endsection
