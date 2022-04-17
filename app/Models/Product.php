@@ -266,7 +266,7 @@ class Product extends Model
 	{
 		// DB::getQueryLog();
 		$result = DB::table(DB::raw('products p'))
-		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, brands.name as nama_kategori, img.medium as gambar"))
+		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, brands.name as nama_kategori, img.medium as gambar"))
 		->join('product_brands', 'product_brands.product_id', '=', 'p.id')
 		->join('brands', 'brands.id', '=', 'product_brands.brand_id')
 		->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id, medium FROM product_images GROUP BY product_id, medium  )
