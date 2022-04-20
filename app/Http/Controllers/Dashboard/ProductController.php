@@ -16,6 +16,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\Product;
+use App\Models\Shop;
 use App\Models\Category;
 use App\Models\Attribute;
 use App\Models\ProductImage;
@@ -23,6 +24,7 @@ use App\Models\ProductInventory;
 use App\Models\ProductAttributeValue;
 use App\Models\AttributeOption;
 use App\Models\Brand;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ProductController extends Controller
 {
@@ -58,6 +60,21 @@ class ProductController extends Controller
      */
     public function create()
     {
+		// try {
+		// 	$shop = Shop::forUser(Auth::user());
+		// 	Shop::where('user_id', Auth::user()->id)->first();
+		// } catch (\App\Exceptions\NoShopException $exception) {
+		// 	return response("no shop found");
+		// 	return back()->withErrors($exception->getMessage());
+		// }
+		$shop =  $shop = Shop::where('user_id', Auth::id())->get();
+
+		if (!$shop) {
+			// throw new \App\Exceptions\NoShopException('Create Shop first');
+			Session::flash('error', 'Create Shop first');
+			return redirect('user/products');
+		}
+
 		$this->data['currentForm'] = 'detail';
 
         $categories = Category::orderBy('name', 'DESC')->get();

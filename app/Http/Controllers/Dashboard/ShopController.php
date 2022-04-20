@@ -31,8 +31,7 @@ class ShopController extends Controller
         $user = User::findOrFail($user_id);
 
         if (Shop::where('user_id', $user_id)->first()) {
-            $id = Shop::where('user_id', $user_id);
-            $shop = Shop::findOrFail($id);
+            $shop = Shop::where('user_id', $user_id)->first();
         } else {
             $shop = null;
         }
@@ -50,7 +49,17 @@ class ShopController extends Controller
      */
     public function create()
     {
-        $this->data['shop'] = null;
+        $user_id = Auth::id();
+        // $user = User::findOrFail($user_id);
+
+        if (Shop::where('user_id', $user_id)->first()) {
+            $id = Shop::where('user_id', $user_id);
+            $shop = Shop::findOrFail($id);
+        } else {
+            $shop = null;
+        }
+
+        $this->data['shop'] = $shop;
 
 		return $this->loadDashboard('shops.form', $this->data);
     }
@@ -65,7 +74,9 @@ class ShopController extends Controller
      public function store(ShopRequest $request)
      {
         $params = $request->except('_token');
+        // var_dump($params); exit();
         $params['slug'] = Str::slug($params['name']);
+        $params['user_id'] = Auth::user()->id;
         $params['is_active'] = true;
         $image = $request->file('image');
 		
@@ -111,10 +122,10 @@ class ShopController extends Controller
     public function edit()
     {
         $user_id = Auth::id();
-        // $id = Shop::where('user_id', $user_id)->firstOrFail();
-        // $shop = Shop::findOrFail($id);
+        $id = Shop::where('user_id', $user_id)->first()->id;
+        $shop = Shop::findOrFail($id);
 
-        // $this->data['shop'] = $shop;
+        $this->data['shop'] = $shop;
 
         return $this->loadDashboard('shops.form', $this->data);
     }

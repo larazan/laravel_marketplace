@@ -3,19 +3,20 @@
 namespace App\Exceptions;
 
 use Exception;
+
 use Illuminate\Support\Facades\Log;
 
-class OutOfStockException extends Exception
+class NoShopException extends Exception
 {
     //
-    /**
+     /**
      * Report the exception.
      *
      * @return bool|null
      */
     public function report()
     {
-        Log::debug('The product is out of stock');
+        Log::debug('Shop not found');
     }
  
     /**
@@ -26,6 +27,6 @@ class OutOfStockException extends Exception
      */
     public function render($request)
     {
-        // return response(...);
+        return response('no shop found');
     }
 }

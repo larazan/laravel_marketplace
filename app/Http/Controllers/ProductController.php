@@ -6,10 +6,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\ProductAttributeValue;
 use App\Models\AttributeOption;
 use App\Models\Category;
 use App\Models\Brand;
+
+// use App\Helpers\General;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -283,14 +286,25 @@ class ProductController extends Controller
 	public function quickView($slug)
 	{
 		$product = Product::active()->where('slug', $slug)->firstOrFail();
-		if ($product->configurable()) {
-			$this->data['colors'] = ProductAttributeValue::getAttributeOptions($product, 'color')->pluck('text_value', 'text_value');
-			$this->data['sizes'] = ProductAttributeValue::getAttributeOptions($product, 'size')->pluck('text_value', 'text_value');
-		}
+		$product_image = ProductImage::where('product_id', $product->id)->get();
 
-		$this->data['product'] = $product;
+		// if ($product->configurable()) {
+		// 	$this->data['colors'] = ProductAttributeValue::getAttributeOptions($product, 'color')->pluck('text_value', 'text_value');
+		// 	$this->data['sizes'] = ProductAttributeValue::getAttributeOptions($product, 'size')->pluck('text_value', 'text_value');
+		// }
+
+		// $this->data['product'] = $product;
+
+		$data = [
+			'product' => $product,
+			'image' => $product_image
+		];
 		
-		return $this->loadTheme('products.quick_view', $this->data);
+		// return $this->loadTheme('products.quick_view', $this->data);
+
+		$html = view('frontend.products.quick_view', $data)->render();
+		
+		echo json_encode($html);
 	}
 
 	public function loadBarang(Request $request)

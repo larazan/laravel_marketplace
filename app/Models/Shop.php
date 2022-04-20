@@ -9,7 +9,7 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable=['name','description','original','small'];
+    protected $fillable=['user_id', 'name','slug', 'description','original','small'];
 	public const UPLOAD_DIR = 'uploads/shops';
 
     public const ACTIVE = 'active';
@@ -22,6 +22,16 @@ class Shop extends Model
 		self::ACTIVE => 'Active',
 		self::INACTIVE => 'Inactive',
 	];
+
+	/**
+	 * Define relationship with the User
+	 *
+	 * @return void
+	 */
+	public function user()
+	{
+		return $this->belongsTo('App\Models\User');
+	}
 
     public function owner()
     {

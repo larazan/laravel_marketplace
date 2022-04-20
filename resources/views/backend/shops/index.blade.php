@@ -14,8 +14,13 @@
                 </div>
                 <!--  col.// -->
                 <div class="col-xl col-lg">
+                @if (!empty($shop))
+                    <h3>{{ $shop->name }}</h3>
+                    <p>{{ $user->address1 }}</p>
+                @else
                     <h3>Noodles Co.</h3>
                     <p>3891 Ranchview Dr. Richardson, California 62639</p>
+                @endif
                 </div>
                 <!--  col.// -->
                 <div class="col-xl-4 text-md-end">
@@ -42,20 +47,34 @@
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <h6>Contacts</h6>
+                    @if (!empty($shop))
+                        <p>
+                            {{ $shop->name }} <br />
+                            {{ $user->email }} <br />
+                            {{ $user->phone }}
+                        </p>
+                    @else
                     <p>
                         Manager: Jerome Bell <br />
                         info@example.com <br />
                         (229) 555-0109, (808) 555-0111
                     </p>
+                    @endif
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <h6>Address</h6>
+                    @if (!empty($shop))
+                        <p>
+                        {{ $user->address1 }} <br />
+                        {{ $user->postcode }}
+                        </p>
+                    @else
                     <p>
-                        Country: California <br />
                         Address: Ranchview Dr. Richardson <br />
                         Postal code: 62639
                     </p>
+                    @endif
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-xl-4 text-xl-end">

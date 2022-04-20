@@ -1,6 +1,9 @@
 @extends('frontend.layout')
 
 @section('content')
+
+
+
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -11,9 +14,9 @@
         </div>
     </div>
 
-@include('frontend.partials.slider')
+    @include('frontend.partials.slider')
 
-    
+
     <div class="container mb-30">
         <div class="row flex-row-reverse">
             <div class="col-lg-4-5">
@@ -64,19 +67,29 @@
                 </div>
                 <div class="row product-grid" id="isi_produk">
 
-                        </div>
-                        <!--product grid-->
-                        <div class="pagination-area mt-20 mb-20">
-                            <nav aria-label="Page navigation example" id="paging_produk">
-                            
-                            </nav>
-                        </div>
-                        
-                    </div>
-                    @include('frontend.products.sidebar')
-                   </div>
                 </div>
-            </div>
-        </main>
-        @endsection
+                <!--product grid-->
+                <div class="pagination-area mt-20 mb-20">
+                    <nav aria-label="Page navigation example" id="paging_produk">
 
+                    </nav>
+                </div>
+
+            </div>
+            @include('frontend.products.sidebar')
+        </div>
+    </div>
+    </div>
+</main>
+
+<!-- Quick view -->
+<div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+        </div>
+    </div>
+</div>
+
+@endsection

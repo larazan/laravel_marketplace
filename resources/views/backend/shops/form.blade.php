@@ -17,7 +17,7 @@
                             {!! Form::model($shop, ['url' => ['user/shop/update', $shop->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
                             {!! Form::hidden('id') !!}
                         @else
-                            {!! Form::open(['url' => 'user/shop/update', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::open(['url' => 'user/shop/store', 'enctype' => 'multipart/form-data']) !!}
                         @endif
 
                             <div class="row border-bottom mb-4 pb-4">
@@ -83,8 +83,8 @@
                                 
                             </div> -->
                             <!-- row.// -->
-                            <button class="btn btn-primary" type="submit">Save all changes</button> &nbsp;
-                            <button class="btn btn-light rounded font-md" type="reset">Reset</button>
+                            <button class="btn btn-primary" type="submit">Save</button> &nbsp;
+                            <a href="{{ url('user/shop') }}" class="btn btn-light rounded font-md">Reset</a>
                         {!! Form::close() !!}
                     </section>
                     <!-- content-body .// -->
