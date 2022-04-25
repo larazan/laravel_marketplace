@@ -90,13 +90,13 @@ class ShopController extends Controller
             $resizedImage = $this->_resizeImage($image, $fileName, $folder);
 
 			$params['original'] = $filePath;
-            // $params['extra_large'] = $resizedImage['extra_large'];
+            $params['medium'] = $resizedImage['medium'];
             $params['small'] = $resizedImage['small'];
 
 			unset($params['image']);
 		} else {
             $params['original'] = '';
-            // $params['extra_large'] = '';
+            $params['medium'] = '';
             $params['small'] = '';
         }
 
@@ -143,14 +143,14 @@ class ShopController extends Controller
 			$resizedImage['small'] = $smallImageFilePath;
 		}
 		
-		// $mediumImageFilePath = $folder . '/medium/' . $fileName;
-		// $size = explode('x', Shop::MEDIUM);
-		// list($width, $height) = $size;
+		$mediumImageFilePath = $folder . '/medium/' . $fileName;
+		$size = explode('x', Shop::MEDIUM);
+		list($width, $height) = $size;
 
-		// $mediumImageFile = Image::make($image)->fit($width, $height)->stream();
-		// if (Storage::put('public/' . $mediumImageFilePath, $mediumImageFile)) {
-		// 	$resizedImage['medium'] = $mediumImageFilePath;
-		// }
+		$mediumImageFile = Image::make($image)->fit($width, $height)->stream();
+		if (Storage::put('public/' . $mediumImageFilePath, $mediumImageFile)) {
+			$resizedImage['medium'] = $mediumImageFilePath;
+		}
 
 		// $largeImageFilePath = $folder . '/large/' . $fileName;
 		// $size = explode('x', Shop::LARGE);
@@ -181,9 +181,9 @@ class ShopController extends Controller
             unlink($path.$shopImage->original);
 		}
 		
-		// if (file_exists($path.$shopImage->extra_large)) {
-        //     unlink($path.$shopImage->extra_large);
-        // }
+		if (file_exists($path.$shopImage->medium)) {
+            unlink($path.$shopImage->medium);
+        }
 
         if (file_exists($path.$shopImage->small)) {
             unlink($path.$shopImage->small);
@@ -219,13 +219,13 @@ class ShopController extends Controller
             $resizedImage = $this->_resizeImage($image, $fileName, $folder);
 
 			$params['original'] = $filePath;
-            // $params['extra_large'] = $resizedImage['extra_large'];
+            $params['medium'] = $resizedImage['medium'];
             $params['small'] = $resizedImage['small'];
 
 			unset($params['image']);
 		} else {
             $params['original'] = '';
-            // $params['extra_large'] = '';
+            $params['medium'] = '';
             $params['small'] = '';
         }
 

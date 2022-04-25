@@ -5,7 +5,7 @@
 <section class="content-main">
     <div class="content-header">
         <div>
-            <h2 class="content-title card-title">Dashboard</h2>
+            <h2 class="content-title card-title">Beranda</h2>
             <p>Whole data about your business here</p>
         </div>
         <div>

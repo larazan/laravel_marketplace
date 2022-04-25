@@ -1,7 +1,7 @@
 <div class="row">
-    @forelse ($vendors as $vendor)
+    @forelse ($shops as $shop)
         @include('frontend.vendors.grid_box')
     @empty
-        No product found!
+        No vendor found!
     @endforelse
 </div>

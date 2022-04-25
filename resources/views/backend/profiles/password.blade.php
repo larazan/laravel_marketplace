@@ -4,7 +4,7 @@
 
 <section class="content-main">
                 <div class="content-header">
-                    <h2 class="content-title">Change password</h2>
+                    <h2 class="content-title">Ganti password</h2>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -21,18 +21,18 @@
                                                     <!-- col .// -->
                                                     <div class="col-lg-6 mb-3">
                                                         {!! Form::label('current-password', 'Password Lama', ['class' => 'form-label']) !!}
-                                                        {!! Form::password('current-password', ['class' => 'form-control', 'required' => true, 'placeholder' => 'Password']) !!}
+                                                        {!! Form::password('current-password', ['class' => 'form-control', 'required' => true, 'placeholder' => 'Password lama']) !!}
                                                         @if ($errors->has('current-password')) <p class="help-block">{{ $errors->first('current-password') }}</p> @endif
                                                     </div>
 
                                                     <div class="col-lg-6 mb-3">
-                                                        {!! Form::label('new-password', 'New Password', ['class' => 'form-label']) !!}
-                                                        {!! Form::password('new-password', ['class' => 'form-control', 'required' => true, 'placeholder' => 'New Password']) !!}
+                                                        {!! Form::label('new-password', 'Password Baru', ['class' => 'form-label']) !!}
+                                                        {!! Form::password('new-password', ['class' => 'form-control', 'required' => true, 'placeholder' => 'Password Baru']) !!}
                                                         @if ($errors->has('new-password')) <p class="help-block">{{ $errors->first('new-password') }}</p> @endif
                                                     </div>
 
                                                     <div class="col-lg-6 mb-3">
-                                                        {!! Form::label('new-password-confirm', 'Confirm Password', ['class' => 'form-label']) !!}
+                                                        {!! Form::label('new-password-confirm', 'Konfirmasi Password', ['class' => 'form-label']) !!}
                                                         {!! Form::password('new-password_confirmation', ['class' => 'form-control', 'required' => true, 'placeholder' => 'Confirm Password']) !!}
                                                     </div>
                                                   

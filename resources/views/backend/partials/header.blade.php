@@ -32,9 +32,9 @@
                                 <img class="img-xs rounded-circle" src="{{ Avatar::create(Auth::user()->first_name.' '.Auth::user()->last_name)->toBase64() }}" alt="User" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                                <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                                <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
-                                <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                                <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profil</a>
+                                <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Akun Settings</a>
+                                <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Bantuan</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
 											document.getElementById('logout-form').submit();"><i class="material-icons md-exit_to_app"></i>

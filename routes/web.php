@@ -27,6 +27,7 @@ use App\Http\Controllers\ArticleController as Article;
 use App\Http\Controllers\OrderController as Order;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserSubscribeController;
+use App\Http\Controllers\ShopController as Shop;
 
 use App\Http\Controllers\Dashboard\DashboardController as DDashboard;
 use App\Http\Controllers\Dashboard\OrderController as DOrder;
@@ -56,6 +57,10 @@ Route::get('/products', [Product::class, 'index']);
 Route::get('/product/{slug}', [Product::class, 'show']);
 Route::get('/products/quick-view/{slug}', [Product::class, 'quickView'])->name('quick-view');
 Route::get('/produk/json_grid', [Product::class, 'loadBarang'])->name('json_grid');
+
+Route::get('/vendors', [Shop::class, 'index']);
+Route::get('/vendor/{slug}', [Shop::class, 'show']);
+Route::get('/vendor/produk_grid', [Shop::class, 'loadBarang'])->name('produk_grid');
 
 // Route::get('/carts', [CartController::class, 'index']);
 // Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);

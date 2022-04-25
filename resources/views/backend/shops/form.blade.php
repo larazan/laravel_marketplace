@@ -4,7 +4,7 @@
 
 <section class="content-main">
     <div class="content-header">
-        <h2 class="content-title">Edit Shop Information</h2>
+        <h2 class="content-title">Edit Informasi Toko</h2>
     </div>
     <div class="card">
         <div class="card-body">
@@ -22,7 +22,7 @@
 
                             <div class="row border-bottom mb-4 pb-4">
                                 <div class="col-md-5">
-                                    <h5>Shop name</h5>
+                                    <h5>Nama Toko</h5>
                                 </div>
                                 <!-- col.// -->
                                 <div class="col-md-7">
@@ -38,7 +38,7 @@
                             <!-- row.// -->
                             <div class="row border-bottom mb-4 pb-4">
                                 <div class="col-md-5">
-                                    <h5>Description</h5>
+                                    <h5>Deskripsi</h5>
                                 </div>
                                 <div class="col-md-7">
                                     
@@ -52,7 +52,7 @@
                             <!-- row.// -->
                             <div class="row border-bottom mb-4 pb-4">
                                 <div class="col-md-5">
-                                    <h5>Image</h5>
+                                    <h5>Gambar</h5>
                                 </div>
                                 <div class="col-md-7">
                                     

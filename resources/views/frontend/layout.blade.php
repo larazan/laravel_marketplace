@@ -26,17 +26,16 @@
 
     @include('frontend.partials.footer')
     
-
     <!-- Preloader Start -->
     <div id="preloader-active">
-            <div class="preloader d-flex align-items-center justify-content-center">
-                <div class="preloader-inner position-relative">
-                    <div class="text-center">
-                        <img src="{{ asset('frontend/assets/imgs/theme/loading.gif') }}" alt="" />
-                    </div>
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <img src="{{ asset('frontend/assets/imgs/theme/loading.gif') }}" alt="" />
                 </div>
             </div>
         </div>
+    </div>
      <!-- Vendor JS-->
     
      <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
@@ -60,14 +59,11 @@
      <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
-     
+     <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>
      <!-- Template  JS -->
      <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
      <script src="{{ asset('frontend/assets/js/shop.js?v=4.0') }}"></script>
      
-     <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>
-    
-   
     @stack('scripts')
     @yield('scripts')
     </body>

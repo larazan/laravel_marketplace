@@ -5,11 +5,11 @@
 <section class="content-main">
     <div class="content-header">
         <div>
-            <h2 class="content-title card-title">Product Images</h2>
+            <h2 class="content-title card-title">Gambar Produk</h2>
             <!-- <p>Lorem ipsum dolor sit amet.</p> -->
         </div>
         <div>
-            <a href="{{ url('user/products/'.$productID.'/add-image') }}" class="btn btn-primary btn-sm rounded">Add new</a>
+            <a href="{{ url('user/products/'.$productID.'/add-image') }}" class="btn btn-primary btn-sm rounded">Tambah Gambar</a>
         </div>
     </div>
     @include('backend.partials.flash')

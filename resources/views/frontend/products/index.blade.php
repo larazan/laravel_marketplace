@@ -1,9 +1,6 @@
 @extends('frontend.layout')
 
 @section('content')
-
-
-
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -15,7 +12,6 @@
     </div>
 
     @include('frontend.partials.slider')
-
 
     <div class="container mb-30">
         <div class="row flex-row-reverse">

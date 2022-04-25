@@ -4,7 +4,7 @@
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
-                        &copy; Nest - HTML Ecommerce Template .
+                        &copy; Nest.
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-end">All rights reserved</div>

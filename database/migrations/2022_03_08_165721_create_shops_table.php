@@ -24,6 +24,7 @@ class CreateShopsTable extends Migration
             $table->text('description')->nullable();
             $table->float('rating')->nullable();
             $table->string('original')->nullable();
+            $table->string('medium')->nullable();
             $table->string('small')->nullable();
             $table->timestamps();
         });

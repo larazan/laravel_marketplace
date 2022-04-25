@@ -5,9 +5,9 @@
             <div class="page-header breadcrumb-wrap">
                 <div class="container">
                     <div class="breadcrumb">
-                    <a href="#" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                    <!-- <a href="#" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a> -->
                         @foreach ($breadcrumbs_data['breadcrumbs_array'] as $key => $value)
-                        <span></span> <a href="{{ $key }}">{{ $value }}</a> 
+                            <a href="{{ $key }}"><i class="fi-rs-home mr-5"></i>{{ $value }}</a> 
                         @endforeach
                         <span></span> {{ $breadcrumbs_data['current_page_title'] }}
                     </div>
@@ -418,7 +418,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @include('frontend.products.related')
+                                    <!-- related -->
                                 </div>
                             </div>
                             

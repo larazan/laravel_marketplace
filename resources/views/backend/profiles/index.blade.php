@@ -9,8 +9,8 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-xl col-lg flex-grow-0" style="flex-basis: 230px">
-                    <div class="img-thumbnail shadow w-100 bg-white position-relative text-center" style="height: 190px; width: 200px; margin-top: -120px">
-                        <img src="{{ URL::asset('dashboard/assets/imgs/people/avatar-1.png') }}" class="center-xy img-fluid" alt="Logo Brand" />
+                    <div class="img-thumbnail shadow w-100 bg-white position-relative text-center" style="height: 200px; width: 200px; margin-top: -120px">
+                        <img src="{{ Avatar::create(Auth::user()->first_name.' '.Auth::user()->last_name)->setShape('square')->setDimension(200, 200)->toBase64() }}" class="center-xy img-fluid" alt="Logo Brand" />
                     </div>
                 </div>
                 <!--  col.// -->
@@ -21,7 +21,7 @@
                 <!--  col.// -->
                 <div class="col-xl-4 text-md-end">
                     <a href="{{  url('user/profile/reset') }}" class="btn btn-light rounded font-sm mr-5 text-body hover-up">Reset Password</a>
-                    <a href="{{  url('user/profile/edit') }}" class="btn btn-primary">Update Profile</a>
+                    <a href="{{  url('user/profile/edit') }}" class="btn btn-primary">Update Profil</a>
                 </div>
                 <!--  col.// -->
             </div>
@@ -31,14 +31,14 @@
                 
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <h6>First Name</h6>
+                    <h6>Nama Depan</h6>
                     <p>
                         {{ $user->first_name }}
                     </p>
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <h6>Last Name</h6>
+                    <h6>Nama Belakang</h6>
                     <p>
                         {{ $user->last_name }}
                     </p>
@@ -46,7 +46,7 @@
                 <!--  col.// -->
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <h6>Contacts</h6>
+                    <h6>Kontak</h6>
                     <p>
                     {{ $user->email }} <br />
                     {{ $user->phone }}
@@ -54,10 +54,10 @@
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <h6>Address</h6>
+                    <h6>Alamat</h6>
                     <p>
                     {{ $user->address1 }} <br />
-                        Postal code: {{ $user->postcode }}
+                        Kodepos: {{ $user->postcode }}
                     </p>
                 </div>
                 <!--  col.// -->

@@ -3,14 +3,14 @@
 @section('content')
 
 @php
-$formTitle = !empty($product) ? 'Update' : 'Add New'
+$formTitle = !empty($product) ? 'Update' : 'Tambah Baru'
 @endphp
 
 <section class="content-main">
     <div class="row">
         <div class="col-9">
             <div class="content-header">
-                <h2 class="content-title">{{ $formTitle }} Product</h2>
+                <h2 class="content-title">{{ $formTitle }} Produk</h2>
                 <!-- <div>
                     <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
                     <button class="btn btn-md rounded font-sm hover-up">Publich</button>
@@ -31,13 +31,13 @@ $formTitle = !empty($product) ? 'Update' : 'Add New'
                     <div class="row gx-3">
                         @include('backend.products.menu')
                         <div class="mb-4">
-                            {!! Form::label('type', 'Type', ['class' => 'form-label']) !!}
-                            {!! Form::select('type', $types , !empty($product) ? $product->type : null, ['class' => 'form-control product-type', 'placeholder' => '-- Choose Product Type --', 'disabled' => !empty($product)]) !!}
+                            {!! Form::label('type', 'Tipe', ['class' => 'form-label']) !!}
+                            {!! Form::select('type', $types , !empty($product) ? $product->type : null, ['class' => 'form-control product-type', 'placeholder' => '-- Pilih Produk Tipe --', 'disabled' => !empty($product)]) !!}
                             <!-- {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'name']) !!} -->
                         </div>
                         <div class="mb-4">
-                            {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
-                            {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'name']) !!}
+                            {!! Form::label('name', 'Nama Barang', ['class' => 'form-label']) !!}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'nama barang']) !!}
                         </div>
                         <div class="mb-4">
                             {!! Form::label('sku', 'SKU', ['class' => 'form-label']) !!}
@@ -45,26 +45,26 @@ $formTitle = !empty($product) ? 'Update' : 'Add New'
                         </div>
 
                         <div class="col-6 mb-3">
-                            {!! Form::label('weight', 'Weight', ['class' => 'form-label']) !!}
-                            {!! Form::text('weight', null, ['class' => 'form-control', 'placeholder' => 'weight']) !!}
+                            {!! Form::label('weight', 'Berat', ['class' => 'form-label']) !!}
+                            {!! Form::text('weight', null, ['class' => 'form-control', 'placeholder' => 'berat']) !!}
                         </div>
                         <div class="col-6 mb-3">
-                            {!! Form::label('qty', 'Qty Inventory', ['class' => 'form-label']) !!}
-                            {!! Form::text('qty', null, ['class' => 'form-control', 'placeholder' => 'qty']) !!}
+                            {!! Form::label('qty', 'Qty', ['class' => 'form-label']) !!}
+                            {!! Form::text('qty', null, ['class' => 'form-control', 'placeholder' => 'kuantitas']) !!}
                         </div>
 
                         <div class="mb-4">
-                            {!! Form::label('brand', 'Brand', ['class' => 'form-label']) !!}
-                            {!! Form::select('brand_id', $brands, !empty($product) ? $brandID : null, ['class' => 'form-control', 'placeholder' => '-- Choose Brand --']) !!}
+                            {!! Form::label('brand', 'Merk', ['class' => 'form-label']) !!}
+                            {!! Form::select('brand_id', $brands, !empty($product) ? $brandID : null, ['class' => 'form-control', 'placeholder' => '-- Pilih Merk --']) !!}
                             <!-- {!! Form::text('brand', null, ['class' => 'form-control', 'placeholder' => 'brand']) !!} -->
                         </div>
                         <div class="mb-4">
-                            {!! Form::label('category_ids', 'Category', ['class' => 'form-label']) !!}
-                            {!! General::selectMultiLevel('category_ids[]', $categories, ['class' => 'form-control select-multiple', 'id' => 'category_ids', 'multiple' => true, 'selected' => !empty(old('category_ids')) ? old('category_ids') : $categoryIDs, 'placeholder' => '-- Choose Category --']) !!}
+                            {!! Form::label('category_ids', 'Kategori', ['class' => 'form-label']) !!}
+                            {!! General::selectMultiLevel('category_ids[]', $categories, ['class' => 'form-control select-multiple', 'id' => 'category_ids', 'multiple' => true, 'selected' => !empty(old('category_ids')) ? old('category_ids') : $categoryIDs, 'placeholder' => '-- Pilih Kategori --']) !!}
                         </div>
                         <div class="mb-4">
-                            {!! Form::label('price', 'Price', ['class' => 'form-label']) !!}
-                            {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'price']) !!}
+                            {!! Form::label('price', 'Harga', ['class' => 'form-label']) !!}
+                            {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'harga']) !!}
                         </div>
                     </div>
                 </div>
@@ -73,22 +73,22 @@ $formTitle = !empty($product) ? 'Update' : 'Add New'
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="mb-4">
-                        {!! Form::label('description', 'Description', ['class' => 'form-label']) !!}
-                        {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'description', 'rows' => '4']) !!}
+                        {!! Form::label('description', 'Deskripsi', ['class' => 'form-label']) !!}
+                        {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'deskripsi', 'rows' => '4']) !!}
                     </div>
                     <!-- SIMPLE -->
                     <div class="row gx-3">
                         <div class="col-md-4 mb-3">
-                            {!! Form::label('length', 'Length', ['class' => 'form-label']) !!}
-                            {!! Form::text('length', null, ['class' => 'form-control', 'placeholder' => 'length']) !!}
+                            {!! Form::label('length', 'Panjang', ['class' => 'form-label']) !!}
+                            {!! Form::text('length', null, ['class' => 'form-control', 'placeholder' => 'panjang']) !!}
                         </div>
                         <div class="col-md-4 mb-3">
-                            {!! Form::label('width', 'Width', ['class' => 'form-label']) !!}
-                            {!! Form::text('width', null, ['class' => 'form-control', 'placeholder' => 'width']) !!}
+                            {!! Form::label('width', 'Lebar', ['class' => 'form-label']) !!}
+                            {!! Form::text('width', null, ['class' => 'form-control', 'placeholder' => 'lebar']) !!}
                         </div>
                         <div class="col-md-4 mb-3">
-                            {!! Form::label('height', 'Height', ['class' => 'form-label']) !!}
-                            {!! Form::text('height', null, ['class' => 'form-control', 'placeholder' => 'height']) !!}
+                            {!! Form::label('height', 'Tinggi', ['class' => 'form-label']) !!}
+                            {!! Form::text('height', null, ['class' => 'form-control', 'placeholder' => 'tinggi']) !!}
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@ $formTitle = !empty($product) ? 'Update' : 'Add New'
                     </div>
 
                     <button class="btn btn-primary" type="submit">Submit</button>
-                    <a href="{{ url('user/products') }}" class="btn btn-secondary btn-default">Back</a>
+                    <a href="{{ url('user/products') }}" class="btn btn-secondary btn-default">Kembali</a>
                 </div>
             </div>
             <!-- card end// -->

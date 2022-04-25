@@ -27,7 +27,7 @@
                     @if (!empty($shop))
                         <a href="{{ url('user/shop/edit') }}" class="btn btn-primary">Update</a>
                     @else
-                        <a href="{{ url('user/shop/create') }}" class="btn btn-primary">Create</a>   
+                        <a href="{{ url('user/shop/create') }}" class="btn btn-primary">Tambah</a>   
                     @endif
                 
                 </div>
@@ -38,7 +38,7 @@
             <div class="row g-4">
                 <div class="col-md-12 col-lg-4 col-xl-2">
                     <article class="box">
-                        <p class="mb-0 text-muted">Total sales:</p>
+                        <p class="mb-0 text-muted">Total penjualan:</p>
                         <h5 class="text-success">238</h5>
                         <p class="mb-0 text-muted">Revenue:</p>
                         <h5 class="text-success mb-0">$2380</h5>
@@ -46,7 +46,7 @@
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <h6>Contacts</h6>
+                    <h6>Kontak</h6>
                     @if (!empty($shop))
                         <p>
                             {{ $shop->name }} <br />
@@ -63,7 +63,7 @@
                 </div>
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <h6>Address</h6>
+                    <h6>Alamat</h6>
                     @if (!empty($shop))
                         <p>
                         {{ $user->address1 }} <br />

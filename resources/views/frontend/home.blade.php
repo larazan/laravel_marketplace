@@ -10,7 +10,7 @@
 <script>
     var dataPagination, pageNumber=1, lastPageNumber, lastPageSize, lastPageKeyword, lastPageKategori, lastPageJenis, lastPageKecamatan, lastPageSort, lastProductType, lastPriceMin, lastPriceMax, delayTime=400;
     const hostName = window.location.origin,
-    pecah = window.location.pathname.split("/");
+            pecah = window.location.pathname.split("/");
     var base_url;
     base_url = "http://localhost" == hostName ? hostName + "/" + pecah[1] + "/" : hostName + "/";
     var KTAppOptions = {
@@ -54,16 +54,17 @@
                 if(obj.data.barang.length > 0){
                     for (var i = 0; i < obj.data.barang.length; i++) {
                         let rowData = obj.data.barang[i];
-                        var img =  base_url+'/public/storage/'+rowData['gambar'];
+                        var img =  base_url+'storage/'+rowData['gambar'];
+                        var imgZonk = base_url+'frontend/assets/imgs/shop/product-1-2.jpg';
+                        var slugUrl = base_url+'product/'+rowData['slug'];
                         template += `
                         <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="shop-product-right.html">
-                                            <img class="default-img" src="${img}" alt="" />
-                                                    <img class="hover-img" src="{{ asset('frontend/assets/imgs/shop/product-1-2.jpg') }}" alt="" />
-                                                </a>
+                                        <a href="${slugUrl}">
+                                            <img class="default-img" src="${rowData['gambar'] ? img : imgZonk}" alt="" />
+                                        </a>
                                             </div>
                                             <div class="product-action-1">
                                                 <a aria-label="Add To Wishlist" class="action-btn" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
@@ -76,7 +77,7 @@
                                             <div class="product-category">
                                                 <a href="shop-grid-right.html">${rowData['nama_kategori']}</a>
                                             </div>
-                                            <h2><a href="shop-product-right.html">${rowData['nama_produk']}</a></h2>
+                                            <h2><a href="${slugUrl}">${rowData['nama_produk']}</a></h2>
                                             <div class="product-rate-cover">
                                                 <div class="product-rate d-inline-block">
                                                     <div class="product-rating" style="width: 90%"></div>

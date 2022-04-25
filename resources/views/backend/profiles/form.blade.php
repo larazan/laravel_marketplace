@@ -19,23 +19,23 @@
                                             <div class="col-lg-8">
                                                 <div class="row gx-3">
                                                     <div class="col-6 mb-3">
-                                                        {!! Form::label('first_name', 'First Name', ['class' => 'form-label']) !!}
-                                                        {!! Form::text('first_name', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'First Name']) !!}
+                                                        {!! Form::label('first_name', 'Nama Depan', ['class' => 'form-label']) !!}
+                                                        {!! Form::text('first_name', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Nama Depan']) !!}
                                                         @if ($errors->has('first_name')) <p class="help-block">{{ $errors->first('first_name') }}</p> @endif
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-6 mb-3">
-                                                        {!! Form::label('last_name', 'Last Name', ['class' => 'form-label']) !!}
-                                                        {!! Form::text('last_name', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Last Name']) !!}
+                                                        {!! Form::label('last_name', 'Nama Belakang', ['class' => 'form-label']) !!}
+                                                        {!! Form::text('last_name', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Nama Belakang']) !!}
                                                         @if ($errors->has('last_name')) <p class="help-block">{{ $errors->first('last_name') }}</p> @endif
                                                     </div>
                                                     <!-- col .// -->
-                                                    <div class="col-lg-6 mb-3">
+                                                    <!-- <div class="col-lg-6 mb-3">
                                                         {!! Form::label('company', 'Company', ['class' => 'form-label']) !!}
                                                         {!! Form::text('company', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Company']) !!}
                                                         @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
                                                         
-                                                    </div>
+                                                    </div> -->
                                                     <!-- col .// -->
                                                     <div class="col-lg-6 mb-3">
                                                         {!! Form::label('email', 'Email', ['class' => 'form-label']) !!}
@@ -45,20 +45,20 @@
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-lg-6 mb-3">
-                                                        {!! Form::label('phone', 'Phone', ['class' => 'form-label']) !!}
-                                                        {!! Form::text('phone', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Phone']) !!}
+                                                        {!! Form::label('phone', 'Telpon', ['class' => 'form-label']) !!}
+                                                        {!! Form::text('phone', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Telpon']) !!}
                                                         @if ($errors->has('phone')) <p class="help-block">{{ $errors->first('phone') }}</p> @endif
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-lg-12 mb-3">
-                                                        {!! Form::label('address', 'Address1', ['class' => 'form-label']) !!}
-                                                        {!! Form::textarea('address1', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Address']) !!}
+                                                        {!! Form::label('address', 'Alamat pertama', ['class' => 'form-label']) !!}
+                                                        {!! Form::textarea('address1', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Alamat']) !!}
                                                         @if ($errors->has('address1')) <p class="help-block">{{ $errors->first('address1') }}</p> @endif
                                                     </div>
                                                     <!-- col .// -->
                                                     <div class="col-lg-12 mb-3">
-                                                        {!! Form::label('address', 'Address2 (optional)', ['class' => 'form-label']) !!}
-                                                        {!! Form::textarea('address2', null, ['class' => 'form-control', 'placeholder' => 'Address']) !!}
+                                                        {!! Form::label('address', 'Alamat kedua (opsional)', ['class' => 'form-label']) !!}
+                                                        {!! Form::textarea('address2', null, ['class' => 'form-control', 'placeholder' => 'Alamat']) !!}
                                                         @if ($errors->has('address2')) <p class="help-block">{{ $errors->first('address2') }}</p> @endif
                                                     </div>
 
@@ -86,8 +86,8 @@
 
                                                     <!-- col .// -->
                                                     <div class="col-lg-12 mb-3">
-                                                        {!! Form::label('postcode', 'Address', ['class' => 'form-label']) !!}
-                                                        {!! Form::number('postcode', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Postcode']) !!}
+                                                        {!! Form::label('postcode', 'Kodepos', ['class' => 'form-label']) !!}
+                                                        {!! Form::number('postcode', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Kodepos']) !!}
                                                         @if ($errors->has('postcode')) <p class="help-block">{{ $errors->first('postcode') }}</p> @endif
                                                     </div>
 

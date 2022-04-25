@@ -22,6 +22,7 @@ class OrderController extends Controller
 		$this->middleware('auth');
         $this->data['currentDashboardMenu'] = 'orders';
 		$this->data['currentDashboardSubMenu'] = '';
+		$this->data['statuses'] = Order::STATUSES;
 	}
     
     public function index() {
