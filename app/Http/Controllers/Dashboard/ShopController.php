@@ -38,6 +38,7 @@ class ShopController extends Controller
         
         $this->data['user'] = $user;
         $this->data['shop'] = $shop;
+        // $this->data['shop_id'] = Shop::where('user_id', $user_id)->first()->id;
 
         return $this->loadDashboard('shops.index', $this->data);
     }
@@ -53,7 +54,7 @@ class ShopController extends Controller
         // $user = User::findOrFail($user_id);
 
         if (Shop::where('user_id', $user_id)->first()) {
-            $id = Shop::where('user_id', $user_id);
+            $id = Shop::where('user_id', $user_id)->first()->id;
             $shop = Shop::findOrFail($id);
         } else {
             $shop = null;

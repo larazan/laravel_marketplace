@@ -16,6 +16,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\Product;
+use App\Models\User;
 use App\Models\Shop;
 use App\Models\Category;
 use App\Models\Attribute;
@@ -105,10 +106,15 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+		$user_id = Auth::user()->id;
+		$shop_id = Shop::where('user_id', $user_id)->first()->id;
+
         $params = $request->except('_token');
         // var_dump($params); exit;
 		$params['slug'] = Str::slug($params['name']);
-		$params['user_id'] = Auth::user()->id;
+		$params['user_id'] = $user_id;
+		$params['shop_id'] = $shop_id;
+
 
 		$product = DB::transaction(
 			function () use ($params) {
