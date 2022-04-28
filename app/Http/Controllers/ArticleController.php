@@ -11,13 +11,13 @@ class ArticleController extends Controller
 	{
 		parent::__construct();
 
-		$limit = 5;
-        $this->data['articles'] = Article::active()->orderBy('id', 'DESC')->limit($limit)->get();
+		// $limit = 5;
+        // $this->data['articles'] = Article::active()->orderBy('id', 'DESC')->limit($limit)->get();
 	}
     
     public function index(Request $request)
 	{
-		$articles = Article::active()->orderBy('id', 'DESC');
+		$articles = Article::orderBy('created_at', 'DESC');
 
 		// build breadcrumb data array
 		$breadcrumbs_data['current_page_title'] = '';
@@ -50,8 +50,8 @@ class ArticleController extends Controller
     }
     
     public function _generate_breadcrumbs_array($id) {
-		$homepage_url = url('/');
-		$breadcrumbs_array[$homepage_url] = 'Home';
+		// $homepage_url = url('/');
+		// $breadcrumbs_array[$homepage_url] = 'Home';
 		
 		// get sub cat title
 		$sub_cat_title = 'Blogs';

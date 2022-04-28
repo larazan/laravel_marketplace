@@ -90,6 +90,13 @@ Route::post('/subscriber', [UserSubscribeController::class, 'postSubscribe']);
 Route::post('/check-subscriber-email', [UserSubscribeController::class, 'checkSubscriber']);
 Route::post('/add-subscriber-email', [UserSubscribeController::class, 'addSubscriber']);
 
+Route::get('/info', [HomeController::class, 'info']);
+Route::get('/contact', [HomeController::class, 'contact']);
+Route::get('/about', [HomeController::class, 'about']);
+Route::get('/guide', [HomeController::class, 'guide']);
+Route::get('/policy', [HomeController::class, 'policy']);
+Route::get('/terms', [HomeController::class, 'terms']);
+
 Route::group(
 	['prefix' => 'user', 'middleware' => ['auth']],
 	function () {

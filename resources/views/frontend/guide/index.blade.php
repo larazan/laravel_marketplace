@@ -5,8 +5,8 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                <span></span> Pages <span></span> Purchase Guide
+                <a href="{{ url('/') }}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <span></span> Purchase Guide
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
                                     </div>
                                 </div>
                                 <figure class="border-radius-15 mb-30">
-                                    <img class="border-radius-15" src="assets/imgs/page/guide-1.png" alt="" />
+                                    <img class="border-radius-15" src="{{ asset('frontend/assets/imgs/page/guide-1.png') }}" alt="" />
                                 </figure>
                                 <div class="single-content mb-50">
                                     <h3>1. Account Registering</h3>

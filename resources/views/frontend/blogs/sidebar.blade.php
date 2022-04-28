@@ -29,7 +29,7 @@
             </ul>
         </div>
         <!-- Product sidebar Widget -->
-        <div class="sidebar-widget product-sidebar mb-50 p-30 bg-grey border-radius-10">
+        <!-- <div class="sidebar-widget product-sidebar mb-50 p-30 bg-grey border-radius-10">
             <h5 class="section-title style-1 mb-30">Trending Now</h5>
             <div class="single-post clearfix">
                 <div class="image">
@@ -104,7 +104,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
         <!--Tags-->
         <div class="sidebar-widget widget-tags mb-50 pb-10">
             <h5 class="section-title style-1 mb-30">Popular Tags</h5>
@@ -129,16 +129,6 @@
                 </li>
             </ul>
         </div>
-        <div class="banner-img wow fadeIn mb-50 animated d-lg-block d-none">
-            <img src="assets/imgs/banner/banner-11.png" alt="" />
-            <div class="banner-text">
-                <span>Oganic</span>
-                <h4>
-                    Save 17% <br />
-                    on <span class="text-brand">Oganic</span><br />
-                    Juice
-                </h4>
-            </div>
-        </div>
+        
     </div>
 </div>

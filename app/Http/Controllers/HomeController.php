@@ -40,4 +40,34 @@ class HomeController extends Controller
 
         return $this->loadTheme('home', $this->data);
     }
+
+    public function info()
+    {
+        return $this->loadTheme('info.index');
+    }
+
+    public function contact()
+    {
+        return $this->loadTheme('contact.index');
+    }
+
+    public function guide()
+    {
+        return $this->loadTheme('guide.index');
+    }
+
+    public function about()
+    {
+        return $this->loadTheme('about.index');
+    }
+
+    public function policy()
+    {
+        return $this->loadTheme('policy.index');
+    }
+
+    public function terms()
+    {
+        return $this->loadTheme('terms.index');
+    }
 }

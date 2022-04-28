@@ -32,7 +32,7 @@
                            
                             <div class="loop-grid pr-30">
                                 <div class="row">
-                                @foreach ($posts as $post)
+                                @foreach ($articles as $post)
                                     <article class="col-xl-4 col-lg-6 col-md-6 text-center hover-up mb-30 animated">
                                         <div class="post-thumb">
                                             <a href="{{ url('blog/'. $post->slug) }}">
@@ -63,7 +63,7 @@
                             </div>
                             <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                                 <nav aria-label="Page navigation example">
-                                {{ $posts->links() }}
+                                {{ $articles->links() }}
                                     <!-- <ul class="pagination justify-content-start">
                                         <li class="page-item">
                                             <a class="page-link" href="#"><i class="fi-rs-arrow-small-left"></i></a>
