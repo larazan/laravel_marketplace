@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
-	/**
+    /**
 	 * Create a new controller instance.
 	 *
 	 * @return void
@@ -23,32 +23,42 @@ class FavoriteController extends Controller
 
 		$this->middleware('auth');
 	}
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index()
-	{
-		$favorites = Favorite::where('user_id', Auth::user()->id)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $favorites = Favorite::where('user_id', Auth::user()->id)
 			->orderBy('created_at', 'desc')->paginate(10);
 		
 		$this->data['favorites'] = $favorites;
 
 		return $this->loadTheme('favorites.index', $this->data);
-	}
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request request params
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(Request $request)
-	{
-		$request->validate(
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        $request->validate(
 			[
 				'product_slug' => 'required',
 			]
@@ -71,22 +81,56 @@ class FavoriteController extends Controller
 		);
 
 		return response('The product has been added to your favorite', 200);
-	}
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param int $id favorite id
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy($id)
-	{
-		$favorite = Favorite::findOrFail($id);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+        $favorite = Favorite::findOrFail($id);
 		$favorite->delete();
 
 		Session::flash('success', 'Your favorite has been removed');
 		
 		return redirect('favorites');
-	}
+    }
 }

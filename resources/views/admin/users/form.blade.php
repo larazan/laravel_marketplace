@@ -22,6 +22,6 @@
 <!-- Roles Form Input -->
 <div class="form-group @if ($errors->has('isAdmin')) has-error @endif">
     {!! Form::label('isAdmin', 'Role') !!}
-    {!! Form::select('isAdmin', ['admin', 'user'],  1,  ['class' => 'form-control']) !!}
+    {!! Form::select('isAdmin', ['user', 'admin'],  0,  ['class' => 'form-control']) !!}
     @if ($errors->has('isAdmin')) <p class="help-block">{{ $errors->first('isAdmin') }}</p> @endif
 </div>

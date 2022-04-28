@@ -81,7 +81,7 @@ Route::get('orders/cities', [Order::class, 'cities']);
 // Route::get('payments/failed', [PaymentController::class, 'failed']);
 // Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
 
-Route::resource('favorites', [FavoriteController::class]);
+Route::resource('favorites', FavoriteController::class);
 
 Route::get('/blogs', [Article::class, 'index']);
 Route::get('/blog/{slug}', [Article::class, 'show']);

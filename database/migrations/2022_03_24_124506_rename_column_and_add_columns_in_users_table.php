@@ -18,7 +18,7 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
 			$table->renameColumn('name', 'first_name');
 			$table->string('last_name')->nullable()->after('name');
 			$table->string('phone')->nullable()->after('email');
-			$table->string('company')->nullable()->after('remember_token');
+			// $table->string('company')->nullable()->after('remember_token');
 			$table->string('address1')->nullable()->after('company');
 			$table->string('address2')->nullable()->after('address1');
 			$table->integer('province_id')->nullable()->after('address2');
