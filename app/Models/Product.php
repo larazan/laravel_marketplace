@@ -266,21 +266,25 @@ class Product extends Model
 	{
 		// DB::getQueryLog();
 		$result = DB::table(DB::raw('products p'))
-		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, brands.name as nama_kategori, img.medium as gambar"))
+		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, brands.name as nama_kategori, product_images.medium as gambar"))
 		->join('product_brands', 'product_brands.product_id', '=', 'p.id')
 		->join('brands', 'brands.id', '=', 'product_brands.brand_id')
-		->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id, medium FROM product_images GROUP BY product_id, medium  )
+		->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
                img'), 
         function($join)
         {
            $join->on('p.id', '=', 'img.product_id');
-        });
+        })
+		->join('product_images', 'product_images.id', 'img.max_id')
+		->where('p.status', '1');
+		// ->where('products.status', 1);
 
 		if($count == true){
             $result = $result->count();
         }else{
             $result  = $result->offset($start)->limit($length)->get();
         }
+		// dd($result);
 		// DB::getQueryLog(); die();
 		return $result;
 	}

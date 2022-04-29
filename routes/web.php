@@ -33,7 +33,7 @@ use App\Http\Controllers\OrderController as Order;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // require_once(__DIR__.'/frontend/auth.php');
@@ -118,6 +118,10 @@ Route::group(
 		
 	}
 );
+
+Route::middleware(['request-header', 'auth-login'])->group(function () {
+	Route::get('/', [HomeController::class, 'index']);
+});
 
 // Route::group(
 // 	['prefix' => 'produk', 'middleware' => ['auth']],
