@@ -186,11 +186,11 @@
 								<span class="nav-text">Users</span>
 								</a>
 							</li>
-							<li class="{{ ($currentAdminSubMenu == 'role') ? 'active' : ''}}">
+							<!-- <li class="{{ ($currentAdminSubMenu == 'role') ? 'active' : ''}}">
 								<a class="sidenav-item-link" href="{{ url('admin/roles')}}">
 								<span class="nav-text">Roles</span>
 								</a>
-							</li>
+							</li> -->
 						</div>
 					</ul>
 				</li>  
@@ -208,7 +208,11 @@
 								<span class="nav-text">Slides</span>
 								</a>
 							</li>
-							
+							<li  class="{{ ($currentAdminSubMenu == 'subscribe') ? 'active' : ''}}" >
+								<a class="sidenav-item-link" href="{{ url('admin/subscribes')}}">
+								<span class="nav-text">Subscribes</span>
+								</a>
+							</li>
 						</div>
 					</ul>
 				</li>     

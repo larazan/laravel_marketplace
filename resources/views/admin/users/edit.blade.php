@@ -8,7 +8,7 @@
         <div class="col-lg-12">
             <div class="card card-default">
                 <div class="card-header card-header-border-bottom">
-                        <h2>Edit -  {{ $user->name }}</h2>
+                        <h2>Edit -  {{ $user->first_name.' '.$user->last_name }}</h2>
                 </div>
                 <div class="card-body">
                     {!! Form::model($user, ['method' => 'PUT', 'route' => ['users.update',  $user->id ] ]) !!}

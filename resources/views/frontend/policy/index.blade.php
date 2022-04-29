@@ -5,8 +5,8 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                <span></span> Pages <span></span> Privacy Policy
+                <a href="{{ url('/') }}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <span></span> Policy
             </div>
         </div>
     </div>

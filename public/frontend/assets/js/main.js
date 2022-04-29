@@ -585,6 +585,18 @@
         });
     }
 
+    /*-------------------------------------
+
+    ---------------------------------------*/
+    // $('.quick-view').on('click', function (e) {
+	// 	e.preventDefault();
+    //     console.log('click modal');
+	// 	// var product_slug = $(this).attr('product-slug');
+    //     var product_slug = 'hijabi';
+	// 	console.log(product_slug);
+	// 	getQuickView(product_slug);
+	// });
+
     /*---- CounterUp ----*/
     $(".count").counterUp({
         delay: 10,

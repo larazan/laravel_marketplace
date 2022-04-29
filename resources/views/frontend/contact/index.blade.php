@@ -5,8 +5,8 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                <span></span> Pages <span></span> Contact
+                <a href="{{ url('/') }}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <span></span> Contact
             </div>
         </div>
     </div>
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 pl-50 d-lg-block d-none">
-                                <img class="border-radius-15 mt-50" src="assets/imgs/page/contact-2.png" alt="" />
+                                <img class="border-radius-15 mt-50" src="{{ asset('frontend/assets/imgs/page/contact-2.png') }}" alt="" />
                             </div>
                         </div>
                     </section>

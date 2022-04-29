@@ -18,11 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone',
+        'first_name', 'last_name', 'email', 'phone', 'password', 'company', 'address1', 'address2', 'province_id', 'city_id', 'postcode',
     ];
+
+    public const UPLOAD_DIR = 'uploads/user';
+    public const EXTRA_LARGE = '1920x643';
+	public const SMALL = '135x75';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,6 +51,17 @@ class User extends Authenticatable
 
     public function shop()
     {
-        return $this->hasOne(Shop::class, 'user_id');
+        // return $this->hasOne(Shop::class, 'user_id');
+        return $this->hasOne('App\Models\Shop');
     }
+
+    /**
+	 * Define relationship with the Favorite
+	 *
+	 * @return void
+	 */
+	public function favorites()
+	{
+		return $this->hasMany('App\Models\Favorite');
+	}
 }

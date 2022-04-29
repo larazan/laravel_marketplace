@@ -12,6 +12,8 @@ use App\Models\AttributeOption;
 use App\Models\Category;
 use App\Models\Brand;
 
+// use App\Helpers\General;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -262,13 +264,13 @@ class ProductController extends Controller
 	}
 
 	public function _generate_breadcrumbs_array($id) {
-		$homepage_url = url('/');
-		$breadcrumbs_array[$homepage_url] = 'Home';
+		// $homepage_url = url('/');
+		// $breadcrumbs_array[$homepage_url] = 'Home';
 		
 		// get sub cat title
-		$sub_cat_title = 'Products';
+		$sub_cat_title = 'Home';
 		// get sub cat url
-		$sub_cat_url = url('products');
+		$sub_cat_url = url('/');
 	
 		$breadcrumbs_array[$sub_cat_url] = $sub_cat_title;
 		return $breadcrumbs_array;
@@ -296,7 +298,9 @@ class ProductController extends Controller
 			'product' => $product,
 			'image' => $product_image
 		];
-		// $html = $this->loadTheme('products.quick_view');
+		
+		// return $this->loadTheme('products.quick_view', $this->data);
+
 		$html = view('frontend.products.quick_view', $data)->render();
 		
 		echo json_encode($html);

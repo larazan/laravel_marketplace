@@ -182,6 +182,10 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
 
+        Barryvdh\DomPDF\ServiceProvider::class,
+
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        
     ],
 
     /*
@@ -245,6 +249,9 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

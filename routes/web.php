@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\AttributeController;
@@ -13,6 +14,9 @@ use App\Http\Controllers\Admin\ShipmentController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SubscribeController;
+
+
 use App\Http\Controllers\CkeditorFileUploadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController as Product;
@@ -21,6 +25,17 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ArticleController as Article;
 use App\Http\Controllers\OrderController as Order;
+use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\UserSubscribeController;
+use App\Http\Controllers\ShopController as Shop;
+
+use App\Http\Controllers\Dashboard\DashboardController as DDashboard;
+use App\Http\Controllers\Dashboard\OrderController as DOrder;
+use App\Http\Controllers\Dashboard\ProductController as DProduct;
+use App\Http\Controllers\Dashboard\TransactionController;
+use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\ShopController as DShop;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,17 +59,21 @@ Route::get('/products/quick-view/{slug}', [Product::class, 'quickView'])->name('
 Route::get('/produk/json_grid', [Product::class, 'loadBarang'])->name('json_grid');
 Route::get('/produk/detail_produk/{slug}', [Product::class, 'detail_produk'])->name('detail_produk');
 
-// Route::get('/carts', [CartController::class, 'index']);
-// Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
-// Route::post('/carts', [CartController::class, 'store']);
-// Route::post('/carts/update', [CartController::class, 'update']);
+Route::get('/vendors', [Shop::class, 'index']);
+Route::get('/vendor/{slug}', [Shop::class, 'show']);
+Route::get('/vendor/produk_grid', [Shop::class, 'loadBarang'])->name('produk_grid');
+
+Route::get('/carts', [CartController::class, 'index']);
+Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
+Route::post('/carts', [CartController::class, 'store']);
+Route::post('/carts/update', [CartController::class, 'update']);
 
 // Route::get('orders/checkout', [Order::class, 'checkout']);
 // Route::post('orders/checkout', [Order::class, 'doCheckout']);
 // Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
 // Route::post('orders/set-shipping', [Order::class, 'setShipping']);
 // Route::get('orders/received/{orderID}', [Order::class, 'received']);
-// Route::get('orders/cities', [Order::class, 'cities']);
+Route::get('orders/cities', [Order::class, 'cities']);
 // Route::get('orders', [Order::class, 'index']);
 // Route::get('orders/{orderID}', [Order::class, 'show']);
 
@@ -63,17 +82,54 @@ Route::get('/produk/detail_produk/{slug}', [Product::class, 'detail_produk'])->n
 // Route::get('payments/failed', [PaymentController::class, 'failed']);
 // Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
 
-// Route::resource('favorites', [FavoriteController::class]);
+Route::resource('favorites', FavoriteController::class);
 
 Route::get('/blogs', [Article::class, 'index']);
 Route::get('/blog/{slug}', [Article::class, 'show']);
 
-Route::group([
-        'prefix' => 'cart',
-        'as' => 'cart.',
-    ], function () {
-        Route::post('add-product/{id?}', [CartController::class, 'addProduct'])->name('add-product');
-});
+Route::post('/subscriber', [UserSubscribeController::class, 'postSubscribe']);
+Route::post('/check-subscriber-email', [UserSubscribeController::class, 'checkSubscriber']);
+Route::post('/add-subscriber-email', [UserSubscribeController::class, 'addSubscriber']);
+
+Route::get('/info', [HomeController::class, 'info']);
+Route::get('/contact', [HomeController::class, 'contact']);
+Route::get('/about', [HomeController::class, 'about']);
+Route::get('/guide', [HomeController::class, 'guide']);
+Route::get('/policy', [HomeController::class, 'policy']);
+Route::get('/terms', [HomeController::class, 'terms']);
+
+Route::group(
+	['prefix' => 'user', 'middleware' => ['auth']],
+	function () {
+		// Route::get('dashboard', [UserDashboardController::class, 'index']);
+		Route::get('dashboard', [DDashboard::class, 'index']);
+		Route::get('orders', [DOrder::class, 'index']);
+		Route::get('orders/detail/{orderID}', [DOrder::class, 'detail']);
+		
+		Route::resource('products', DProduct::class);
+		Route::get('products/{productID}/images', [DProduct::class, 'images'])->name('products.images');
+		Route::get('products/{productID}/add-image', [DProduct::class, 'addImage'])->name('products.add_image');
+		Route::post('products/images/{productID}', [DProduct::class , 'uploadImage'])->name('products.upload_image');
+		Route::delete('products/images/{imageID}', [DProduct::class , 'removeImage'])->name('products.remove_image');
+
+		Route::get('transactions', [TransactionController::class, 'index']);
+		Route::get('transactions/detail/{transactionID}', [TransactionController::class, 'detail']);
+		
+		Route::get('profile', [ProfileController::class, 'index']);
+		Route::get('profile/edit', [ProfileController::class, 'edit']);
+		Route::put('profile/update', [ProfileController::class, 'update'])->name('updateProfile');
+		Route::get('profile/reset', [ProfileController::class, 'reset']);
+		Route::post('profile/change-password', [ProfileController::class, 'changePassword'])->name('changePasswordPost');
+		
+		Route::get('settings', [SettingController::class, 'index']);
+		
+		Route::get('shop', [DShop::class, 'index']);
+		Route::get('shop/create', [DShop::class, 'create']);
+		Route::post('shop/store', [DShop::class, 'store']);
+		Route::get('shop/edit', [DShop::class, 'edit']);
+		Route::put('shop/update', [DShop::class, 'update'])->name('updateShop');
+	}
+);
 
 Route::group(
 	['prefix' => 'admin', 'middleware' => ['auth']],
@@ -122,13 +178,15 @@ Route::group(
 		Route::resource('articles', ArticleController::class);
         Route::resource('category_articles', CategoryArticleController::class);
 
-		
+		Route::get('subscribes', [SubscribeController::class, 'index']);
 	}
 );
 
-Route::middleware(['request-header', 'auth-login'])->group(function () {
-	Route::get('/', [HomeController::class, 'index']);
-});
+// Route::middleware(['request-header', 'auth-login'])->group(function () {
+// 	Route::get('/', [HomeController::class, 'index']);
+// });
+
+Route::get('/', [HomeController::class, 'index']);
 
 // Route::group(
 // 	['prefix' => 'produk', 'middleware' => ['auth']],
@@ -139,9 +197,6 @@ Route::middleware(['request-header', 'auth-login'])->group(function () {
 
 Route::post('ckeditor', [CkeditorFileUploadController::class, 'store'])->name('ckeditor.upload');
 
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

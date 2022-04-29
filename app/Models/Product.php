@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Models\Traits\HashUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,7 @@ class Product extends Model
     protected $fillable = [
 		'parent_id',
 		'user_id',
+		'shop_id',
 		'sku',
 		'type',
 		'name',
@@ -26,6 +28,12 @@ class Product extends Model
 		'description',
 		'status',
 	];
+
+	// protected $primaryKey = 'uuid';
+
+    // protected $keyType = 'string';
+
+    // public $incrementing = false;
 
 	public const DRAFT = 0;
 	public const ACTIVE = 1;

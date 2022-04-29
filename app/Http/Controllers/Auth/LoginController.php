@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -35,5 +38,34 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+	 * Show login form
+	 *
+	 * @return void
+	 */
+	public function showLoginForm()
+	{
+		if (view()->exists('auth.authenticate')) {
+			return view('auth.authenticate');
+		}
+
+		return $this->loadTheme('auth.login');
+    }
+
+    public function cekLogin(Request $request) 
+    {
+        $remember = $request->remember ? true : false;
+
+        $up = $request->only('username', 'password');
+
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember)) {
+            $user = auth()->user();
+            dd($user);
+            return redirect()->route('/');
+        }
+
+        return redirect()->back();
     }
 }

@@ -27,7 +27,6 @@
 
     @include('frontend.partials.footer')
     
-
     <!-- Preloader Start -->
     <div id="preloader-active">
             <div class="preloader d-flex align-items-center justify-content-center">
@@ -38,10 +37,12 @@
                 </div>
             </div>
         </div>
+    </div>
      <!-- Vendor JS-->
      <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
+     <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/vendor/bootstrap.bundle.min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/slick.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.syotimer.min.js') }}"></script>
