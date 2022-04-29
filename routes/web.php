@@ -62,10 +62,10 @@ Route::get('/vendors', [Shop::class, 'index']);
 Route::get('/vendor/{slug}', [Shop::class, 'show']);
 Route::get('/vendor/produk_grid', [Shop::class, 'loadBarang'])->name('produk_grid');
 
-// Route::get('/carts', [CartController::class, 'index']);
-// Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
-// Route::post('/carts', [CartController::class, 'store']);
-// Route::post('/carts/update', [CartController::class, 'update']);
+Route::get('/carts', [CartController::class, 'index']);
+Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
+Route::post('/carts', [CartController::class, 'store']);
+Route::post('/carts/update', [CartController::class, 'update']);
 
 // Route::get('orders/checkout', [Order::class, 'checkout']);
 // Route::post('orders/checkout', [Order::class, 'doCheckout']);

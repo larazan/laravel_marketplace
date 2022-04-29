@@ -65,7 +65,7 @@
                             @endif
                             </div>
                             <div class="info">
-                                <h6 class="mb-0">{{ $product->name }}</h6>
+                                <h6 class="mb-0">{{ $product->name }} </h6>
                             </div>
                         </a>
                     </div>
