@@ -360,4 +360,13 @@ class ProductController extends Controller
 		$response = \General::helpResponse($responseCode, $responseData);
 		return response()->json($response, $responseCode);
 	}
+
+	public function detail_produk($slug)
+	{
+		$product = Product::active()->where('slug', $slug)->firstOrFail();
+		$product_image = ProductImage::where('product_id', $product->id)->get();
+
+		return $this->loadTheme('products.detail_produk', compact("product", "product_image"));
+	}
+
 }

@@ -6,6 +6,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('frontend/assets/js/shop.js?v=4.0') }}"></script>
 <script>
     var dataPagination, pageNumber=1, lastPageNumber, lastPageSize, lastPageKeyword, lastPageKategori, lastPageJenis, lastPageKecamatan, lastPageSort, lastProductType, lastPriceMin, lastPriceMax, delayTime=400;
 
@@ -60,12 +61,14 @@
                     for (var i = 0; i < obj.data.barang.length; i++) {
                         let rowData = obj.data.barang[i];
                         var img =  base_url+'/public/storage/'+rowData['gambar'];
+                        var urlSlug = "{{ route('detail_produk', ":slug") }}";
+                        var url_slug = urlSlug.replace(":slug", rowData['slug']);
                         template += `
                         <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="shop-product-right.html">
+                                        <a href="${url_slug}">
                                             <img class="default-img" src="${img}" alt="" />
                                                     <img class="hover-img" src="{{ asset('frontend/assets/imgs/shop/product-1-2.jpg') }}" alt="" />
                                                 </a>
@@ -81,7 +84,7 @@
                                             <div class="product-category">
                                                 <a href="shop-grid-right.html">${rowData['nama_kategori']}</a>
                                             </div>
-                                            <h2><a href="shop-product-right.html">${rowData['nama_produk']}</a></h2>
+                                            <h2><a href="${url_slug}">${rowData['nama_produk']}</a></h2>
                                             <div class="product-rate-cover">
                                                 <div class="product-rate d-inline-block">
                                                     <div class="product-rating" style="width: 90%"></div>
@@ -201,11 +204,12 @@
             type:"GET",
             url: urlRoute.replace(":slug", slug),
             dataType: "json",
-            // beforeSend: function() {
-            //     modal.find('.modal-content').html('Tunggu sebentar...');
-            // },
+            beforeSend: function() {
+                $('#preloader-active').show();
+            },
             success:function(response){
                 console.log(response)
+                $('#preloader-active').hide();
                 // var tes = '';
                 modal.find('.modal-content').html(response);
                 // $('#quickViewModal').modal('show');

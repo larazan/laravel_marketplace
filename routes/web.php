@@ -42,6 +42,7 @@ Route::get('/products', [Product::class, 'index']);
 Route::get('/product/{slug}', [Product::class, 'show']);
 Route::get('/products/quick-view/{slug}', [Product::class, 'quickView'])->name('quick-view');
 Route::get('/produk/json_grid', [Product::class, 'loadBarang'])->name('json_grid');
+Route::get('/produk/detail_produk/{slug}', [Product::class, 'detail_produk'])->name('detail_produk');
 
 // Route::get('/carts', [CartController::class, 'index']);
 // Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);

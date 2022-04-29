@@ -16,6 +16,7 @@
         <!-- Template CSS -->
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/slider-range.css') }}" />
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css?v=4.0') }}" />
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/sweetalert2.min.css') }}" />
     </head>
 
     <body>
@@ -32,13 +33,12 @@
             <div class="preloader d-flex align-items-center justify-content-center">
                 <div class="preloader-inner position-relative">
                     <div class="text-center">
-                        <img src="{{ asset('frontend/assets/imgs/theme/loading.gif') }}" alt="" />
+                        <img src="{{ asset('frontend/assets/imgs/theme/loading2.gif') }}" alt="" />
                     </div>
                 </div>
             </div>
         </div>
      <!-- Vendor JS-->
-    
      <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
@@ -61,10 +61,10 @@
      <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
      <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>
      <!-- Template  JS -->
+     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
-     <script src="{{ asset('frontend/assets/js/shop.js?v=4.0') }}"></script>
-     
      @stack('scripts')
 
     </body>
+    
 </html>
