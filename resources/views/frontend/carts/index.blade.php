@@ -27,8 +27,12 @@
                         <table class="table table-wishlist">
                             <thead>
                                 <tr class="main-heading">
-                                    <th class="">Gambar</th>
-                                    <th scope="col">Product</th>
+                                    <th class="custome-checkbox start pl-30">
+                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox11" value="">
+                                        <label class="form-check-label" for="exampleCheckbox11"></label>
+                                    </th>
+                                    <!-- <th class="">Gambar</th> -->
+                                    <th scope="col" colspan="2">Product</th>
                                     <th scope="col">Unit Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Subtotal</th>
@@ -42,13 +46,17 @@
                                         $image = !empty($product->productImages->first()) ? asset('storage/'.$product->productImages->first()->path) : asset('themes/ezone/assets/img/cart/3.jpg')
                                     @endphp
                                 <tr class="pt-30">
-                            
+                                    <td class="custome-checkbox pl-30">
+                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
+                                        <label class="form-check-label" for="exampleCheckbox1"></label>
+                                    </td>
+                                    <!-- <td class="image product-thumbnail pt-40"><img src="assets/imgs/shop/product-1-1.jpg" alt="#"></td> -->
                                     <td class="image product-thumbnail pt-40">
                                         <img src="{{ $image }}" alt="{{ $product->name }}">
                                     </td>
                                     <td class="product-des product-name">
                                         <h6 class="mb-5">
-                                            <a class="product-name mb-10 text-heading" href="{{ url('product/'. $product->slug) }}">{ $item->name }}</a>
+                                            <a class="product-name mb-10 text-heading" href="{{ url('product/'. $product->slug) }}">{{ $item->name }}</a>
                                         </h6>
                                     </td>
                                     <td class="price" data-title="Price">
@@ -82,8 +90,7 @@
                     <div class="divider-2 mb-30"></div>
                     <div class="cart-action d-flex justify-content-between">
                         <a href="{{ url('/') }}" class="btn "><i class="fi-rs-arrow-left mr-10"></i>Continue Shopping</a>
-                        <!-- <a class="btn  mr-10 mb-sm-15"><i class="fi-rs-refresh mr-10"></i>Update Cart</a> -->
-                        <input class="btn  mr-10 mb-sm-15" name="update_cart" value="Update cart" type="submit">
+                        <!-- <button class="btn  mr-10 mb-sm-15" name="update_cart" type="submit"><i class="fi-rs-refresh mr-10"></i>Update Cart</button> -->
                     </div>
                     
                 </div>

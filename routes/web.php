@@ -182,9 +182,11 @@ Route::group(
 	}
 );
 
-Route::middleware(['request-header', 'auth-login'])->group(function () {
-	Route::get('/', [HomeController::class, 'index']);
-});
+// Route::middleware(['request-header', 'auth-login'])->group(function () {
+// 	Route::get('/', [HomeController::class, 'index']);
+// });
+
+Route::get('/', [HomeController::class, 'index']);
 
 // Route::group(
 // 	['prefix' => 'produk', 'middleware' => ['auth']],

@@ -62,18 +62,10 @@
      <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
      <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>
      <!-- Template  JS -->
-<<<<<<< HEAD
-     <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
-     <script src="{{ asset('frontend/assets/js/shop.js?v=4.0') }}"></script>
-     
-    @stack('scripts')
-    @yield('scripts')
-=======
      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
      @stack('scripts')
 
->>>>>>> 7bc25fb80c7a1d808c0471b387244a25d76264a3
     </body>
     
 </html>
