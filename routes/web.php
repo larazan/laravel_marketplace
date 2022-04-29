@@ -68,6 +68,13 @@ Route::get('/produk/detail_produk/{slug}', [Product::class, 'detail_produk'])->n
 Route::get('/blogs', [Article::class, 'index']);
 Route::get('/blog/{slug}', [Article::class, 'show']);
 
+Route::group([
+        'prefix' => 'cart',
+        'as' => 'cart.',
+    ], function () {
+        Route::post('add-product/{id?}', [CartController::class, 'addProduct'])->name('add-product');
+});
+
 Route::group(
 	['prefix' => 'admin', 'middleware' => ['auth']],
 	function () {

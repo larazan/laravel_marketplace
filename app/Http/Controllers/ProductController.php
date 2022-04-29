@@ -363,6 +363,8 @@ class ProductController extends Controller
 
 	public function detail_produk($slug)
 	{
+		// $user = Auth::user();
+		// dd($user); die();
 		$product = Product::active()->where('slug', $slug)->firstOrFail();
 		$product_image = ProductImage::where('product_id', $product->id)->get();
 

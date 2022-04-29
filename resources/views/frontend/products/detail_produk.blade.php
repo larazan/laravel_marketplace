@@ -20,8 +20,9 @@
                                 <!-- MAIN SLIDES -->
                                 <div class="product-image-slider">
                                     @foreach ($product_image as $item)
-                                        <figure class="border-radius-10">
-                                            <img src="{{url('/storage/'.$item->medium) }}" alt="product image" />
+                                        <figure class="border-radius-10" style="display: flex;
+                                        justify-content: center;">
+                                            <img src="{{url('/storage/'.$item->large) }}" alt="product image" />
                                         </figure>
                                     @endforeach
                                 </div>
@@ -75,7 +76,7 @@
                                         <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                     </div>
                                     <div class="product-extra-link2">
-                                        <button type="submit" class="button button-add-to-cart" onclick="addCart({{ $product->id }})"><i class="fi-rs-shopping-cart"></i>Tambah Keranjang</button>
+                                        <button type="submit" class="button button-add-to-cart" onclick="addCart({{ $product->id }})"><i class="fi-rs-shopping-cart"></i>Beli</button>
                                         <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                         <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                     </div>
@@ -239,7 +240,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="Vendor-info">
                                     <div class="vendor-logo d-flex mb-30">
-                                        <img src="assets/imgs/vendor/vendor-18.svg" alt="" />
+                                        <img src="frontend/assets/imgs/vendor/vendor-18.svg" alt="" />
                                         <div class="vendor-name ml-15">
                                             <h6>
                                                 <a href="vendor-details-2.html">Noodles Co.</a>
@@ -253,8 +254,8 @@
                                         </div>
                                     </div>
                                     <ul class="contact-infor mb-50">
-                                        <li><img src="assets/imgs/theme/icons/icon-location.svg" alt="" /><strong>Address: </strong> <span>5171 W Campbell Ave undefined Kent, Utah 53127 United States</span></li>
-                                        <li><img src="assets/imgs/theme/icons/icon-contact.svg" alt="" /><strong>Contact Seller:</strong><span>(+91) - 540-025-553</span></li>
+                                        <li><img src="frontend/assets/imgs/theme/icons/icon-location.svg" alt="" /><strong>Address: </strong> <span>5171 W Campbell Ave undefined Kent, Utah 53127 United States</span></li>
+                                        <li><img src="frontend/assets/imgs/theme/icons/icon-contact.svg" alt="" /><strong>Contact Seller:</strong><span>(+91) - 540-025-553</span></li>
                                     </ul>
                                     <div class="d-flex mb-55">
                                         <div class="mr-30">
@@ -282,7 +283,7 @@
                                                     <div class="single-comment justify-content-between d-flex mb-30">
                                                         <div class="user justify-content-between d-flex">
                                                             <div class="thumb text-center">
-                                                                <img src="assets/imgs/blog/author-2.png" alt="" />
+                                                                <img src="frontend/assets/imgs/blog/author-2.png" alt="" />
                                                                 <a href="#" class="font-heading text-brand">Sienna</a>
                                                             </div>
                                                             <div class="desc">
@@ -301,7 +302,7 @@
                                                     <div class="single-comment justify-content-between d-flex mb-30 ml-30">
                                                         <div class="user justify-content-between d-flex">
                                                             <div class="thumb text-center">
-                                                                <img src="assets/imgs/blog/author-3.png" alt="" />
+                                                                <img src="frontend/assets/imgs/blog/author-3.png" alt="" />
                                                                 <a href="#" class="font-heading text-brand">Brenna</a>
                                                             </div>
                                                             <div class="desc">
@@ -320,7 +321,7 @@
                                                     <div class="single-comment justify-content-between d-flex">
                                                         <div class="user justify-content-between d-flex">
                                                             <div class="thumb text-center">
-                                                                <img src="assets/imgs/blog/author-4.png" alt="" />
+                                                                <img src="frontend/assets/imgs/blog/author-4.png" alt="" />
                                                                 <a href="#" class="font-heading text-brand">Gemma</a>
                                                             </div>
                                                             <div class="desc">
@@ -421,8 +422,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="shop-product-right.html" tabindex="0">
-                                                    <img class="default-img" src="assets/imgs/shop/product-2-1.jpg" alt="" />
-                                                    <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="" />
+                                                    <img class="default-img" src="frontend/assets/imgs/shop/product-2-1.jpg" alt="" />
+                                                    <img class="hover-img" src="frontend/assets/imgs/shop/product-2-2.jpg" alt="" />
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -451,8 +452,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="shop-product-right.html" tabindex="0">
-                                                    <img class="default-img" src="assets/imgs/shop/product-3-1.jpg" alt="" />
-                                                    <img class="hover-img" src="assets/imgs/shop/product-4-2.jpg" alt="" />
+                                                    <img class="default-img" src="frontend/assets/imgs/shop/product-3-1.jpg" alt="" />
+                                                    <img class="hover-img" src="frontend/assets/imgs/shop/product-4-2.jpg" alt="" />
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -481,8 +482,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="shop-product-right.html" tabindex="0">
-                                                    <img class="default-img" src="assets/imgs/shop/product-4-1.jpg" alt="" />
-                                                    <img class="hover-img" src="assets/imgs/shop/product-4-2.jpg" alt="" />
+                                                    <img class="default-img" src="frontend/assets/imgs/shop/product-4-1.jpg" alt="" />
+                                                    <img class="hover-img" src="frontend/assets/imgs/shop/product-4-2.jpg" alt="" />
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -511,8 +512,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="shop-product-right.html" tabindex="0">
-                                                    <img class="default-img" src="assets/imgs/shop/product-5-1.jpg" alt="" />
-                                                    <img class="hover-img" src="assets/imgs/shop/product-3-2.jpg" alt="" />
+                                                    <img class="default-img" src="frontend/assets/imgs/shop/product-5-1.jpg" alt="" />
+                                                    <img class="hover-img" src="frontend/assets/imgs/shop/product-3-2.jpg" alt="" />
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -571,12 +572,44 @@
     function addCart(id)
     {
         var qty = $('.qty-val').text();
-        Swal.fire(
-        'Tambahkan produk?',
-        'Ayo tambahkan produk kesayanganmu sekarang..',
-        'question'
-        )
+        Swal.fire({
+        title: 'Tambahkan Produk?',
+        text: "Ayo tambahkan produk kesayanganu sekarang..",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:"POST",
+                url: '{{ url("cart/add-product", 3) }}',
+                data: {qty:qty},
+                dataType: "json",
+                // beforeSend: function() {
+                //     $('#preloader-active').show();
+                // },
+                success:function(response){
+
+    
+                },
+                error: function(response) {
+                
+                }
+            });
+        }
+        })
+
+       
     }
+
+
     
 </script>
 @endpush

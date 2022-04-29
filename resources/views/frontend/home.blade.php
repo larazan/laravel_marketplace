@@ -63,6 +63,7 @@
                         var img =  base_url+'/public/storage/'+rowData['gambar'];
                         var urlSlug = "{{ route('detail_produk', ":slug") }}";
                         var url_slug = urlSlug.replace(":slug", rowData['slug']);
+                        var harga = helpCurrency2(rowData['price'], 'Rp ');
                         template += `
                         <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
                             <div class="product-cart-wrap mb-30">
@@ -96,11 +97,11 @@
                                             </div>
                                             <div class="product-card-bottom">
                                                 <div class="product-price">
-                                                    <span>${helpCurrency(rowData['price'], 'Rp ', '.')}</span>
+                                                    <span>${harga}</span>
                                                     <span class="old-price">$32.8</span>
                                                 </div>
                                                 <div class="add-cart">
-                                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Beli </a>
                                                 </div>
                                             </div>
                                         </div>

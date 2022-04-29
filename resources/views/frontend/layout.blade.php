@@ -59,11 +59,12 @@
      <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
-     <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>
+     
      <!-- Template  JS -->
      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
      @stack('scripts')
+     <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>
 
     </body>
     
