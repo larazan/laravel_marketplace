@@ -48,7 +48,7 @@ use App\Http\Controllers\Dashboard\ShopController as DShop;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // require_once(__DIR__.'/frontend/auth.php');
@@ -57,6 +57,7 @@ Route::get('/products', [Product::class, 'index']);
 Route::get('/product/{slug}', [Product::class, 'show']);
 Route::get('/products/quick-view/{slug}', [Product::class, 'quickView'])->name('quick-view');
 Route::get('/produk/json_grid', [Product::class, 'loadBarang'])->name('json_grid');
+Route::get('/produk/detail_produk/{slug}', [Product::class, 'detail_produk'])->name('detail_produk');
 
 Route::get('/vendors', [Shop::class, 'index']);
 Route::get('/vendor/{slug}', [Shop::class, 'show']);
@@ -180,6 +181,10 @@ Route::group(
 		Route::get('subscribes', [SubscribeController::class, 'index']);
 	}
 );
+
+Route::middleware(['request-header', 'auth-login'])->group(function () {
+	Route::get('/', [HomeController::class, 'index']);
+});
 
 // Route::group(
 // 	['prefix' => 'produk', 'middleware' => ['auth']],

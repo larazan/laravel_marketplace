@@ -64,28 +64,18 @@
                 <div class="row product-grid" id="isi_produk">
 
                 </div>
-                <!--product grid-->
-                <div class="pagination-area mt-20 mb-20">
-                    <nav aria-label="Page navigation example" id="paging_produk">
-
-                    </nav>
-                </div>
-
             </div>
-            @include('frontend.products.sidebar')
-        </div>
-    </div>
-    </div>
-</main>
+        </main>
+              <!-- Quick view -->
+              <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                       
+                      
+                       
+                    </div>
+                </div>
+            </div>
+        @endsection
 
-<!-- Quick view -->
-<div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-
-        </div>
-    </div>
-</div>
-
-@endsection
+       

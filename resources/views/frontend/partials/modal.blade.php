@@ -136,7 +136,7 @@
 
 
  <!-- Modal -->
- <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
+ <div class="modal fade custom-modal" id="onloadModal2" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
