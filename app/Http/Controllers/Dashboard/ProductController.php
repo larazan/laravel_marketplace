@@ -68,7 +68,7 @@ class ProductController extends Controller
 		// 	return response("no shop found");
 		// 	return back()->withErrors($exception->getMessage());
 		// }
-		$shop =  $shop = Shop::where('user_id', Auth::id())->get();
+		$shop =  $shop = Shop::where('user_id', Auth::id())->first();
 
 		if (!$shop) {
 			// throw new \App\Exceptions\NoShopException('Create Shop first');

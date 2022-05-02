@@ -9,6 +9,7 @@ use App\Models\Product;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FavoriteController extends Controller
 {
@@ -81,6 +82,36 @@ class FavoriteController extends Controller
 		);
 
 		return response('The product has been added to your favorite', 200);
+    }
+
+    public function addProduct(Request $request)
+    {
+        $product = Product::where('id', $request->id)->firstOrFail();
+		
+        
+		$favorite = Favorite::where('user_id', Auth::user()->id)
+			->where('product_id', $request->id)
+			->first();
+		if ($favorite) {
+            $responseCode = 422;
+            $responseData['status'] = true;
+            $responseData['message'] = 'Produk yang anda tambahkan sudah ada ke wishlistmu!';
+		}else{
+            DB::beginTransaction();
+            $data = new Favorite();
+            $data->user_id = Auth::user()->id;
+            $data->product_id = $request->id;
+            $data->save();
+            $responseCode = 200;
+            $responseData['status'] = true;
+            $responseData['message'] = 'berhasil menambahkan produk kamu ke wishlist!';
+
+            DB::commit();
+        }
+
+        $response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response);
+
     }
 
     /**

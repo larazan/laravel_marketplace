@@ -1,7 +1,7 @@
 @extends('frontend.layout')
 
 @section('content')
-<main class="main">
+<main class="main" style="margin-left: 30px;margin-right: 30px; ">
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
@@ -13,7 +13,7 @@
         <div class="container mb-80 mt-50">
             <div class="row">
                 <div class="col-lg-8 mb-40">
-                    <h1 class="heading-2 mb-10">Your Cart</h1>
+                    <h2 class="heading-4 mb-10"><img src="{{ asset('frontend/assets/imgs/shopping-cart.png') }}" width="50">&nbsp;Keranjang Anda</h2>
                     <!-- <div class="d-flex justify-content-between">
                         <h6 class="text-body">There are <span class="text-brand">3</span> products in your cart</h6>
                         <h6 class="text-body"><a href="#" class="text-muted"><i class="fi-rs-trash mr-5"></i>Clear Cart</a></h6>
@@ -90,7 +90,7 @@
                     <div class="divider-2 mb-30"></div>
                     <div class="cart-action d-flex justify-content-between">
                         <a href="{{ url('/') }}" class="btn "><i class="fi-rs-arrow-left mr-10"></i>Continue Shopping</a>
-                        <!-- <button class="btn  mr-10 mb-sm-15" name="update_cart" type="submit"><i class="fi-rs-refresh mr-10"></i>Update Cart</button> -->
+                        <a class="btn  mr-10 mb-sm-15" name="update_cart" onclick="refreshPage()"><i class="fi-rs-refresh mr-10"></i>Update Cart</a>
                     </div>
                     
                 </div>
@@ -132,3 +132,11 @@
         </div>
     </main>
     @endsection
+
+    @push('scripts')
+    <script>
+        function refreshPage()
+        {
+            window.location.reload(true)
+        }
+    </script>

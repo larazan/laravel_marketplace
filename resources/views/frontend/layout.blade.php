@@ -63,6 +63,8 @@
      
      <!-- Template  JS -->
      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8-beta.17/jquery.inputmask.min.js"></script>
+     
      <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
      @stack('scripts')
      <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>

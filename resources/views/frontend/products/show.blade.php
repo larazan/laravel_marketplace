@@ -145,7 +145,7 @@
                                                     <a href="{{ url('products?category='. $category->slug ) }}" rel="tag">{{ $category->name }}</a>, 
                                                     @endforeach
                                                 </li>
-                                                <li>Stok:<span class="in-stock text-brand ml-5">{{ $product->productInventory->qty }} Barang Tersedia</span></li>
+                                                <li>Stok:<span class="in-stock text-brand ml-5">{{ $product->productInventory->qty ?? '' }} Barang Tersedia</span></li>
                                             </ul>
                                         </div>
                             </div>

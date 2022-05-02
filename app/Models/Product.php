@@ -274,9 +274,12 @@ class Product extends Model
 	{
 		// DB::getQueryLog();
 		$result = DB::table(DB::raw('products p'))
-		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, brands.name as nama_kategori, product_images.medium as gambar"))
-		->join('product_brands', 'product_brands.product_id', '=', 'p.id')
-		->join('brands', 'brands.id', '=', 'product_brands.brand_id')
+		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, p.sku, brands.name as nama_kategori, product_images.medium as gambar, shops.name as nama_toko"))
+		->leftJoin('product_brands', 'product_brands.product_id', '=', 'p.id')
+		->leftJoin('product_categories', 'product_categories.product_id', '=', 'p.id')
+		->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
+		->leftJoin('brands', 'brands.id', '=', 'product_brands.brand_id')
+		->leftJoin('shops', 'shops.user_id', '=', 'p.user_id')
 		->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
                img'), 
         function($join)
@@ -285,6 +288,25 @@ class Product extends Model
         })
 		->join('product_images', 'product_images.id', 'img.max_id')
 		->where('p.status', '1');
+		
+		if(!empty($searchProdukAndUkm)){
+            $result = $result->where(function($where) use($searchProdukAndUkm){
+                $where->where('p.name', 'LIKE', "%".$searchProdukAndUkm."%")
+                ->orWhere('shops.name', 'LIKE', "%".$searchProdukAndUkm."%");
+            });
+        }
+
+		if($hargaMinimal == true){
+            $result = $result->whereRaw("p.price >= ".$hargaMinimal);
+        }
+
+		if($hargaMaksimal == true){
+            $result = $result->whereRaw("p.price <= ".$hargaMaksimal);
+        }
+
+		if ($id_kategori){ 
+			$result = $result->whereIn('product_categories.category_id', $id_kategori);
+		}
 		// ->where('products.status', 1);
 
 		if($count == true){
