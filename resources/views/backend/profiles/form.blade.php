@@ -12,9 +12,7 @@
                             
                             <div class="col-lg-9">
                                 <section class="content-body p-xl-4">
-                                    <!-- {!! Form::model($user, ['url' => ['profile']]) !!} -->
                                     {!! Form::model($user, ['method' => 'PUT', 'route' => ['updateProfile'] ]) !!}
-                                    @csrf    
                                         <div class="row">
                                             <div class="col-lg-8">
                                                 <div class="row gx-3">

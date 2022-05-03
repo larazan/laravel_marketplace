@@ -14,8 +14,7 @@
                     <section class="content-body p-xl-4">
                         
                         @if (!empty($shop))
-                            {!! Form::model($shop, ['url' => ['user/shop/update', $shop->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
-                            {!! Form::hidden('id') !!}
+                            {!! Form::model($shop, ['method' => 'PUT', 'route' => ['updateShop'], 'enctype' => 'multipart/form-data' ]) !!}
                         @else
                             {!! Form::open(['url' => 'user/shop/store', 'enctype' => 'multipart/form-data']) !!}
                         @endif
@@ -58,7 +57,7 @@
                                     
                                     <div class="mb-3">
                                     <img class="img-preview img-fluid col-sm-5 mb-3" id="img-preview" style="display: block;">
-                                    {!! Form::file('featured_image', ['class' => 'form-control', 'placeholder' => 'post image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
+                                    {!! Form::file('image', ['class' => 'form-control', 'placeholder' => 'post image', 'id' => 'image', 'onchange' => 'previewImage();']) !!}
                                     </div>
                                 </div>
                                 <!-- col.// -->

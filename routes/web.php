@@ -128,11 +128,12 @@ Route::group(
 		Route::post('shop/store', [DShop::class, 'store']);
 		Route::get('shop/edit', [DShop::class, 'edit']);
 		Route::put('shop/update', [DShop::class, 'update'])->name('updateShop');
+
 	}
 );
 
 Route::group(
-	['prefix' => 'admin', 'middleware' => ['auth']],
+	['prefix' => 'admin', 'middleware' => ['auth', 'admin']],
 	function () {
 		Route::get('dashboard', [DashboardController::class, 'index']);
 		Route::resource('categories', CategoryController::class);

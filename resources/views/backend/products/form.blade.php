@@ -111,8 +111,6 @@ $formTitle = !empty($product) ? 'Update' : 'Tambah Baru'
             </div>
             @endif
 
-        </div>
-        <div class="col-lg-3">
             <div class="card mb-4">
                 <div class="card-body">
 
@@ -125,8 +123,9 @@ $formTitle = !empty($product) ? 'Update' : 'Tambah Baru'
                     <a href="{{ url('user/products') }}" class="btn btn-secondary btn-default">Kembali</a>
                 </div>
             </div>
-            <!-- card end// -->
+
         </div>
+        
         {!! Form::close() !!}
     </div>
 </section>

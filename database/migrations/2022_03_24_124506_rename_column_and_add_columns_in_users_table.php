@@ -19,7 +19,7 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
 			$table->string('last_name')->nullable()->after('name');
 			$table->string('phone')->nullable()->after('email');
 			// $table->string('company')->nullable()->after('remember_token');
-			$table->string('address1')->nullable()->after('company');
+			$table->string('address1')->nullable()->after('phone');
 			$table->string('address2')->nullable()->after('address1');
 			$table->integer('province_id')->nullable()->after('address2');
 			$table->integer('city_id')->nullable()->after('province_id');
@@ -40,7 +40,7 @@ class RenameColumnAndAddColumnsInUsersTable extends Migration
             $table->renameColumn('first_name', 'name');
 			$table->dropColumn('last_name');
 			$table->dropColumn('phone');
-			$table->dropColumn('company');
+			// $table->dropColumn('company');
 			$table->dropColumn('address1');
 			$table->dropColumn('address2');
 			$table->dropColumn('province_id');

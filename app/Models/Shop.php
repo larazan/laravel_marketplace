@@ -11,7 +11,7 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable=['user_id', 'name','slug', 'description','original','small'];
+    protected $fillable=['user_id', 'name','slug', 'description','original', 'medium', 'small'];
 	public const UPLOAD_DIR = 'uploads/shops';
 
     public const ACTIVE = 'active';
