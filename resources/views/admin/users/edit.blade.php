@@ -24,3 +24,23 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script>
+   
+    $('#user-province-id').on('change', function (e) {
+        var province_id = e.target.value;
+        console.log('pilih');
+        $.get('/orders/cities?province_id=' + province_id, function(data){
+            $('#user-city-id').empty();
+            $('#user-city-id').append('<option value>- Please Select -</option>');
+
+            $.each(data.cities, function(city_id, city){
+            
+            $('#user-city-id').append('<option value="'+city_id+'">'+ city + '</option>');
+
+        });
+        });
+    });
+
+</script>

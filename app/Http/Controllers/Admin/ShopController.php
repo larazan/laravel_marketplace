@@ -90,6 +90,7 @@ class ShopController extends Controller
 
         $this->data['shops'] = $shops->toArray();
         $this->data['shop'] = $shop;
+        $this->data['editor1'] = $shop->description;
         return view('admin.shops.form', $this->data);
     }
 

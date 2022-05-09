@@ -9,9 +9,13 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    protected $data = [];
+    protected $uploadsFolder = 'uploads/';
+
     public function __construct()
     {
         parent::__construct();
@@ -157,4 +161,65 @@ class UserController extends Controller
         }
         return redirect('admin/users');
     }
+
+    /**
+	 * Get provinces
+	 *
+	 * @return array
+	 */
+	public function getProvinces()
+	{
+		$provinceFile = 'provinces.txt';
+		$provinceFilePath = 'uploads/files/' . $provinceFile;
+
+		$isExistProvinceJson = Storage::disk('local')->exists($provinceFilePath);
+
+		if (!$isExistProvinceJson) {
+			$response = $this->rajaOngkirRequest('province');
+			Storage::disk('local')->put($provinceFilePath, serialize($response['rajaongkir']['results']));
+		}
+
+		$province = unserialize(Storage::get($provinceFilePath));
+
+		$provinces = [];
+		if (!empty($province)) {
+			foreach ($province as $province) {
+				$provinces[$province['province_id']] = strtoupper($province['province']);
+			}
+		}
+
+		return $provinces;
+    }
+    
+
+	/**
+	 * Get cities by province ID
+	 *
+	 * @param int $provinceId province id
+	 *
+	 * @return array
+	 */
+	public function getCities($provinceId)
+	{
+		$cityFile = 'cities_at_'. $provinceId .'.txt';
+		$cityFilePath = 'uploads/files/' .$cityFile;
+
+		$isExistCitiesJson = Storage::disk('local')->exists($cityFilePath);
+
+		if (!$isExistCitiesJson) {
+			$response = $this->rajaOngkirRequest('city', ['province' => $provinceId]);
+			Storage::disk('local')->put($cityFilePath, serialize($response['rajaongkir']['results']));
+		}
+
+		$cityList = unserialize(Storage::get($cityFilePath));
+		
+		$cities = [];
+		if (!empty($cityList)) {
+			foreach ($cityList as $city) {
+				$cities[$city['city_id']] = strtoupper($city['type'].' '.$city['city_name']);
+			}
+		}
+
+		return $cities;
+	}
 }

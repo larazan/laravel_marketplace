@@ -4,15 +4,15 @@
             <div class="vendor-img">
                 <a href="{{ url('vendor/'. $shop->slug) }}">
                     @if ($shop->medium)
-                    <img class="default-img" src="{{ asset('shops/'.$shop->medium) }}" alt="" />
+                    <img src="{{ asset('storage/'.$shop->small) }}" alt="{{ $shop->name }}" />
                     @else
                     <img class="default-img" src="{{ asset('frontend/assets/imgs/vendor/vendor-1.png') }}" alt="" />
                     @endif
                 </a>
             </div>
-            <div class="product-badges product-badges-position product-badges-mrg">
+            <!-- <div class="product-badges product-badges-position product-badges-mrg">
                 <span class="hot">Mall</span>
-            </div>
+            </div> -->
         </div>
         <div class="vendor-content-wrap">
             <div class="d-flex justify-content-between align-items-end mb-30">
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="mb-10">
-                    <span class="font-small total-product">22 products</span>
+                    <span class="font-small total-product">{{ $shop->products->count() }} produk</span>
                 </div>
             </div>
 
