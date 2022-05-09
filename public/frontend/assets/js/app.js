@@ -44,6 +44,9 @@ $(document).on('click', '.quick-view', (e) => { //replaces function book()
 		var province_id = e.target.value;
  
 		$.get('/orders/cities?province_id=' + province_id, function(data){
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			  },500);
 			$('#user-city-id').empty();
 			$('#user-city-id').append('<option value>- Please Select -</option>');
 
