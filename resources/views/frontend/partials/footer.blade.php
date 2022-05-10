@@ -2,8 +2,7 @@
     @include('frontend.partials.subscribe')
     @include('frontend.partials.services')
     @php
-        $settings=DB::table('settings')->get();
-                                
+        $settings = DB::table('settings')->get();            
     @endphp
     <section class="section-padding footer-mid">
         <div class="container pt-15 pb-20">
@@ -12,7 +11,7 @@
                     <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
                         <div class="logo mb-30">
                             <a href="index.html" class="mb-15"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
-                            <p class="font-lg text-heading">Awesome grocery store website template</p>
+                            <p class="font-lg text-heading">@foreach($settings as $data) {{$data->short_des}} @endforeach</p>
                         </div>
                         <ul class="contact-infor">
                             <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}" alt="" /><strong>Address: </strong> <span>@foreach($settings as $data) {{$data->address}} @endforeach</span></li>

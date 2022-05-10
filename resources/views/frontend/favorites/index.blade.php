@@ -55,7 +55,7 @@
                                     </div>
                                 </td>
                                 <td class="price" data-title="Price">
-                                    <h3 class="text-brand">{ number_format($product->priceLabel()) }}</h3>
+                                    <h3 class="text-brand">{{ \General::priceFormat($product->priceLabel(), 'Rp') }}</h3>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <span class="stock-status in-stock mb-0"> In Stock </span>

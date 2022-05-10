@@ -11,7 +11,7 @@
                         </div>
                         <div class="header-right">
                             <div class="search-style-2">
-                                <form action="#">
+                                <form role="form" action="" onsubmit="return false" method="post"">
                                     <select class="select-active">
                                         <option>All Categories</option>
                                         <option>Milks and Dairies</option>
@@ -25,7 +25,8 @@
                                         <option>Noodles & Rice</option>
                                         <option>Ice cream</option>
                                     </select>
-                                    <input type="text" placeholder="Search for items..." />
+                                    <input autocomplete="off" type="text" name="keyword" id="pagekeyword" value="" placeholder="Cari Produk atau Toko . . ." />
+                                    <button type="button" onclick="cekParam()" id="btn_search"><i class="fi-rs-search"></i></button>
                                 </form>
                             </div>
                             <div class="header-action-right">
@@ -50,7 +51,7 @@
 											<img alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
 											<span class="pro-count blue">2</span>
 										</a>
-										<a href="shop-cart.html"><span class="lable">Cart</span></a>
+										<a href="shop-cart.html"><span class="lable">Keranjang</span></a>
 										@include('frontend.partials.mini_cart')
 									</div>
 									<div class="header-action-icon-2">
@@ -58,19 +59,19 @@
 										<a href="page-account.html">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
 										</a>
-										<a href="{{ url('user/dashboard')}}"><span class="lable ml-0">Account</span></a>
+										<a href="{{ url('user/dashboard')}}"><span class="lable ml-0">Akun</span></a>
 										<div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
 											<ul>
-												<li><a href="{{ url('user/dashboard')}}"><i class="fi fi-rs-user mr-10"></i>My Account</a></li>
+												<li><a href="{{ url('user/dashboard')}}"><i class="fi fi-rs-user mr-10"></i>Akun Saya</a></li>
 												<li><a href="page-account.html"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a></li>
 												<li><a href="page-account.html"><i class="fi fi-rs-label mr-10"></i>My Voucher</a></li>
 												<li><a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a></li>
-												<li><a href="page-account.html"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a></li>
+												<li><a href="page-account.html"><i class="fi fi-rs-settings-sliders mr-10"></i>Pengaturan</a></li>
 												<li>
                                                     <!-- <a href="page-login.html"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a> -->
                                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();"><i class="fi fi-rs-sign-out mr-10"></i>
-                                                        {{ __('Logout') }}
+                                                        {{ __('Keluar') }}
                                                     </a>
 
                                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -167,16 +168,16 @@
                             <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                                 <nav>
                                     <ul>
-                                        <li class="hot-deals"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-hot.svg') }}" alt="hot deals" /><a href="shop-grid-right.html">Hot Deals</a></li>
+                                        {{-- <li class="hot-deals"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-hot.svg') }}" alt="hot deals" /><a href="shop-grid-right.html">Hot Deals</a></li> --}}
                                         <li>
-                                            <a class="active" href="/">Home</a>
+                                            <a class="active" href="{{ url('home') }}">Home</a>
                                             
                                         </li>
                                         <li>
                                             <a href="page-about.html">About</a>
                                         </li>
                                         <li>
-                                            <a href="shop-grid-right.html">Shop</a>   
+                                            <a href="shop-grid-right.html">Toko</a>   
                                         </li>
                                         <li>
                                             <a href="#">Vendors <i class="fi-rs-angle-down"></i></a>
@@ -189,7 +190,7 @@
                                                 <li><a href="vendor-guide.html">Vendor Guide</a></li>
                                             </ul>
                                         </li>
-                                        <li class="position-static">
+                                        {{-- <li class="position-static">
                                             <a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
                                             <ul class="mega-menu">
                                                 <li class="sub-mega-menu sub-mega-menu-width-22">
@@ -250,7 +251,7 @@
                                                     </div>
                                                 </li>
                                             </ul>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                             <a href="blog-category-grid.html">Blog</a>
                                         </li>

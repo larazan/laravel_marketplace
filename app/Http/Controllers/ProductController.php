@@ -316,20 +316,23 @@ class ProductController extends Controller
 
 		$page = preg_replace('/[^0-9]/u', '', $request->get('page'));
     	$perpage = preg_replace('/[^0-9]/u', '', $request->get('size'));
+		$pricemin = preg_replace('/[^0-9]/u', '', $request->get('pricemin'));
+		$pricemax = preg_replace('/[^0-9]/u', '', $request->get('pricemax'));
 		// $perpage = 15;
 		$keyword = strtoupper($request->get('keyword'));
 		$pattern = '/[^a-zA-Z0-9 !@#$%^&*\/\.\,\(\)-_:;?\+=]/u';
         $search = preg_replace($pattern, '', $keyword);
 
+		$id_kategori = $request->get('id_kategori');
+
 		$sort = 0;
 		$deductor = ($sort == 0)? 2 : 1;
 		// $deductor = 1;
 		$start = ($page - 1) * $perpage;
-
 		if($page >= 0){
-			$result = $m_product->loadProduct($start,$perpage, null, false);
-
-			$total = $m_product->loadProduct($start,$perpage, null, true);
+			$result = $m_product->loadProduct($start,$perpage, $search, false, null, null, null, $id_kategori, null, $pricemin, $pricemax);
+			
+			$total = $m_product->loadProduct($start,$perpage, $search, true, null, null, null, $id_kategori, null, $pricemin, $pricemax);
 		}else{
 			$result = [];
             $total = 0;
@@ -339,7 +342,7 @@ class ProductController extends Controller
 
 		$rowStart = ($deductor == 2)? ($start + $perpage + 1) : ($start + 1);
 		$rowEnd = ($rowStart + count($result)) - 1;
-		$rowTotal = (($total >= $perpage && $deductor == 2)? ($total + $perpage) : $total);
+		$rowTotal = (($total > $perpage && $deductor == 2)? ($total + $perpage) : $total);
 		$total_page = ceil($rowTotal / $perpage);
 
 		$pagination = [
@@ -367,6 +370,8 @@ class ProductController extends Controller
 
 	public function detail_produk($slug)
 	{
+		// $user = Auth::user();
+		// dd($user); die();
 		$product = Product::active()->where('slug', $slug)->firstOrFail();
 		$product_image = ProductImage::where('product_id', $product->id)->get();
 

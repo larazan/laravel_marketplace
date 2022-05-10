@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\ProductInventory;
 
 use Illuminate\Support\Facades\Session; 
@@ -231,4 +232,9 @@ class CartController extends Controller
 
 		return redirect('carts');
     }
+
+	public function addProduct($id, Request $request)
+	{
+		dd($id);
+	}
 }

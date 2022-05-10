@@ -51,6 +51,7 @@ use App\Http\Controllers\Dashboard\ShopController as DShop;
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/produk/{id?}', [HomeController::class, 'index'])->name('home');
 
 // require_once(__DIR__.'/frontend/auth.php');
 
@@ -58,6 +59,7 @@ Route::get('/products', [Product::class, 'index']);
 Route::get('/product/{slug}', [Product::class, 'show']);
 Route::get('/products/quick-view/{slug}', [Product::class, 'quickView'])->name('quick-view');
 Route::get('/produk/json_grid', [Product::class, 'loadBarang'])->name('json_grid');
+Route::get('/produk/{id?}', [HomeController::class, 'index'])->name('home');
 Route::get('/produk/detail_produk/{slug}', [Product::class, 'detail_produk'])->name('detail_produk');
 
 Route::get('/vendors', [Shop::class, 'index']);
@@ -68,6 +70,14 @@ Route::get('/carts', [CartController::class, 'index']);
 Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
 Route::post('/carts', [CartController::class, 'store']);
 Route::post('/carts/update', [CartController::class, 'update']);
+
+Route::group(
+	['prefix' => 'wishlist', 'middleware' => ['auth']],
+	function () {
+		Route::get('/', [FavoriteController::class , 'index']);
+		Route::post('/add-product', [FavoriteController::class , 'addProduct'])->name('add-product');
+	}
+);
 
 // Route::get('orders/checkout', [Order::class, 'checkout']);
 // Route::post('orders/checkout', [Order::class, 'doCheckout']);
@@ -196,12 +206,7 @@ Route::group(
 
 Route::get('/', [HomeController::class, 'index']);
 
-// Route::group(
-// 	['prefix' => 'produk', 'middleware' => ['auth']],
-// 	function () {
-// 		Route::get('json_grid', [Product::class , 'loadBarang']);
-// 	}
-// );
+
 
 Route::post('ckeditor', [CkeditorFileUploadController::class, 'store'])->name('ckeditor.upload');
 

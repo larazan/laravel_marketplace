@@ -5,7 +5,7 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <a href="{{ url('home') }}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
                 <!-- <span></span> <a href="shop-grid-right.html">Recipes</a> <span></span> Best smartwatch 2021: the top wearables you can buy today -->
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="col-lg-4-5">
                 <div class="shop-product-fillter">
                     <div class="totall-product">
-                        <p>We found <strong class="text-brand">29</strong> items for you!</p>
+                        {{-- <p>We found <strong class="text-brand">29</strong> items for you!</p> --}}
                     </div>
                     <div class="sort-by-product-area">
                         <div class="sort-by-cover mr-10">

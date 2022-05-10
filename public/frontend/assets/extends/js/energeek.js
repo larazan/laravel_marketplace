@@ -4,7 +4,7 @@ var preventLeaving = function () {
 	}
 }
 
-var helpCurrency = function(value='', logo_currency='', pemisah='.', pemisah_sen=',', end='00') {
+var helpCurrency2 = function(value='', logo_currency='', pemisah='.', pemisah_sen=',', end='') {
 	value = String(value);
 	if(value == '' || value == 'null'){
 		value = '0';
@@ -18,9 +18,11 @@ var helpCurrency = function(value='', logo_currency='', pemisah='.', pemisah_sen
 
 	if(split_value.length > 1){
 		if(split_value[1].length == 1){
-			end = pemisah_sen+split_value[1]+'0';
+			// end = pemisah_sen+split_value[1]+'0';
+			end = '';
 		}else{
-			end = pemisah_sen+split_value[1];
+			// end = pemisah_sen+split_value[1];
+			end = '';
 		}
 	}
 

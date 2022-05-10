@@ -7,7 +7,7 @@
             <!-- MAIN SLIDES -->
             <div class="product-image-slider">
                 @foreach ($image as $item)
-                    <figure class="border-radius-10">
+                    <figure class="border-radius-10" style="display: flex;justify-content: center;">
                         <img src="{{url('/storage/'.$item->medium) }}" alt="product image" />
                     </figure>
                 @endforeach
