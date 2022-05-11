@@ -202,13 +202,15 @@
             }
         }
 
-        if(pageNumber != lastPageNumber){
-            lastPageNumber = pageNumber;
-            load_data = true;
-        }
 
         if(pagekeyword != lastPageKeyword){
             lastPageKeyword = pagekeyword;
+            load_data = true;
+            pageNumber = 1;
+        }
+
+        if(pageNumber != lastPageNumber){
+            lastPageNumber = pageNumber;
             load_data = true;
         }
 

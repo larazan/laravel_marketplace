@@ -11,7 +11,7 @@
                         </div>
                         <div class="header-right">
                             <div class="search-style-2">
-                                <form role="form" action="" onsubmit="return false" method="post"">
+                                <form role="form" action="" onsubmit="return false" method="post">
                                     <select class="select-active">
                                         <option>All Categories</option>
                                         <option>Milks and Dairies</option>
@@ -32,19 +32,19 @@
                             <div class="header-action-right">
 								<div class="header-action-2">
 																
-									<div class="header-action-icon-2">
+									{{-- <div class="header-action-icon-2">
 										<a href="shop-compare.html">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-compare.svg') }}" />
 											<span class="pro-count blue">3</span>
 										</a>
 										<a href="shop-compare.html"><span class="lable ml-0">Compare</span></a>
-									</div>
+									</div> --}}
 									<div class="header-action-icon-2">
-										<a href="shop-wishlist.html">
+										<a href="{{ url('wishlist') }}">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
 											<span class="pro-count blue">6</span>
 										</a>
-										<a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
+										<a href="{{ url('wishlist') }}"><span class="lable">Wishlist</span></a>
 									</div>
 									<div class="header-action-icon-2">
 										<a class="mini-cart-icon" href="shop-cart.html">
@@ -102,7 +102,7 @@
                         <div class="header-nav d-none d-lg-flex">
                             <div class="main-categori-wrap d-none d-lg-block">
                                 <a class="categories-button-active" href="#">
-                                    <span class="fi-rs-apps"></span> <span class="et">Browse</span> All Categories
+                                    <span class="fi-rs-apps"></span> <span class="et">Telusuri</span> Semua Kategori
                                     <i class="fi-rs-angle-down"></i>
                                 </a>
                                 <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
