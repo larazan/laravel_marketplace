@@ -1,3 +1,6 @@
+@php
+    $jml_wishlist = \App\Models\Favorite::where('user_id', Auth::user()->id)->get()->count();
+@endphp
 <header class="header-area header-style-1 header-height-2">
             <div class="mobile-promotion">
                 <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
@@ -7,7 +10,7 @@
                 <div class="container">
                     <div class="header-wrap">
                         <div class="logo logo-width-1">
-                            <a href="/"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                            <a href="/"><img src="{{ asset('frontend/assets/imgs/sorgumku.svg') }}"  alt="logo" /></a>
                         </div>
                         <div class="header-right">
                             <div class="search-style-2">
@@ -42,7 +45,10 @@
 									<div class="header-action-icon-2">
 										<a href="{{ url('wishlist') }}">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-											<span class="pro-count blue">6</span>
+                                            @if ($jml_wishlist > 0)
+                                                <span class="pro-count blue">{{ $jml_wishlist }}</span>
+                                            @endif
+											
 										</a>
 										<a href="{{ url('wishlist') }}"><span class="lable">Wishlist</span></a>
 									</div>

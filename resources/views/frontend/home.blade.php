@@ -553,13 +553,13 @@
     function addWishlist(id)
     {
         Swal.fire({
-        title: 'Tambahkan ke Wishlist?',
-        text: "Ayo tambahkan produk kesayanganu sekarang..",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya'
+            title: 'Tambahkan ke Wishlist?',
+            text: "Ayo tambahkan produk kesayanganu sekarang..",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
         }).then((result) => {
         if (result.isConfirmed) {
             $.ajaxSetup({
