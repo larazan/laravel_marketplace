@@ -11,19 +11,19 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable=['user_id', 'name','slug', 'description','original','small'];
+    protected $fillable=['user_id', 'name','slug', 'description','original', 'medium', 'small'];
 	public const UPLOAD_DIR = 'uploads/shops';
 
-    public const ACTIVE = 'active';
-	public const INACTIVE = 'inactive';
+    public const ACTIVE = 1;
+	public const INACTIVE = 2;
 
 	public const EXTRA_LARGE = '1920x643';
 	public const MEDIUM = '312x400';
 	public const SMALL = '135x75';
 
 	public const STATUSES = [
-		self::ACTIVE => 'Active',
-		self::INACTIVE => 'Inactive',
+		self::ACTIVE => 'active',
+		self::INACTIVE => 'inactive',
 	];
 
 	/**
@@ -40,6 +40,16 @@ class Shop extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+	/**
+	 * Define relationship with the Shipment
+	 *
+	 * @return void
+	 */
+	public static function statuses()
+	{
+		return self::STATUSES;
+	}
 
     /**
 	 * Scope active product

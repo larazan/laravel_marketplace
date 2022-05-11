@@ -15,6 +15,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('dashboard/assets/imgs/theme/favicon.svg') }}" />
         <!-- Template CSS -->
         <link href="{{ URL::asset('dashboard/assets/css/main.css?v=1.1') }}" rel="stylesheet" type="text/css" />
+        @yield('style')
     </head>
 
     <body>

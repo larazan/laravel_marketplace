@@ -20,6 +20,7 @@ class Product extends Model
 		'name',
 		'slug',
 		'price',
+		'discount',
 		'weight',
 		'length',
 		'width',
@@ -130,6 +131,11 @@ class Product extends Model
 	public function productImages()
 	{
 		return $this->hasMany('App\Models\ProductImage')->orderBy('id', 'DESC');
+	}
+
+	public function productReview()
+	{
+		return $this->hasMany('App\Models\ProductReview');
 	}
 
 	/**

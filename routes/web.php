@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SubscribeController;
+use App\Http\Controllers\Admin\SettingController;
 
 
 use App\Http\Controllers\CkeditorFileUploadController;
@@ -34,7 +35,7 @@ use App\Http\Controllers\Dashboard\OrderController as DOrder;
 use App\Http\Controllers\Dashboard\ProductController as DProduct;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\ProfileController;
-use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\SettingController as DSetting;
 use App\Http\Controllers\Dashboard\ShopController as DShop;
 
 /*
@@ -138,6 +139,7 @@ Route::group(
 		Route::post('shop/store', [DShop::class, 'store']);
 		Route::get('shop/edit', [DShop::class, 'edit']);
 		Route::put('shop/update', [DShop::class, 'update'])->name('updateShop');
+
 	}
 );
 
@@ -189,6 +191,12 @@ Route::group(
         Route::resource('category_articles', CategoryArticleController::class);
 
 		Route::get('subscribes', [SubscribeController::class, 'index']);
+
+		Route::get('setting', [SettingController::class, 'index']);
+		Route::get('setting/create', [SettingController::class, 'create']);
+		Route::post('setting/store', [SettingController::class, 'store']);
+		Route::get('setting/edit', [SettingController::class, 'edit']);
+		Route::put('setting/update', [SettingController::class, 'update'])->name('updateSetting');
 	}
 );
 

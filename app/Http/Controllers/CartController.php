@@ -31,7 +31,7 @@ class CartController extends Controller
     public function index()
     {
         $items = \Cart::getContent();
-
+		dd($items);
         // var_dump($items); exit;
 		$this->data['items'] =  $items;
 

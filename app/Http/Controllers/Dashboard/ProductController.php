@@ -69,10 +69,8 @@ class ProductController extends Controller
 		// 	return back()->withErrors($exception->getMessage());
 		// }
 		$shop =  $shop = Shop::where('user_id', Auth::id())->first();
-
 		if (!$shop) {
-			// throw new \App\Exceptions\NoShopException('Create Shop first');
-			Session::flash('error', 'Create Shop first');
+			Session::flash('error', 'Buat Toko terlebih dulu <a href="'. url('/user/shop') .'">disini</a>');
 			return redirect('user/products');
 		}
 

@@ -330,7 +330,7 @@
                                             <div class="product-card-bottom">
                                                 <div class="product-price">
                                                     <span>${harga}</span>
-                                                    <span class="old-price">$32.8</span>
+                                                   
                                                 </div>
                                                 <div class="add-cart">
                                                     <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Beli </a>

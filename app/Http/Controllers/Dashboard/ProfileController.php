@@ -122,8 +122,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $id = Auth::id();
         $params = $request->except('_token');
 
         $image = $request->file('image');
@@ -180,14 +181,15 @@ class ProfileController extends Controller
             return redirect()->back()->with("error","New Password cannot be same as your current password.");
         }
 
-        $validatedData = $request->validate([
+        $request->validate([
             'current-password' => 'required',
             'new-password' => 'required|string|min:8|confirmed',
         ]);
 
         //Change Password
         $user = Auth::user();
-        $user->password = bcrypt($request->get('new-password'));
+        // $user->password = bcrypt($request->get('new-password'));
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return redirect()->back()->with("success","Password successfully changed!");

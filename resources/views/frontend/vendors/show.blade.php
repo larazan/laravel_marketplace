@@ -21,7 +21,7 @@
 
                 <div class="vendor-logo mr-50">
                     @if ($shop->medium)
-                    <img src="{{ asset('storage/'.$shop->medium) }}" alt="{{ $shop->name }}" />
+                    <img src="{{ asset('storage/'.$shop->small) }}" alt="{{ $shop->name }}" />
                     @else
                     <img src="{{ asset('frontend/assets/imgs/vendor/vendor-17.png') }}" alt="{{ $shop->name }}" />
                     @endif
@@ -88,7 +88,7 @@
             <div class="col-lg-4-5">
                 <div class="shop-product-fillter">
                     <div class="totall-product">
-                        <p>We found <strong class="text-brand">29</strong> items for you!</p>
+                        <p>We found <strong class="text-brand">{{ $shop->products->count() }}</strong> items for you!</p>
                     </div>
                     <div class="sort-by-product-area">
                         <div class="sort-by-cover mr-10">

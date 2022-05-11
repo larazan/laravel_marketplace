@@ -200,9 +200,13 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ShopRequest $request, $id)
+    public function update(Request $request)
     {
+        $user_id = Auth::id();
+        $id = Shop::where('user_id', $user_id)->first()->id;
         $params = $request->except('_token');
+
+        // dd($params);
 
         $image = $request->file('image');
 		

@@ -216,6 +216,27 @@
 						</div>
 					</ul>
 				</li>     
+
+				<li  class="has-sub {{ ($currentAdminMenu == 'setting') ? 'active' : ''}}">
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#setting"
+						aria-expanded="false" aria-controls="article">
+						<i class="mdi mdi-newspaper"></i>
+						<span class="nav-text">Setting</span> <b class="caret"></b>
+					</a>
+					<ul  class="collapse {{ ($currentAdminMenu == 'setting') ? 'show' : ''}}"  id="setting"
+						data-parent="#sidebar-menu">
+						<div class="sub-menu">
+							<li class="{{ ($currentAdminSubMenu == 'set') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/setting')}}">
+								<span class="nav-text">Setting</span>
+								</a>
+							</li>
+							
+							
+						</div>
+					</ul>
+				</li>
+
 			</ul>
 		</div>
 	</div>

@@ -17,7 +17,7 @@ class ShopController extends Controller
 
         $this->data['currentAdminMenu'] = 'marketplace';
         $this->data['currentAdminSubMenu'] = 'shop';
-        $this->data['statuses'] = Shop::STATUSES;
+        $this->data['statuses'] = Shop::statuses();
     }
 
     /**
@@ -90,6 +90,7 @@ class ShopController extends Controller
 
         $this->data['shops'] = $shops->toArray();
         $this->data['shop'] = $shop;
+        $this->data['editor1'] = $shop->description;
         return view('admin.shops.form', $this->data);
     }
 
