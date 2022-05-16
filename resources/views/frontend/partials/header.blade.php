@@ -185,7 +185,7 @@
                                         <li>
                                             <a href="shop-grid-right.html">Toko</a>   
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <a href="#">Vendors <i class="fi-rs-angle-down"></i></a>
                                             <ul class="sub-menu">
                                                 <li><a href="vendors-grid.html">Vendors Grid</a></li>
@@ -195,7 +195,7 @@
                                                 <li><a href="vendor-dashboard.html">Vendor Dashboard</a></li>
                                                 <li><a href="vendor-guide.html">Vendor Guide</a></li>
                                             </ul>
-                                        </li>
+                                        </li> --}}
                                         {{-- <li class="position-static">
                                             <a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
                                             <ul class="mega-menu">
