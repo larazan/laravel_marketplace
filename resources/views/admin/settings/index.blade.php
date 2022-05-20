@@ -33,6 +33,24 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="primary">Meta dekripsi</label>
+                                <div class="">
+                                    <h5>
+                                    {{ $meta_description }}
+                                    </h5>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="primary">Meta keyword</label>
+                                <div class="">
+                                    <h5>
+                                    {{ $meta_keyword }}
+                                    </h5>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="primary">Alamat</label>
                                 <div class="">
                                     <h5>

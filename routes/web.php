@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SubscribeController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\LogActivityController;
 
 
 use App\Http\Controllers\CkeditorFileUploadController;
@@ -28,6 +29,8 @@ use App\Http\Controllers\ArticleController as Article;
 use App\Http\Controllers\OrderController as Order;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserSubscribeController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\ShopController as Shop;
 
 use App\Http\Controllers\Dashboard\DashboardController as DDashboard;
@@ -66,6 +69,8 @@ Route::get('/vendors', [Shop::class, 'index']);
 Route::get('/vendor/{slug}', [Shop::class, 'show']);
 Route::get('/vendor/produk_grid', [Shop::class, 'loadBarang'])->name('produk_grid');
 
+Route::get('/tes', [Shop::class, 'tes']);
+
 Route::get('/carts', [CartController::class, 'index']);
 Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
 Route::post('/carts', [CartController::class, 'store']);
@@ -79,7 +84,7 @@ Route::group(
 	}
 );
 
-// Route::get('orders/checkout', [Order::class, 'checkout']);
+Route::get('orders/checkout', [Order::class, 'checkout']);
 // Route::post('orders/checkout', [Order::class, 'doCheckout']);
 // Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
 // Route::post('orders/set-shipping', [Order::class, 'setShipping']);
@@ -101,6 +106,14 @@ Route::get('/blog/{slug}', [Article::class, 'show']);
 Route::post('/subscriber', [UserSubscribeController::class, 'postSubscribe']);
 Route::post('/check-subscriber-email', [UserSubscribeController::class, 'checkSubscriber']);
 Route::post('/add-subscriber-email', [UserSubscribeController::class, 'addSubscriber']);
+
+// Product Review
+Route::resource('/review', ProductReviewController::class);
+Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
+
+// Route::post('/review', [ReviewController::class, 'postReview']);
+// Route::post('/check-reviewer', [ReviewController::class, 'checkReviewer']);
+// Route::post('/add-review', [ReviewController::class, 'addReview']);
 
 Route::get('/info', [HomeController::class, 'info']);
 Route::get('/contact', [HomeController::class, 'contact']);
@@ -197,6 +210,8 @@ Route::group(
 		Route::post('setting/store', [SettingController::class, 'store']);
 		Route::get('setting/edit', [SettingController::class, 'edit']);
 		Route::put('setting/update', [SettingController::class, 'update'])->name('updateSetting');
+	
+		Route::get('logs', [LogActivityController::class, 'index']);
 	}
 );
 

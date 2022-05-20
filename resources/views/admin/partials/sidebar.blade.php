@@ -213,6 +213,11 @@
 								<span class="nav-text">Subscribes</span>
 								</a>
 							</li>
+							<li  class="{{ ($currentAdminSubMenu == 'logs') ? 'active' : ''}}" >
+								<a class="sidenav-item-link" href="{{ url('admin/logs')}}">
+								<span class="nav-text">Log Activity</span>
+								</a>
+							</li>
 						</div>
 					</ul>
 				</li>     

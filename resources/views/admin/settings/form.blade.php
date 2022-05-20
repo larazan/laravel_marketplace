@@ -26,6 +26,13 @@
 							{!! Form::text('title', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
+							{!! Form::label('meta_description', 'Meta deskripsi') !!}
+							{!! Form::text('meta_description', null, ['class' => 'form-control']) !!}
+						</div><div class="form-group">
+							{!! Form::label('meta_keyword', 'Meta Keyword') !!}
+							{!! Form::text('meta_keyword', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
 							{!! Form::label('address', 'Address') !!}
 							{!! Form::text('address', null, ['class' => 'form-control']) !!}
 						</div>

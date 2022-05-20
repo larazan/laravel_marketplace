@@ -68,7 +68,7 @@ class ProductController extends Controller
 		// 	return response("no shop found");
 		// 	return back()->withErrors($exception->getMessage());
 		// }
-		$shop =  $shop = Shop::where('user_id', Auth::id())->first();
+		$shop = Shop::where('user_id', Auth::id())->first();
 		// dd($shop);
 
 		if (!$shop) {
@@ -83,6 +83,7 @@ class ProductController extends Controller
 		$brands = Brand::pluck('name', 'id');
 		$configurableAttributes = $this->_getConfigurableAttributes();
 
+		$this->data['shop_id'] = $shop->id;
 		$this->data['categories'] = $categories->toArray();
 		$this->data['brands'] = $brands;
 		$this->data['product'] = null;
@@ -134,6 +135,8 @@ class ProductController extends Controller
 		);
 
 		if ($product) {
+			// 
+			ProductInventory::updateOrCreate(['product_id' => $product->id], ['qty' => $params['qty']]);
 			Session::flash('success', 'Product has been saved');
 		} else {
 			Session::flash('error', 'Product could not be saved');
@@ -141,6 +144,116 @@ class ProductController extends Controller
 
 		return redirect('user/products/'. $product->id .'/edit/');
     }
+
+	/**
+	 * Generate product variants for the configurable product
+	 *
+	 * @param Product $product product object
+	 * @param array   $params  params
+	 *
+	 * @return void
+	 */
+	private function _generateProductVariants($product, $params)
+	{
+		$configurableAttributes = $this->_getConfigurableAttributes();
+
+		$variantAttributes = [];
+		foreach ($configurableAttributes as $attribute) {
+			$variantAttributes[$attribute->code] = $params[$attribute->code];
+		}
+
+		$variants = $this->_generateAttributeCombinations($variantAttributes);
+		
+        // test
+        // echo '<pre>';
+        // print_r($variants);
+        // exit;
+
+		if ($variants) {
+			foreach ($variants as $variant) {
+				$variantParams = [
+					'parent_id' => $product->id,
+					'user_id' => Auth::user()->id,
+					'shop_id' => Shop::where('user_id', Auth::user()->id)->first()->id,
+					'sku' => $product->sku . '-' .implode('-', array_values($variant)),
+					'type' => 'simple',
+					'name' => $product->name . $this->_convertVariantAsName($variant),
+				];
+                // print_r($variantParams);exit;
+				$variantParams['slug'] = Str::slug($variantParams['name']);
+
+				$newProductVariant = Product::create($variantParams);
+
+				$categoryIds = !empty($params['category_ids']) ? $params['category_ids'] : [];
+				$newProductVariant->categories()->sync($categoryIds);
+
+				$this->_saveProductAttributeValues($newProductVariant, $variant, $product->id);
+			}
+		}
+	}
+
+	private function _generateAttributeCombinations($arrays)
+	{
+		$result = [[]];
+		foreach ($arrays as $property => $property_values) {
+			$tmp = [];
+			foreach ($result as $result_item) {
+				foreach ($property_values as $property_value) {
+					$tmp[] = array_merge($result_item, array($property => $property_value));
+				}
+			}
+			$result = $tmp;
+		}
+		return $result;
+	}
+
+	/**
+	 * Save the product attribute values
+	 *
+	 * @param Product $product         product object
+	 * @param array   $variant         variant
+	 * @param int     $parentProductID parent product ID
+	 *
+	 * @return void
+	 */
+	private function _saveProductAttributeValues($product, $variant, $parentProductID)
+	{
+		foreach (array_values($variant) as $attributeOptionID) {
+			$attributeOption = AttributeOption::find($attributeOptionID);
+		   
+			$attributeValueParams = [
+				'parent_product_id' => $parentProductID,
+				'product_id' => $product->id,
+				'attribute_id' => $attributeOption->attribute_id,
+				'text_value' => $attributeOption->name,
+			];
+
+			ProductAttributeValue::create($attributeValueParams);
+		}
+	}
+
+	/**
+	 * Convert variant attributes as variant name
+	 *
+	 * @param array $variant variant
+	 *
+	 * @return string
+	 */
+	private function _convertVariantAsName($variant)
+	{
+		$variantName = '';
+		
+		foreach (array_keys($variant) as $key => $code) {
+			$attributeOptionID = $variant[$code];
+			$attributeOption = AttributeOption::find($attributeOptionID);
+			
+			if ($attributeOption) {
+				$variantName .= ' - ' . $attributeOption->name;
+			}
+		}
+
+		return $variantName;
+	}
 
 	private function _isProduct($id)
 	{

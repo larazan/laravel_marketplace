@@ -68,18 +68,28 @@ class Shop extends Model
         return $this->hasMany(Product::class, 'shop_id');
     }
 
-	public function loadShop($start, $length, $searchProdukAndUkm='', $count=false, $sort=false, $field=false, $id_ukm=false, $id_kategori=false, $condition=false, $hargaMinimal=false, $hargaMaksimal=false, $searchProduk='', $id_user='', $id_kecamatan='',  $kategori_produk=null, $id_jenis=false, $product_type = 0)
+	public function loadShop($start, $length, $slug='', $count=false)
 	{
 		$result = DB::table(DB::raw('products p'))
-		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, brands.name as nama_kategori, img.medium as gambar"))
-		->join('product_brands', 'product_brands.product_id', '=', 'p.id')
-		->join('brands', 'brands.id', '=', 'product_brands.brand_id')
-		->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id, medium FROM product_images GROUP BY product_id, medium  )
+		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, p.sku, brands.name as nama_kategori, product_images.medium as gambar, shops.name as nama_toko"))
+		->leftJoin('product_brands', 'product_brands.product_id', '=', 'p.id')
+		->leftJoin('product_categories', 'product_categories.product_id', '=', 'p.id')
+		->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
+		->leftJoin('brands', 'brands.id', '=', 'product_brands.brand_id')
+		->leftJoin('shops', 'shops.user_id', '=', 'p.user_id')
+		// ->leftJoin('shops', 'shops.id', '=', 'p.shop_id')
+		->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
                img'), 
         function($join)
         {
            $join->on('p.id', '=', 'img.product_id');
-        });
+        })
+		->join('product_images', 'product_images.id', 'img.max_id')
+		->where('p.status', '1');
+
+		if (!empty($slug)) {
+			$result = $result->where('shops.slug', $slug);
+		}
 
 		if($count == true){
             $result = $result->count();

@@ -87,6 +87,9 @@ class BrandController extends Controller
 			Session::flash('error', 'Brand could not be created');
 		}
 
+        // add log
+        \LogActivity::addToLog('add brand');
+
 		return redirect('admin/brands');
     }
 

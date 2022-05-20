@@ -24,12 +24,12 @@
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
                                         <h1 class="mb-5">Login</h1>
-                                        <p class="mb-30">Don't have an account? <a href="{{ route('register') }}">Create here</a></p>
+                                        <p class="mb-30">Belum punya akun? <a href="{{ route('register') }}">Daftar akun</a></p>
                                     </div>
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="text" required="" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('E-Mail Address') }}" />
+                                            <input type="text" required="" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Alamat Email" />
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -52,7 +52,7 @@
                                                     <label class="form-check-label" for="exampleCheckbox1"><span>Remember me</span></label>
                                                 </div>
                                             </div>
-                                            <a class="text-muted" href="{{ route('password.request') }}">Forgot password?</a>
+                                            <a class="text-muted" href="{{ route('password.request') }}">Lupa password?</a>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>

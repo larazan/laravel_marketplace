@@ -25,6 +25,8 @@ class SettingController extends Controller
         $setting = Settings::findOrFail($id);
         if ($setting) {
             $title = $setting->title;
+            $meta_description = $setting->meta_description;
+            $meta_keyword = $setting->meta_keyword;
             $address = $setting->address;
             $phone = $setting->phone;
             $email = $setting->email;
@@ -35,6 +37,8 @@ class SettingController extends Controller
             $instagram = $setting->instagram;
         } else {
             $title = null;
+            $meta_description = null;
+            $meta_keyword = null;
             $address = null;
             $phone = null;
             $email = null;
@@ -46,6 +50,8 @@ class SettingController extends Controller
         }
 
         $this->data['title'] = $title;
+        $this->data['meta_description'] = $meta_description;
+        $this->data['meta_keyword'] = $meta_keyword;
         $this->data['address'] = $address;
         $this->data['phone'] = $phone;
         $this->data['email'] = $email;
@@ -131,6 +137,8 @@ class SettingController extends Controller
 
         if ($setting) {
             $title = $setting->title;
+            $meta_description = $setting->meta_description;
+            $meta_keyword = $setting->meta_keyword;
             $address = $setting->address;
             $phone = $setting->phone;
             $email = $setting->email;
@@ -141,6 +149,8 @@ class SettingController extends Controller
             $instagram = $setting->instagram;
         } else {
             $title = null;
+            $meta_description = null;
+            $meta_keyword = null;
             $address = null;
             $phone = null;
             $email = null;

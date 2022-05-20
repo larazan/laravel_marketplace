@@ -276,6 +276,10 @@ class Product extends Model
 		return $this->type == 'simple';
 	}
 
+	public function getReview(){
+        return $this->hasMany('App\Models\ProductReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');
+    }
+
 	public function loadProduct($start, $length, $searchProdukAndUkm='', $count=false, $sort=false, $field=false, $id_ukm=false, $id_kategori=false, $condition=false, $hargaMinimal=false, $hargaMaksimal=false, $searchProduk='', $id_user='', $id_kecamatan='',  $kategori_produk=null, $id_jenis=false, $product_type = 0)
 	{
 		// DB::getQueryLog();

@@ -152,7 +152,19 @@
 
 @push('scripts')
 <script>
-    var dataPagination, pageNumber=1, lastPageNumber, lastPageSize, lastPageKeyword, lastPageKategori, lastPageJenis, lastPageKecamatan, lastPageSort, lastProductType, lastPriceMin, lastPriceMax, delayTime=400;
+    var dataPagination, 
+        pageNumber=1, 
+        lastPageNumber, 
+        lastPageSize, 
+        lastPageKeyword, 
+        lastPageKategori, 
+        lastPageJenis, 
+        lastPageKecamatan, 
+        lastPageSort, 
+        lastProductType, 
+        lastPriceMin, 
+        lastPriceMax, 
+        delayTime=400;
     const hostName = window.location.origin,
     pecah = window.location.pathname.split("/");
     var base_url;
@@ -163,9 +175,7 @@
             base: { label: ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"], shape: ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"] },
         },
     };
-    $(document).ready(function(){
-       
-        // var ajaxUrl = baseUrl+'/produk/',
+    $(document).ready(function(){       
         loadBarang();
     });
     function loadBarang()
@@ -175,15 +185,17 @@
         let lastPageSize = 15;
         let size = 15;
         var ajaxSource = '{{ route("produk_grid") }}';
-        let dataSource = ajaxSource+'?keyword='+keyword+'&page='+pageNumber+'&size='+lastPageSize+'&pricemin='+lastPriceMin+'&pricemax='+lastPriceMax+'&product-type='+product_type;
+        let dataSource = ajaxSource+'?keyword='+keyword+'&page='+pageNumber+'&size='+lastPageSize;
+        console.log(dataSource);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        
         $.ajax({
             type:"GET",
-            url: dataSource+'?utm_source=product',
+            url: dataSource,
             beforeSend: function() {
                 // preventLeaving();
                 $('#preloader-active').show();
@@ -195,24 +207,27 @@
                 console.log(base_url)
                 var template = "";
                 renderPagination(obj.data.meta.pagination);
+
                 if(obj.data.barang.length > 0){
                     for (var i = 0; i < obj.data.barang.length; i++) {
                         let rowData = obj.data.barang[i];
-                        var img =  base_url+'/public/storage/'+rowData['gambar'];
+                        var img =  base_url+'storage/'+rowData['gambar'];
+                        var imgZonk = base_url+'frontend/assets/imgs/shop/product-1-2.jpg';
+                        var slugUrl = base_url+'product/'+rowData['slug'];
+                        var harga = helpCurrency2(rowData['price'], 'Rp');
                         template += `
                         <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="shop-product-right.html">
-                                            <img class="default-img" src="${img}" alt="" />
-                                                    <img class="hover-img" src="{{ asset('frontend/assets/imgs/shop/product-1-2.jpg') }}" alt="" />
-                                                </a>
+                                        <a href="${slugUrl}">
+                                            <img class="default-img" src="${rowData['gambar'] ? img : imgZonk}" alt="" />
+                                        </a>
                                             </div>
                                             <div class="product-action-1">
-                                                <a aria-label="Add To Wishlist" class="action-btn" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                                <a aria-label="Tambahkan ke wishlist" class="action-btn" onclick='addWishlist("${rowData['id_produk']}")'><i class="fi-rs-heart"></i></a>
                                                 <a aria-label="Compare" class="action-btn" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                                <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal" onclick='quickViewModal("${rowData['slug']}")'><i class="fi-rs-eye"></i></a>
+                                                <a aria-label="Lihat Detail" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal" onclick='quickViewModal("${rowData['slug']}")'><i class="fi-rs-eye"></i></a>
                                             </div>
                                             
                                         </div>
@@ -220,7 +235,7 @@
                                             <div class="product-category">
                                                 <a href="shop-grid-right.html">${rowData['nama_kategori']}</a>
                                             </div>
-                                            <h2><a href="shop-product-right.html">${rowData['nama_produk']}</a></h2>
+                                            <h2><a href="${slugUrl}">${rowData['nama_produk']}</a></h2>
                                             <div class="product-rate-cover">
                                                 <div class="product-rate d-inline-block">
                                                     <div class="product-rating" style="width: 90%"></div>
@@ -228,15 +243,15 @@
                                                 <span class="font-small ml-5 text-muted"> (4.0)</span>
                                             </div>
                                             <div>
-                                                <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>
+                                                <span class="font-small text-muted">${rowData['sku']} - <a href="vendor-details-1.html">${rowData['nama_toko']}</a></span>
                                             </div>
                                             <div class="product-card-bottom">
                                                 <div class="product-price">
-                                                    <span>${helpCurrency(rowData['price'], 'Rp ', '.')}</span>
+                                                    <span>${harga}</span>
                                                     <span class="old-price">$32.8</span>
                                                 </div>
                                                 <div class="add-cart">
-                                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Beli </a>
                                                 </div>
                                             </div>
                                         </div>

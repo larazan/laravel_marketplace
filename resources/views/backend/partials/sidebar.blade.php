@@ -24,7 +24,15 @@
                     <li class="menu-item {{ ($currentDashboardMenu == 'orders') ? 'active' : ''}}">
                         <a class="menu-link" href="{{ url('user/orders')}}">
                             <i class="icon material-icons md-shopping_cart"></i>
-                            <span class="text">Daftar Order</span>
+                            <span class="text">Order Masuk</span>
+                        </a>
+                        
+                    </li>
+
+                    <li class="menu-item {{ ($currentDashboardMenu == 'orders') ? 'active' : ''}}">
+                        <a class="menu-link" href="{{ url('user/orders')}}">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Order Keluar</span>
                         </a>
                         
                     </li>
@@ -54,7 +62,7 @@
                     
                    
                 </ul>
-                <hr />
+                <!-- <hr />
                 <ul class="menu-aside">
                     <li class="menu-item {{ ($currentDashboardMenu == 'settings') ? 'active' : ''}}">
                         <a class="menu-link" href="{{ url('user/settings')}}">
@@ -63,7 +71,7 @@
                         </a>
                     </li>
                     
-                </ul>
+                </ul> -->
                 <br />
                 <br />
             </nav>

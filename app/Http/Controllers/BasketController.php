@@ -7,22 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\ProductInventory;
+use App\Models\Basket;
 
 use Illuminate\Support\Facades\Session; 
 use App\Exceptions\OutOfStockException;
 
-class CartController extends Controller
+class BasketController extends Controller
 {
-    /**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
     /**
      * Display a listing of the resource.
      *
@@ -30,11 +21,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $items = \Cart::getContent();
-		// dd($items);
-		$this->data['items'] =  $items;
-
-		return $this->loadTheme('carts.index', $this->data);
+        //
     }
 
     /**
@@ -56,12 +43,11 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $params = $request->except('_token');
-        // var_dump($params);exit;
 		
 		$product = Product::findOrFail($params['product_id']);
 		$slug = $product->slug;
 
-		$attributes = [];
+        $attributes = [];
 		if ($product->configurable()) {
 			$product = Product::from('products as p')
 				->whereRaw(
@@ -94,8 +80,7 @@ class CartController extends Controller
 			$attributes['color'] = $params['color'];
 		}
 
-		$itemQuantity =  $this->_getItemQuantity(md5($product->id)) + $params['qty'];
-		$this->_checkProductInventory($product, $itemQuantity);
+		$this->_checkProductInventory($product, $params['qty']);
 		
 		$item = [
 			'id' => md5($product->id),
@@ -106,11 +91,43 @@ class CartController extends Controller
 			'associatedModel' => $product,
 		];
 
-		\Cart::add($item);
-
-		Session::flash('success', 'Product '. $item['name'] .' has been added to cart');
+        if (Basket::create($item)) {
+            Session::flash('success', 'Product '. $item['name'] .' has been added to cart');
+        } else {
+            Session::flash('error', 'Product '. $item['name'] .' couldnt been added to cart');
+        }
+        
 		return redirect('/product/'. $slug);
     }
+
+	/**
+	 * Check product inventory
+	 *
+	 * @param Product $product      product object
+	 * @param int     $itemQuantity qty
+	 *
+	 * @return int
+	 */
+	private function _checkProductInventory($product, $itemQuantity)
+	{
+		if ($product->productInventory->qty < $itemQuantity) {
+			throw new \App\Exceptions\OutOfStockException('The product '. $product->sku .' is out of stock');
+		}
+	}
+
+	/**
+	 * Get cart item by card item id
+	 *
+	 * @param string $cartID cart ID
+	 *
+	 * @return array
+	 */
+	private function _getCartItem($cartID)
+	{
+		$items = \Cart::getContent();
+
+		return $items[$cartID];
+	}
 
     /**
      * Display the specified resource.
@@ -133,59 +150,6 @@ class CartController extends Controller
     {
         //
     }
-
-    /**
-	 * Get total quantity per item in the cart
-	 *
-	 * @param string $itemId item ID
-	 *
-	 * @return int
-	 */
-	private function _getItemQuantity($itemId)
-	{
-		$items = \Cart::getContent();
-		$itemQuantity = 0;
-		if ($items) {
-			foreach ($items as $item) {
-				if ($item->id == $itemId) {
-					$itemQuantity = $item->quantity;
-					break;
-				}
-			}
-		}
-
-		return $itemQuantity;
-	}
-
-	/**
-	 * Check product inventory
-	 *
-	 * @param Product $product      product object
-	 * @param int     $itemQuantity qty
-	 *
-	 * @return int
-	 */
-	private function _checkProductInventory($product, $itemQuantity)
-	{
-		if ($product->productInventory->qty < $itemQuantity) {
-			throw new OutOfStockException('The product '. $product->sku .' is out of stock');
-		}
-	}
-
-	/**
-	 * Get cart item by card item id
-	 *
-	 * @param string $cartID cart ID
-	 *
-	 * @return array
-	 */
-	private function _getCartItem($cartID)
-	{
-		$items = \Cart::getContent();
-
-		return $items[$cartID];
-	}
-
 
     /**
      * Update the specified resource in storage.
@@ -227,13 +191,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        \Cart::remove($id);
-
-		return redirect('carts');
+        //
     }
-
-	public function addProduct($id, Request $request)
-	{
-		dd($id);
-	}
 }

@@ -16,9 +16,11 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->text('meta_description');
+            $table->text('meta_keyword');
             $table->longText('description');
             $table->text('short_des');
-            // $table->string('logo')->nullable();
+            $table->string('logo')->nullable();
             $table->string('original')->nullable();
             $table->string('medium')->nullable();
             $table->string('small')->nullable();

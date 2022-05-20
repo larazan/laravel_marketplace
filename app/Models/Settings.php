@@ -9,7 +9,7 @@ class Settings extends Model
 {
     use HasFactory;
 
-    protected $fillable=['short_des','description','photo','address','phone','email', 'twitter', 'facebook', 'instagram', 'logo', 'original', 'medium', 'small'];
+    protected $fillable=['title', 'meta_description', 'meta_keyword', 'short_des','description','photo','address','phone','email', 'twitter', 'facebook', 'instagram', 'logo', 'original', 'medium', 'small'];
 
     public const UPLOAD_DIR = 'uploads/setting';
 

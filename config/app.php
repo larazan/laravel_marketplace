@@ -242,6 +242,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'General' => App\Helpers\General::class,
+        'LogActivity' => App\Helpers\LogActivity::class,
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,

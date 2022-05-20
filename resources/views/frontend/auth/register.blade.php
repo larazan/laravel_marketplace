@@ -7,7 +7,7 @@
         <div class="container">
             <div class="breadcrumb">
                 <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                <span></span> Pages <span></span> My Account
+                <span></span> Register
             </div>
         </div>
     </div>
@@ -20,13 +20,13 @@
                             <div class="login_wrap widget-taber-content background-white">
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
-                                        <h1 class="mb-5">Create an Account</h1>
-                                        <p class="mb-30">Already have an account? <a href="{{ route('login') }}">Login</a></p>
+                                        <h1 class="mb-5">Buat Akun</h1>
+                                        <p class="mb-30">sudah punya akun? <a href="{{ route('login') }}">Login</a></p>
                                     </div>
                                     <form method="POST" action="{{ route('register') }}">
                                     @csrf
                                         <div class="form-group">
-                                            <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus placeholder="First name" />
+                                            <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus placeholder="Nama depan" />
                                             @error('first_name')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
 											@enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus placeholder="Last name" />
+                                            <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus placeholder="Nama belakang" />
                                             @error('last_name')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>
@@ -42,7 +42,7 @@
 											@enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email" />
+                                            <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Alamat email" />
                                             @error('email')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
 											@enderror
                                         </div>
                                         <div class="form-group">
-                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password" />
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Konfirmasi password" />
                                         </div>
                                         
                                         
@@ -69,7 +69,7 @@
                                                     <label class="form-check-label" for="exampleCheckbox12"><span>I agree to terms &amp; Policy.</span></label>
                                                 </div>
                                             </div>
-                                            <a href="page-privacy-policy.html"><i class="fi-rs-book-alt mr-5 text-muted"></i>Lean more</a>
+                                            <!-- <a href="page-privacy-policy.html"><i class="fi-rs-book-alt mr-5 text-muted"></i>Lean more</a> -->
                                         </div>
                                         <div class="row">
                                             <div class="form-group mb-30">
