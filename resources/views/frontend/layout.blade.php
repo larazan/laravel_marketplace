@@ -16,8 +16,12 @@
         <!-- Template CSS -->
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/slider-range.css') }}" />
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css?v=4.0') }}" />
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}" />
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/sweetalert2.min.css') }}" />
     </head>
+
+    <div id="alert-container">
+    </div>
 
     <body>
     @include('frontend.partials.modal')
@@ -26,6 +30,7 @@
     @yield('content')
 
     @include('frontend.partials.footer')
+    <div class="preloader-loading"></div>
     
     <!-- Preloader Start -->
     <div id="preloader-active">

@@ -69,7 +69,12 @@ Route::get('/vendor/produk_grid', [Shop::class, 'loadBarang'])->name('produk_gri
 Route::get('/carts', [CartController::class, 'index']);
 Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
 Route::post('/carts', [CartController::class, 'store']);
+Route::post('/carts/add-cart', [CartController::class, 'addCart'])->name('add-cart');
 Route::post('/carts/update', [CartController::class, 'update']);
+Route::post('/carts/list-produk', [CartController::class, 'listProduk'])->name('list-produk');
+Route::post('/carts/delete-list-cart', [CartController::class, 'deleteList'])->name('delete-list-cart');
+Route::post('/carts/edit-qty-cart', [CartController::class, 'editQty'])->name('edit-qty-cart');
+
 
 Route::group(
 	['prefix' => 'wishlist', 'middleware' => ['auth']],

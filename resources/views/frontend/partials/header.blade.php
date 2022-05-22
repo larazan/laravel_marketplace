@@ -1,5 +1,9 @@
 @php
-    $jml_wishlist = \App\Models\Favorite::where('user_id', Auth::user()->id)->get()->count();
+    if (isset(Auth::user()->id)) {
+        $jml_wishlist = \App\Models\Favorite::where('user_id', Auth::user()->id)->get()->count();
+        $jml_basket = \App\Models\Baskets::where('user_id', Auth::user()->id)->get()->whereNull('deleted_at')->count();
+    }
+    
 @endphp
 <header class="header-area header-style-1 header-height-2">
             <div class="mobile-promotion">
@@ -45,8 +49,10 @@
 									<div class="header-action-icon-2">
 										<a href="{{ url('wishlist') }}">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-                                            @if ($jml_wishlist > 0)
-                                                <span class="pro-count blue">{{ $jml_wishlist }}</span>
+                                            @if (isset(Auth::user()->id))
+                                                @if ($jml_wishlist > 0)
+                                                    <span class="pro-count blue">{{ $jml_wishlist }}</span>
+                                                @endif
                                             @endif
 											
 										</a>
@@ -55,9 +61,13 @@
 									<div class="header-action-icon-2">
 										<a class="mini-cart-icon" href="shop-cart.html">
 											<img alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-											<span class="pro-count blue">2</span>
+                                            @if (isset(Auth::user()->id))
+                                                @if ($jml_basket > 0)
+                                                    <span class="pro-count blue">{{ $jml_basket }}</span>
+                                                @endif
+                                            @endif
 										</a>
-										<a href="shop-cart.html"><span class="lable">Keranjang</span></a>
+										<a href="{{ url('carts') }}"><span class="lable">Keranjang</span></a>
 										@include('frontend.partials.mini_cart')
 									</div>
 									<div class="header-action-icon-2">

@@ -4,6 +4,24 @@ var preventLeaving = function () {
 	}
 }
 
+var alert_success = function(id='', message='') {
+	var alert = '<div class="alert alert-success alert-dismissible" id="'+id+'"><span class="btn-close" data-bs-dismiss="alert" aria-label="close"></span><i class="fi-rs-check message-icon"></i>'+message+'</div>'
+	return alert;
+}
+
+var alert_danger = function(id='', message='') {
+	var alert = '<div class="alert alert-danger alert-dismissible" id="'+id+'"><span class="btn-close" data-bs-dismiss="alert" aria-label="close"></span><i class="fi-rs-cross message-icon"></i>'+message+'</div>'
+	return alert;
+}
+
+var dismiss_alert = function(id)
+{
+	var _id = '#'+id;
+	setTimeout(() => {
+		$(_id).alert('close');
+	}, 4000);
+}
+
 var helpCurrency2 = function(value='', logo_currency='', pemisah='.', pemisah_sen=',', end='') {
 	value = String(value);
 	if(value == '' || value == 'null'){
