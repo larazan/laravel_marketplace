@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Basket;
+use App\Models\Shop;
 use App\Models\ProductInventory;
 
 use Illuminate\Support\Facades\Session; 
@@ -106,7 +109,38 @@ class CartController extends Controller
 			'associatedModel' => $product,
 		];
 
+		$item_cart = [
+			'id' => md5($product->id),
+			'session_id' => Session::getId(),
+			'name' => $product->name,
+			'prod_id' => $product->id,
+			'price' => $product->price,
+			'quantity' => $params['qty'],
+			'shop_id' => $product->shop->id,
+			'customer_id' => Auth::user()->id,
+			'ip_address' => request()->ip(),
+			'attributes' => $attributes,
+		];
+
+		$productOwn = $this->_checkProductOwn($product->id);
+		if ($productOwn == true) {
+			Session::flash('error', 'Cannot buying own product');
+			return redirect('/product/'. $slug);
+		}
+
 		\Cart::add($item);
+
+		$productAlready = $this->_checkAlreadyIn($product->id);
+		if ($productAlready == true) {
+			// update basket
+			$basket = Basket::find(md5($product->id));
+			$basket->quantity = $params['qty'];
+			$basket->attributes = $attributes;
+			$basket->save();
+			// Basket::updateOrCreate(['id' => md5($product->id)], ['quantity' => $params['qty']]);
+		} else {
+			Basket::create($item_cart);
+		}
 
 		Session::flash('success', 'Product '. $item['name'] .' has been added to cart');
 		return redirect('/product/'. $slug);
@@ -155,6 +189,27 @@ class CartController extends Controller
 		}
 
 		return $itemQuantity;
+	}
+
+	private function _checkAlreadyIn($product_id)
+	{
+		$id = md5($product_id);
+		$basket = Basket::findOrFail($id);
+		if ($basket) {
+			return true;
+		}
+	}
+
+	private function _checkProductOwn($product_id) 
+	{
+		$product = Product::findOrFail($product_id);
+		$shop_id = Shop::where('user_id', Auth::id())->first()->id;
+		// $own = Product::active()->where('shop_id', $shop_id)->first();
+		$own = $product->shop->id;
+
+		if ($own == $shop_id) {
+			return true;
+		}
 	}
 
 	/**
@@ -212,7 +267,11 @@ class CartController extends Controller
 						],
 					]
 				);
+
+				Basket::updateOrCreate(['id' => $cartID], ['quantity' => $item['quantity']]);
 			}
+
+			
 
 			Session::flash('success', 'The cart has been updated');
 			return redirect('carts');
@@ -226,8 +285,12 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {  
+	
         \Cart::remove($id);
+
+		$basket = Basket::findOrFail($id);
+		$basket->delete();
 
 		return redirect('carts');
     }

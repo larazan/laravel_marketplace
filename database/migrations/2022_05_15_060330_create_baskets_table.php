@@ -14,7 +14,7 @@ class CreateBasketsTable extends Migration
     public function up()
     {
         Schema::create('baskets', function (Blueprint $table) {
-            $table->id();
+            $table->string('id');
             $table->string('session_id');
             $table->string('name');
             $table->integer('prod_id');
@@ -22,7 +22,7 @@ class CreateBasketsTable extends Migration
             $table->integer('quantity');
             $table->integer('shop_id');
             $table->integer('customer_id');
-            $table->integer('ip_address');
+            $table->string('ip_address');
             $table->json('attributes');
             $table->timestamps();
         });
