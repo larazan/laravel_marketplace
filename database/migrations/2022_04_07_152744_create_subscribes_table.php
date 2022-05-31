@@ -17,6 +17,7 @@ class CreateSubscribesTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->string('status');
+            $table->integer('opened')->default(0);
             $table->timestamps();
         });
     }

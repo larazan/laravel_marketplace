@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 use App\Models\Product;
 use App\Models\Order;
@@ -100,8 +101,13 @@ class CartController extends Controller
 		$itemQuantity =  $this->_getItemQuantity(md5($product->id)) + $params['qty'];
 		$this->_checkProductInventory($product, $itemQuantity);
 		
+		$tim = Carbon::now()->timestamp;
+		$ses = Session::getId();
+		$userId = Auth::user()->id;
+		$ip = request()->ip();
+
 		$item = [
-			'id' => md5($product->id),
+			'id' => md5($product->id . $userId . $ip),
 			'name' => $product->name,
 			'price' => $product->price,
 			'quantity' => $params['qty'],
@@ -110,15 +116,15 @@ class CartController extends Controller
 		];
 
 		$item_cart = [
-			'id' => md5($product->id),
-			'session_id' => Session::getId(),
+			'id' => md5($product->id . $userId . $ip),
+			'session_id' => $ses,
 			'name' => $product->name,
 			'prod_id' => $product->id,
 			'price' => $product->price,
 			'quantity' => $params['qty'],
 			'shop_id' => $product->shop->id,
-			'customer_id' => Auth::user()->id,
-			'ip_address' => request()->ip(),
+			'customer_id' => $userId,
+			'ip_address' => $ip,
 			'attributes' => $attributes,
 		];
 
@@ -193,7 +199,9 @@ class CartController extends Controller
 
 	private function _checkAlreadyIn($product_id)
 	{
-		$id = md5($product_id);
+		$userId = Auth::user()->id;
+		$ip = request()->ip();
+		$id = md5($product_id . $userId . $ip);
 		$basket = Basket::findOrFail($id);
 		if ($basket) {
 			return true;
@@ -295,8 +303,5 @@ class CartController extends Controller
 		return redirect('carts');
     }
 
-	public function addProduct($id, Request $request)
-	{
-		dd($id);
-	}
+	
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderItem;
 use App\Models\Shipment;
 use App\Models\ProductInventory;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 use App\Jobs\SendMailOrderReceived;
+use App\Models\Shop;
 
 class OrderController extends Controller
 {
@@ -339,6 +341,7 @@ class OrderController extends Controller
 		if ($order) {
 			\Cart::clear();
 			$this->_sendEmailOrderReceived($order);
+			$this->_sendEmailOrderRequest($order);
 
 			Session::flash('success', 'Thank you. Your order has been received!');
 			return redirect('orders/received/'. $order->id);
@@ -400,6 +403,14 @@ class OrderController extends Controller
 		$destination = isset($params['ship_to']) ? $params['shipping_city_id'] : $params['city_id'];
 		$selectedShipping = $this->_getSelectedShipping($destination, $this->_getTotalWeight(), $params['shipping_service']);
 		
+		// add params shop id
+		$items = \Cart::getContent();
+		foreach ($items as $item) {
+			$product_id = $item->associatedModel->id;
+		}
+		$product = Product::findOrFail($product_id)->first();
+		$shop_id = $product->shop->id;
+		// $shop_id = $params['shop_id'];
 
 		$baseTotalPrice = \Cart::getSubTotal();
 		$taxAmount = \Cart::getCondition('TAX 10%')->getCalculatedValue(\Cart::getSubTotal());
@@ -416,6 +427,8 @@ class OrderController extends Controller
 			'user_id' => Auth::user()->id,
 			'code' => Order::generateCode(),
 			'status' => Order::CREATED,
+			'customer_id' => Auth::user()->id,
+			'shop_id' => $shop_id,
 			'order_date' => $orderDate,
 			'payment_due' => $paymentDue,
 			'payment_status' => Order::UNPAID,
@@ -547,6 +560,23 @@ class OrderController extends Controller
 
 		// \App\Jobs\SendMailOrderReceived::dispatch($order, Auth::user())
 		// ->delay(now()->addMinutes(1));
+	}
+
+	/**
+	 * Send email order detail to shopper
+	 *
+	 * @param Order $order order object
+	 *
+	 * @return void
+	 */
+	private function _sendEmailOrderRequest($order)
+	{
+		$shop = Shop::findOrFail($order->shop_id);
+		$user = $shop->user;
+		$cs = env('CS_EMAIL');
+		$user_id = $shop->user->id;
+		$user_mail = $shop->user->email;
+		\App\Jobs\SendMailOrderRequest::dispatch($order, $user, $cs);
 	}
 
 	/**

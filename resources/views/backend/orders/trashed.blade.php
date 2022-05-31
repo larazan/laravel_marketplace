@@ -5,7 +5,7 @@
 <section class="content-main">
     <div class="content-header">
         <div>
-            <h2 class="content-title card-title">Order List</h2>
+            <h2 class="content-title card-title">Trashed Order List</h2>
             <p>Lorem ipsum dolor sit amet.</p>
         </div>
         <div>

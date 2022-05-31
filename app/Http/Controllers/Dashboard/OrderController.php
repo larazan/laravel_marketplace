@@ -80,13 +80,40 @@ class OrderController extends Controller
 		return view('admin.orders.index', $this->data);
     }
 
+	/**
+	 * Display the specified orders.
+	 * 
+	 * @param int $id order ID
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
     public function detail($id) {
-        // $order = Order::withTrashed()->findOrFail($id);
+        $order = Order::withTrashed()->findOrFail($id);
 
-		// $this->data['order'] = $order;
+		$this->data['order'] = $order;
+
+		$this->_setToOpened($id);
 
         return $this->loadDashboard('orders.detail', $this->data);
     }
+
+	/**
+	 * Display the trashed orders.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function trashed()
+	{
+		$orders = Order::forUser(Auth::user())
+		->onlyTrashed()
+		->orderBy('created_at', 'DESC')
+		->paginate(10);
+
+		// $this->data['orders'] = Order::onlyTrashed()->orderBy('created_at', 'DESC')->paginate(10);
+		$this->data['orders'] = $orders;
+
+		return $this->loadDashboard('orders.trashed', $this->data);
+	}
 
     /**
 	 * Display the specified resource.
@@ -244,4 +271,11 @@ class OrderController extends Controller
 			return redirect('user/orders');
 		}
 	}
+
+	private function _setToOpened($update_id)
+    {
+        $order = Order::find($update_id);
+        $order->opened_shopper = 1;
+        $order->save();
+    }
 }

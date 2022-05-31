@@ -32,6 +32,7 @@ use App\Http\Controllers\UserSubscribeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\ShopController as Shop;
+use App\Http\Controllers\ReceivedController;
 
 use App\Http\Controllers\Dashboard\DashboardController as DDashboard;
 use App\Http\Controllers\Dashboard\OrderController as DOrder;
@@ -121,6 +122,7 @@ Route::get('/about', [HomeController::class, 'about']);
 Route::get('/guide', [HomeController::class, 'guide']);
 Route::get('/policy', [HomeController::class, 'policy']);
 Route::get('/terms', [HomeController::class, 'terms']);
+Route::get('/received', [ReceivedController::class, 'index']);
 
 Route::group(
 	['prefix' => 'user', 'middleware' => ['auth']],

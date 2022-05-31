@@ -18,6 +18,13 @@ class SubscribeController extends Controller
 		$this->data['currentAdminSubMenu'] = 'subscribe';
     }
 
+    private function _setToOpened($update_id)
+    {
+        $subscribe = Subscribe::find($update_id);
+        $subscribe->opened = 1;
+        $subscribe->save();
+    }
+
     /**
      * Display a listing of the resource.
      *

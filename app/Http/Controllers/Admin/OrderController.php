@@ -122,7 +122,7 @@ class OrderController extends Controller
         $order = Order::withTrashed()->findOrFail($id);
 
 		$this->data['order'] = $order;
-
+		$this->_setToOpened($id);
 		return view('admin.orders.show', $this->data);
     }
 
@@ -335,5 +335,11 @@ class OrderController extends Controller
         //
     }
 
+	private function _setToOpened($update_id)
+    {
+        $order = Order::find($update_id);
+        $order->opened = 1;
+        $order->save();
+    }
     
 }

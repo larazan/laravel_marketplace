@@ -14,10 +14,11 @@ class AddColumnsInOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->integer('product_id')->after('status');
-			$table->integer('customer_id')->after('product_id');
+            $table->integer('customer_id')->after('status');
 			$table->integer('shop_id')->after('customer_id');
-			$table->integer('opened')->after('shop_id');
+			$table->integer('opened')->after('shop_id')->default(0);
+            $table->integer('opened_cus')->after('opened')->default(0);
+            $table->integer('opened_shopper')->after('opened_cus')->default(0);
         });
     }
 
@@ -29,10 +30,11 @@ class AddColumnsInOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('product_id');
             $table->dropColumn('customer_id');
             $table->dropColumn('shop_id');
             $table->dropColumn('opened');
+            $table->dropColumn('opened_cus');
+            $table->dropColumn('opened_shopper');
         });
     }
 }

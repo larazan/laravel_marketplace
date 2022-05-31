@@ -22,7 +22,10 @@
 							</thead>
 							<tbody>
 								@forelse ($orders as $order)
-									<tr>    
+									<!-- @php
+										$seal = ($order->opened == 1) ? 'seal' : '';
+									@endphp -->
+									<tr class="{{ ($order->opened == 1) ? 'seal' : '' }}">    
 										<td>
 											{{ $order->code }}<br>
 											<span style="font-size: 12px; font-weight: normal"> {{\General::datetimeFormat($order->order_date) }}</span>
@@ -55,4 +58,12 @@
 			</div>
 		</div>
 	</div>
+@endsection
+
+@section('css')
+<style>
+ .seal {
+	background-color: #fbbf24;
+ }
+ </style>
 @endsection
