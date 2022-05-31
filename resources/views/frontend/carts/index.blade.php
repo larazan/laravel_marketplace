@@ -120,14 +120,24 @@
                 var template = '';
                 let obj = response;
                 var total = 0;
+                var subtotal = 0;
+
+                var total2 = 0;
+                var subtotal2 = 0;
                 console.log(obj)
                 if(obj.data.produk.length > 0){
                     for (var i = 0; i < obj.data.produk.length; i++) {
                         let rowData = obj.data.produk[i];
                         var harga = helpCurrency2(rowData['price'], 'Rp ');
-                        var subtotal = rowData['price'] * rowData['qty'];
+                        subtotal = rowData['price'] * rowData['qty'];
                         total += subtotal;
+                        if (rowData['is_checked'] == 1) {
+                            subtotal2 = rowData['price'] * rowData['qty'];
+                            total2 += subtotal2;
+                        }
+                        
                         var total_amount = helpCurrency2(total, 'Rp ');
+                        var total_amount2 = helpCurrency2(total2, 'Rp ');
                         subtotal = helpCurrency2(subtotal, 'Rp ');
                         var checkbox = "checkbox_"+i;
                         var no = i + 1;
@@ -136,10 +146,17 @@
                         var img =  base_url+'storage/'+rowData['gambar'];
                         var imgZonk = base_url+'frontend/assets/imgs/shop/product-1-2.jpg';
                         var name_qty = 'qty_'+rowData['id_basket'];
+
+                        var is_checked = '';
+                        if (rowData['is_checked'] == 1) {
+                            is_checked = 'checked';
+                        }else{
+                            is_checked = '';
+                        }
                         template += `
                             <tr class="pt-30">
                                 <td class="custome-checkbox pl-30">
-                                    <input class="form-check-input" type="checkbox" name="${checkbox}" id="${id_checkbox}" value="" checked>
+                                    <input class="form-check-input cek_shop" type="checkbox" name="${checkbox}" data-id="${rowData['id_basket']}" data-produk="${rowData['product_id']}" id="${id_checkbox}" value="" ${is_checked} }}>
                                     <label class="form-check-label" for="${id_checkbox}"></label>
                                 </td>
                                 <td class="image product-thumbnail pt-40"><img src="${rowData['gambar'] ? img : imgZonk}" alt="#"></td>
@@ -190,8 +207,8 @@
                 }else{
                     $("#btn_checkout").removeClass("disabled");
                 }
-                $('#subtotal').html(total_amount);
-                $('#total').html(total_amount);
+                $('#subtotal').html(total_amount2);
+                $('#total').html(total_amount2);
             },
             error: function(response) {
             
@@ -264,6 +281,50 @@
             data: {
                     id:id, 
                     qty:value
+                },
+            dataType: "json",
+            beforeSend: function() {
+                $('#preloader-active').show();
+            },
+            success:function(response){
+                $('#preloader-active').hide();
+                if (response.code == 200) {
+                    listProduk();
+                    var alert = alert_success(id, response.data.message)
+                    $('#alert-container').html(alert);
+
+                    dismiss_alert(id);
+                }else{
+                    listProduk();
+                    var alert = alert_danger(id, response.data.message)
+                    $('#alert-container').html(alert);
+
+                    dismiss_alert(id);
+                }
+                
+
+            },
+            error: function(response) {
+            
+            }
+        });
+
+    });
+
+    $(document).on('change', '.cek_shop', function(){
+        var id = $(this).data("id");
+        var produk = $(this).data("produk");
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:"POST",
+            url: '{{ url("carts/cek-shop") }}',
+            data: {
+                    id:id,
+                    id_produk: produk
                 },
             dataType: "json",
             beforeSend: function() {

@@ -367,4 +367,56 @@ class CartController extends Controller
 		$response = \General::helpResponse($responseCode, $responseData);
 		return response()->json($response, $responseCode);
 	}
+
+	public function cekShop(Request $request)
+	{
+		$basket_cek = Baskets::where('user_id', Auth::user()->id)
+								->where('is_checked', 1)
+								->limit(1)
+								->first();
+		$produk_basket =  Product::where('id', $basket_cek->product_id)->first();
+		$produk = Product::where('id', $request->id_produk)->first();
+		$baskets = Baskets::findOrFail($request->id);
+		DB::beginTransaction();
+		if ($produk->shop_id == $produk_basket->shop_id ) {
+			try {
+				$baskets->is_checked = 1;
+				$baskets->save();
+				DB::commit();
+				$responseCode = 200;
+				$responseData['status'] = true;
+				$responseData['message'] = 'Yeaah.. berhasil mengupdate keranjang !';
+			} catch (Exception $e) {
+				DB::rollBack();
+				$responseCode = 304;
+				$responseData['status'] = false;
+				$responseData['message'] = 'Gagal mengeluarkan mengupdate keranjang !';
+			}
+		}else{
+			$del_baskets = Baskets::where('user_id', Auth::user()->id)->get();
+			try {
+				foreach ($del_baskets as $value) {
+					$data_baskets = Baskets::findOrFail($value->id);
+					$data_baskets->is_checked = null;
+					$data_baskets->save();
+				}
+				
+				$baskets->is_checked = 1;
+
+				$baskets->save();
+				DB::commit();
+				$responseCode = 200;
+				$responseData['status'] = true;
+				$responseData['message'] = 'Yeaah.. berhasil mengupdate keranjang !';
+			} catch (Exception $e) {
+				DB::rollBack();
+				$responseCode = 304;
+				$responseData['status'] = false;
+				$responseData['message'] = 'Gagal mengeluarkan mengupdate keranjang !';
+			}
+		}
+
+		$response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response, $responseCode);
+	}
 }

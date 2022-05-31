@@ -74,6 +74,7 @@ Route::post('/carts/update', [CartController::class, 'update']);
 Route::post('/carts/list-produk', [CartController::class, 'listProduk'])->name('list-produk');
 Route::post('/carts/delete-list-cart', [CartController::class, 'deleteList'])->name('delete-list-cart');
 Route::post('/carts/edit-qty-cart', [CartController::class, 'editQty'])->name('edit-qty-cart');
+Route::post('/carts/cek-shop', [CartController::class, 'cekShop'])->name('cek-shop');
 
 
 Route::group(
