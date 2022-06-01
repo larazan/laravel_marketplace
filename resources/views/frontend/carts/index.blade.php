@@ -82,7 +82,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <a href="#" class="btn mb-20 w-100" id="btn_checkout">Checkout<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a href="{{ url('orders') }}" class="btn mb-20 w-100" id="btn_checkout">Checkout<i class="fi-rs-sign-out ml-15"></i></a>
                 </div>
             </div>
         </div>
@@ -245,16 +245,10 @@
                     // $('#preloader-active').hide();
                     if (response.code == 200) {
                         listProduk();
-                        var alert = alert_success(id, response.data.message)
-                        $('#alert-container').html(alert);
-
-                        dismiss_alert(id);
+                        toastr.success(response.data.message)
                     }else{
                         listProduk();
-                        var alert = alert_danger(id, response.data.message)
-                        $('#alert-container').html(alert);
-
-                        dismiss_alert(id);
+                        toastr.error(response.data.message)
                     }
                     
 
@@ -290,16 +284,10 @@
                 $('#preloader-active').hide();
                 if (response.code == 200) {
                     listProduk();
-                    var alert = alert_success(id, response.data.message)
-                    $('#alert-container').html(alert);
-
-                    dismiss_alert(id);
+                    toastr.success(response.data.message)
                 }else{
                     listProduk();
-                    var alert = alert_danger(id, response.data.message)
-                    $('#alert-container').html(alert);
-
-                    dismiss_alert(id);
+                    toastr.error(response.data.message)
                 }
                 
 
@@ -334,16 +322,10 @@
                 $('#preloader-active').hide();
                 if (response.code == 200) {
                     listProduk();
-                    var alert = alert_success(id, response.data.message)
-                    $('#alert-container').html(alert);
-
-                    dismiss_alert(id);
+                    toastr.success(response.data.message)
                 }else{
                     listProduk();
-                    var alert = alert_danger(id, response.data.message)
-                    $('#alert-container').html(alert);
-
-                    dismiss_alert(id);
+                    toastr.error(response.data.message)
                 }
                 
 

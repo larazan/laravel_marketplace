@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css?v=4.0') }}" />
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}" />
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/sweetalert2.min.css') }}" />
+        <link media="all" type="text/css" rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/toastr.min.css') }}">
     </head>
 
     <div id="alert-container">
@@ -64,11 +65,13 @@
      <script src="{{ asset('frontend/assets/js/plugins/scrollup.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}"></script>
+     <script src="https://nest.botble.com/vendor/core/core/base/libraries/toastr/toastr.min.js" type="2354b4d8179df5447e9cee2f-text/javascript"></script>
      <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
      
      <!-- Template  JS -->
      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8-beta.17/jquery.inputmask.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
      
      <script src="{{ asset('frontend/assets/js/main.js?v=4.0') }}"></script>
      @stack('scripts')

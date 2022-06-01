@@ -85,6 +85,13 @@ Route::group(
 	}
 );
 
+Route::group(
+	['prefix' => 'orders', 'middleware' => ['auth']],
+	function () {
+		Route::get('/', [Order::class, 'index']);
+	}
+);
+
 // Route::get('orders/checkout', [Order::class, 'checkout']);
 // Route::post('orders/checkout', [Order::class, 'doCheckout']);
 // Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);

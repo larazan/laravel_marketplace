@@ -373,6 +373,7 @@ class CartController extends Controller
 		$basket_cek = Baskets::where('user_id', Auth::user()->id)
 								->where('is_checked', 1)
 								->limit(1)
+								->whereNull('deleted_at')
 								->first();
 		$produk_basket =  Product::where('id', $basket_cek->product_id)->first();
 		$produk = Product::where('id', $request->id_produk)->first();
@@ -393,7 +394,7 @@ class CartController extends Controller
 				$responseData['message'] = 'Gagal mengeluarkan mengupdate keranjang !';
 			}
 		}else{
-			$del_baskets = Baskets::where('user_id', Auth::user()->id)->get();
+			$del_baskets = Baskets::where('user_id', Auth::user()->id)->whereNull('deleted_at')->get();
 			try {
 				foreach ($del_baskets as $value) {
 					$data_baskets = Baskets::findOrFail($value->id);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Models\Baskets;
 use App\Models\OrderItem;
 use App\Models\Shipment;
 use App\Models\ProductInventory;
@@ -37,13 +38,38 @@ class OrderController extends Controller
 	 */
 	public function index()
 	{
-		$orders = Order::forUser(Auth::user())
-			->orderBy('created_at', 'DESC')
-			->paginate(10);
 
-		$this->data['orders'] = $orders;
+		$items = Baskets::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.user_id, 
+									baskets.qty, 
+									baskets.is_checked, 
+									products.name,
+									products.price,
+									product_images.small as gambar, 
+									shops.name as nama_toko
+									"))
+						->where('baskets.user_id', Auth::user()->id)
+						->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+						->leftJoin('product_brands', 'product_brands.product_id', '=', 'products.id')
+						->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
+						->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
+						->leftJoin('brands', 'brands.id', '=', 'product_brands.brand_id')
+						->leftJoin('shops', 'shops.user_id', '=', 'products.user_id')
+						->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
+							img'), 
+						function($join)
+						{
+						$join->on('products.id', '=', 'img.product_id');
+						})
+						->join('product_images', 'product_images.id', 'img.max_id')
+						->whereNull('baskets.deleted_at')
+						->where('baskets.is_checked', 1)
+						->get();
 
-		return $this->loadTheme('orders.index', $this->data);
+		$this->data['orders'] = $items;
+
+		return $this->loadTheme('orders.checkout', $this->data);
 	}
 
 	/**
