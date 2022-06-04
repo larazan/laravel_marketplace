@@ -13,6 +13,6 @@ class ReceivedController extends Controller
     public function index()
     {
         $this->data['time'] = Carbon::now()->timestamp; 
-        return view('backend.orders.received', $this->data);
+        return view('backend.orderout.received', $this->data);
     }
 }

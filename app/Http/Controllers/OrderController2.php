@@ -571,6 +571,8 @@ class OrderController extends Controller
 	 */
 	private function _sendEmailOrderRequest($order)
 	{
+		
+
 		$shop = Shop::findOrFail($order->shop_id);
 		$user = $shop->user;
 		$cs = env('CS_EMAIL');

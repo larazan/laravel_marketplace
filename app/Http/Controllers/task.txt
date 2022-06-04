@@ -1,0 +1,15 @@
+CART
+get total
+get subtotal 
+get total quantity
+
+
+ORDER
+konfirmasi barang
+upload
+
+CART form
+
+CHECKOUT form
+info pembeli
+info toko (kota buat ongkir)
