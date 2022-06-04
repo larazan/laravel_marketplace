@@ -280,7 +280,7 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');
     }
 
-	public function loadProduct($start, $length, $searchProdukAndUkm='', $count=false, $sort=false, $field=false, $id_ukm=false, $id_kategori=false, $condition=false, $hargaMinimal=false, $hargaMaksimal=false, $searchProduk='', $id_user='', $id_kecamatan='',  $kategori_produk=null, $id_jenis=false, $product_type = 0)
+	public function loadProduct($start, $length, $searchProdukAndUkm='', $count=false, $sort=false, $field=false, $id_ukm=false, $id_kategori=false, $condition=false, $hargaMinimal=false, $hargaMaksimal=false, $shop=null, $searchProduk='', $id_user='', $id_kecamatan='',  $kategori_produk=null, $id_jenis=false, $product_type = 0)
 	{
 		// DB::getQueryLog();
 		$result = DB::table(DB::raw('products p'))
@@ -312,6 +312,10 @@ class Product extends Model
 
 		if($hargaMaksimal == true){
             $result = $result->whereRaw("p.price <= ".$hargaMaksimal);
+        }
+
+		if($shop){
+            $result = $result->whereRaw("p.shop_id = ".$shop);
         }
 
 		if ($id_kategori){ 

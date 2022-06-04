@@ -75,7 +75,13 @@ Route::get('/tes', [Shop::class, 'tes']);
 Route::get('/carts', [CartController::class, 'index']);
 Route::get('/carts/remove/{cartID}', [CartController::class, 'destroy']);
 Route::post('/carts', [CartController::class, 'store']);
+Route::post('/carts/add-cart', [CartController::class, 'addCart'])->name('add-cart');
 Route::post('/carts/update', [CartController::class, 'update']);
+Route::post('/carts/list-produk', [CartController::class, 'listProduk'])->name('list-produk');
+Route::post('/carts/delete-list-cart', [CartController::class, 'deleteList'])->name('delete-list-cart');
+Route::post('/carts/edit-qty-cart', [CartController::class, 'editQty'])->name('edit-qty-cart');
+Route::post('/carts/cek-shop', [CartController::class, 'cekShop'])->name('cek-shop');
+
 
 Route::group(
 	['prefix' => 'wishlist', 'middleware' => ['auth']],
@@ -85,7 +91,18 @@ Route::group(
 	}
 );
 
+<<<<<<< HEAD
 Route::get('orders/checkout', [Order::class, 'checkout']);
+=======
+Route::group(
+	['prefix' => 'orders', 'middleware' => ['auth']],
+	function () {
+		Route::get('/', [Order::class, 'index']);
+	}
+);
+
+// Route::get('orders/checkout', [Order::class, 'checkout']);
+>>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc
 // Route::post('orders/checkout', [Order::class, 'doCheckout']);
 // Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
 // Route::post('orders/set-shipping', [Order::class, 'setShipping']);

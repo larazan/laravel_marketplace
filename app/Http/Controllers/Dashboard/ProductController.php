@@ -72,7 +72,6 @@ class ProductController extends Controller
 		// dd($shop);
 
 		if (!$shop) {
-			// throw new \App\Exceptions\NoShopException('Create Shop first');
 			Session::flash('error', 'Buat Toko terlebih dulu <a href="'. url('/user/shop') .'">disini</a>');
 			return redirect('user/products');
 		}

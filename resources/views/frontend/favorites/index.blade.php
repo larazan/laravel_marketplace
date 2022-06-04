@@ -15,8 +15,8 @@
         <div class="row">
             <div class="col-xl-10 col-lg-12 m-auto">
                 <div class="mb-50">
-                    <h1 class="heading-2 mb-10">Your Wishlist</h1>
-                    <h6 class="text-body">There are <span class="text-brand">5</span> products in this list</h6>
+                    <h1 class="heading-2 mb-10">Wishlist kamu</h1>
+                    <h6 class="text-body">Ayo checkout sekarang..</h6>
                 </div>
                 <div class="table-responsive shopping-summery">
                     <table class="table table-wishlist">
@@ -64,7 +64,7 @@
                                 <td class="action text-center" data-title="Remove">
                                     {!! Form::open(['url' => 'favorites/'. $favorite->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
                                     {!! Form::hidden('_method', 'DELETE') !!}
-                                    <button type="submit" style="background-color: transparent; border-color: #FFF;"><i class="fi-rs-trash"></i></button>
+                                    <button type="submit" style="background-color: #fa3620; border-color: #fff;"><i class="fi-rs-trash"></i></button>
                                     {!! Form::close() !!}
                                     <!-- <a href="#" class="text-body"><i class="fi-rs-trash"></i></a> -->
                                 </td>

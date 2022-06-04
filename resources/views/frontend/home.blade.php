@@ -202,13 +202,15 @@
             }
         }
 
-        if(pageNumber != lastPageNumber){
-            lastPageNumber = pageNumber;
-            load_data = true;
-        }
 
         if(pagekeyword != lastPageKeyword){
             lastPageKeyword = pagekeyword;
+            load_data = true;
+            pageNumber = 1;
+        }
+
+        if(pageNumber != lastPageNumber){
+            lastPageNumber = pageNumber;
             load_data = true;
         }
 
@@ -328,7 +330,7 @@
                                             <div class="product-card-bottom">
                                                 <div class="product-price">
                                                     <span>${harga}</span>
-                                                    <span class="old-price">$32.8</span>
+                                                   
                                                 </div>
                                                 <div class="add-cart">
                                                     <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Beli </a>
@@ -551,13 +553,13 @@
     function addWishlist(id)
     {
         Swal.fire({
-        title: 'Tambahkan ke Wishlist?',
-        text: "Ayo tambahkan produk kesayanganu sekarang..",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya'
+            title: 'Tambahkan ke Wishlist?',
+            text: "Ayo tambahkan produk kesayanganu sekarang..",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
         }).then((result) => {
         if (result.isConfirmed) {
             $.ajaxSetup({

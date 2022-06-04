@@ -37,112 +37,9 @@
                                 <th scope="col" class="end">Hapus</th>
                             </tr>
                         </thead>
-<<<<<<< HEAD
                         <tbody id="list_product">
                           
                            
-=======
-                        <tbody>
-                            <tr class="pt-30">
-                                <td class="custome-checkbox pl-30">
-                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
-                                    <label class="form-check-label" for="exampleCheckbox1"></label>
-                                </td>
-                                <td class="image product-thumbnail pt-40"><img src="frontend/assets/imgs/shop/product-1-1.jpg" alt="#"></td>
-                                <td class="product-des product-name">
-                                    <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html">Field Roast Chao Cheese Creamy Original</a></h6>
-                                    <div class="product-rate-cover">
-                                        <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width:90%">
-                                            </div>
-                                        </div>
-                                        <span class="font-small ml-5 text-muted"> (4.0)</span>
-                                    </div>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h4 class="text-body">$2.51 </h4>
-                                </td>
-                                <td class="text-center detail-info" data-title="Stock">
-                                    <div class="detail-extralink mr-15">
-                                        <div class="detail-qty border radius">
-                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                            <span class="qty-val">1</span>
-                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h4 class="text-brand">$2.51 </h4>
-                                </td>
-                                <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="custome-checkbox pl-30">
-                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox2" value="">
-                                    <label class="form-check-label" for="exampleCheckbox2"></label>
-                                </td>
-                                <td class="image product-thumbnail"><img src="frontend/assets/imgs/shop/product-2-1.jpg" alt="#"></td>
-                                <td class="product-des product-name">
-                                    <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html">Blue Diamond Almonds Lightly Salted</a></h6>
-                                    <div class="product-rate-cover">
-                                        <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width:90%">
-                                            </div>
-                                        </div>
-                                        <span class="font-small ml-5 text-muted"> (4.0)</span>
-                                    </div>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h4 class="text-body">$3.2 </h4>
-                                </td>
-                                <td class="text-center detail-info" data-title="Stock">
-                                    <div class="detail-extralink mr-15">
-                                        <div class="detail-qty border radius">
-                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                            <span class="qty-val">1</span>
-                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h4 class="text-brand">$3.2 </h4>
-                                </td>
-                                <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="custome-checkbox pl-30">
-                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox3" value="">
-                                    <label class="form-check-label" for="exampleCheckbox3"></label>
-                                </td>
-                                <td class="image product-thumbnail"><img src="frontend/assets/imgs/shop/product-3-1.jpg" alt="#"></td>
-                                <td class="product-des product-name">
-                                    <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html">Fresh Organic Mustard Leaves Bell Pepper</a></h6>
-                                    <div class="product-rate-cover">
-                                        <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width:90%">
-                                            </div>
-                                        </div>
-                                        <span class="font-small ml-5 text-muted"> (4.0)</span>
-                                    </div>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h4 class="text-body">$2.43 </h4>
-                                </td>
-                                <td class="text-center detail-info" data-title="Stock">
-                                    <div class="detail-extralink mr-15">
-                                        <div class="detail-qty border radius">
-                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                            <span class="qty-val">1</span>
-                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h4 class="text-brand">$2.43 </h4>
-                                </td>
-                                <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
-                            </tr>
->>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc
                         </tbody>
                     </table>
                 </div>
@@ -155,11 +52,8 @@
             </div>
             <div class="col-lg-4">
                 <div class="border p-md-4 cart-totals ml-30">
-<<<<<<< HEAD
                     <img src="{{ asset('frontend/assets/imgs/sorgumku.svg') }}" width="200">
                     <br>
-=======
->>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc
                     <div class="table-responsive">
                         <table class="table no-border">
                             <tbody>
@@ -168,16 +62,12 @@
                                         <h6 class="text-muted">Subtotal</h6>
                                     </td>
                                     <td class="cart_total_amount">
-<<<<<<< HEAD
                                         <h4 class="text-brand text-end" id="subtotal"></h4>
-=======
-                                        <h4 class="text-brand text-end">$12.31</h4>
->>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc
                                     </td>
                                 </tr>
                                 <tr>
                                     <td scope="col" colspan="2">
-                                        <div class="divider-2 mt-10 mb-10" style="background-color: #3bb77e;!important"></div>
+                                        <div class="divider-2 mt-10 mb-10" style="background-color: #3bb77e; !important"></div>
                                     </td>
                                 </tr>
                                
@@ -186,21 +76,13 @@
                                         <h6 class="text-muted">Total</h6>
                                     </td>
                                     <td class="cart_total_amount">
-<<<<<<< HEAD
                                         <h4 class="text-brand text-end" id="total"></h4>
-=======
-                                        <h4 class="text-brand text-end">$12.31</h4>
->>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-<<<<<<< HEAD
                     <a href="{{ url('orders') }}" class="btn mb-20 w-100" id="btn_checkout">Checkout<i class="fi-rs-sign-out ml-15"></i></a>
-=======
-                    <a href="#" class="btn mb-20 w-100">Checkout<i class="fi-rs-sign-out ml-15"></i></a>
->>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc
                 </div>
             </div>
         </div>
@@ -210,7 +92,6 @@
 
 @push('scripts')
 <script>
-<<<<<<< HEAD
     const hostName = window.location.origin,
     pecah = window.location.pathname.split("/");
     var base_url;
@@ -218,7 +99,6 @@
     $(document).ready(function() {
         listProduk();
     });
-
     function listProduk()
     {
         $.ajaxSetup({
@@ -240,7 +120,6 @@
                 let obj = response;
                 var total = 0;
                 var subtotal = 0;
-
                 var total2 = 0;
                 var subtotal2 = 0;
                 console.log(obj)
@@ -261,11 +140,9 @@
                         var checkbox = "checkbox_"+i;
                         var no = i + 1;
                         var id_checkbox = "exampleCheckbox"+rowData['id_basket'];
-
                         var img =  base_url+'storage/'+rowData['gambar'];
                         var imgZonk = base_url+'frontend/assets/imgs/shop/product-1-2.jpg';
                         var name_qty = 'qty_'+rowData['id_basket'];
-
                         var is_checked = '';
                         if (rowData['is_checked'] == 1) {
                             is_checked = 'checked';
@@ -334,7 +211,6 @@
             }
         });
     }
-
     function hapus(id)
     {
         Swal.fire({
@@ -370,7 +246,6 @@
                         toastr.error(response.data.message)
                     }
                     
-
                 },
                 error: function(response) {
                 
@@ -379,7 +254,6 @@
         }
         })
     }
-
     $(document).on('change', '#product-quantity', function(){
         var value = $(this).val();
         var id = $(this).data("id");
@@ -409,15 +283,12 @@
                     toastr.error(response.data.message)
                 }
                 
-
             },
             error: function(response) {
             
             }
         });
-
     });
-
     $(document).on('change', '.cek_shop', function(){
         var id = $(this).data("id");
         var produk = $(this).data("produk");
@@ -447,20 +318,11 @@
                     toastr.error(response.data.message)
                 }
                 
-
             },
             error: function(response) {
             
             }
         });
-
     });
-
 </script>
 @endpush
-=======
-    $(document).ready(function() {
-        console.log( "ready!" );
-    });
-</script>
->>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc

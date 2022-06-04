@@ -1,7 +1,42 @@
+toastr.options = {
+	'closeButton': true,
+	'debug': false,
+	'newestOnTop': false,
+	'progressBar': false,
+	'positionClass': 'toast-top-right',
+	'preventDuplicates': false,
+	'showDuration': '1000',
+	'hideDuration': '1000',
+	'timeOut': '5000',
+	'extendedTimeOut': '1000',
+	'showEasing': 'swing',
+	'hideEasing': 'linear',
+	'showMethod': 'fadeIn',
+	'hideMethod': 'fadeOut',
+}
+
 var preventLeaving = function () {        
 	window.onbeforeunload = function() {
 		return "Are you sure you want to navigate away?";
 	}
+}
+
+var alert_success = function(id='', message='') {
+	var alert = '<div class="alert alert-success alert-dismissible" id="'+id+'"><span class="btn-close" data-bs-dismiss="alert" aria-label="close"></span><i class="fi-rs-check message-icon"></i>'+message+'</div>'
+	return alert;
+}
+
+var alert_danger = function(id='', message='') {
+	var alert = '<div class="alert alert-danger alert-dismissible" id="'+id+'"><span class="btn-close" data-bs-dismiss="alert" aria-label="close"></span><i class="fi-rs-cross message-icon"></i>'+message+'</div>'
+	return alert;
+}
+
+var dismiss_alert = function(id)
+{
+	var _id = '#'+id;
+	setTimeout(() => {
+		$(_id).alert('close');
+	}, 4000);
 }
 
 var helpCurrency2 = function(value='', logo_currency='', pemisah='.', pemisah_sen=',', end='') {

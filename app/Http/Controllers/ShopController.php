@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 use App\Models\Shop;
 use App\Models\Product;
@@ -38,7 +39,7 @@ class ShopController extends Controller
 		// var_dump($result);
 		// exit();
 
-		$shops = Shop::active()->orderBy('id', 'DESC');
+		$shops = DB::table(DB::raw('shops s'))->get();
 
 		$shops = $this->_searchShops($shops, $request);
 
@@ -46,7 +47,6 @@ class ShopController extends Controller
 		$breadcrumbs_data['current_page_title'] = '';
 		$breadcrumbs_data['breadcrumbs_array'] = $this->_generate_breadcrumbs_array($shops);
 		$this->data['breadcrumbs_data'] = $breadcrumbs_data;
-
 		$this->data['shops'] = $shops->paginate(9);
 		return $this->loadTheme('vendors.index', $this->data);
 	}

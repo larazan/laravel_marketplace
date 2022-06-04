@@ -1,3 +1,10 @@
+@php
+    if (isset(Auth::user()->id)) {
+        $jml_wishlist = \App\Models\Favorite::where('user_id', Auth::user()->id)->get()->count();
+        $jml_basket = \App\Models\Baskets::where('user_id', Auth::user()->id)->whereNull('is_checked')->get()->whereNull('deleted_at')->count();
+    }
+    
+@endphp
 <header class="header-area header-style-1 header-height-2">
             <div class="mobile-promotion">
                 <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
@@ -7,11 +14,11 @@
                 <div class="container">
                     <div class="header-wrap">
                         <div class="logo logo-width-1">
-                            <a href="/"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                            <a href="/"><img src="{{ asset('frontend/assets/imgs/sorgumku.svg') }}"  alt="logo" /></a>
                         </div>
                         <div class="header-right">
                             <div class="search-style-2">
-                                <form role="form" action="" onsubmit="return false" method="post"">
+                                <form role="form" action="" onsubmit="return false" method="post">
                                     <select class="select-active">
                                         <option>All Categories</option>
                                         <option>Milks and Dairies</option>
@@ -32,26 +39,35 @@
                             <div class="header-action-right">
 								<div class="header-action-2">
 																
-									<div class="header-action-icon-2">
+									{{-- <div class="header-action-icon-2">
 										<a href="shop-compare.html">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-compare.svg') }}" />
 											<span class="pro-count blue">3</span>
 										</a>
 										<a href="shop-compare.html"><span class="lable ml-0">Compare</span></a>
-									</div>
+									</div> --}}
 									<div class="header-action-icon-2">
-										<a href="shop-wishlist.html">
+										<a href="{{ url('wishlist') }}">
 											<img class="svgInject" alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-											<span class="pro-count blue">6</span>
+                                            @if (isset(Auth::user()->id))
+                                                @if ($jml_wishlist > 0)
+                                                    <span class="pro-count blue">{{ $jml_wishlist }}</span>
+                                                @endif
+                                            @endif
+											
 										</a>
-										<a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
+										<a href="{{ url('wishlist') }}"><span class="lable">Wishlist</span></a>
 									</div>
 									<div class="header-action-icon-2">
 										<a class="mini-cart-icon" href="shop-cart.html">
 											<img alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-											<span class="pro-count blue">2</span>
+                                            @if (isset(Auth::user()->id))
+                                                @if ($jml_basket > 0)
+                                                    <span class="pro-count blue">{{ $jml_basket }}</span>
+                                                @endif
+                                            @endif
 										</a>
-										<a href="shop-cart.html"><span class="lable">Keranjang</span></a>
+										<a href="{{ url('carts') }}"><span class="lable">Keranjang</span></a>
 										@include('frontend.partials.mini_cart')
 									</div>
 									<div class="header-action-icon-2">
@@ -102,7 +118,7 @@
                         <div class="header-nav d-none d-lg-flex">
                             <div class="main-categori-wrap d-none d-lg-block">
                                 <a class="categories-button-active" href="#">
-                                    <span class="fi-rs-apps"></span> <span class="et">Browse</span> All Categories
+                                    <span class="fi-rs-apps"></span> <span class="et">Telusuri</span> Semua Kategori
                                     <i class="fi-rs-angle-down"></i>
                                 </a>
                                 <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
@@ -179,7 +195,7 @@
                                         <li>
                                             <a href="shop-grid-right.html">Toko</a>   
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <a href="#">Vendors <i class="fi-rs-angle-down"></i></a>
                                             <ul class="sub-menu">
                                                 <li><a href="vendors-grid.html">Vendors Grid</a></li>
@@ -189,7 +205,7 @@
                                                 <li><a href="vendor-dashboard.html">Vendor Dashboard</a></li>
                                                 <li><a href="vendor-guide.html">Vendor Guide</a></li>
                                             </ul>
-                                        </li>
+                                        </li> --}}
                                         {{-- <li class="position-static">
                                             <a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
                                             <ul class="mega-menu">

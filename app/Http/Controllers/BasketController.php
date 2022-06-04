@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Baskets;
 use App\Models\ProductInventory;
 use App\Models\Basket;
 
 use Illuminate\Support\Facades\Session; 
 use App\Exceptions\OutOfStockException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BasketController extends Controller
 {
@@ -21,7 +24,13 @@ class BasketController extends Controller
      */
     public function index()
     {
-        //
+        // $items = \Cart::getContent();
+		// $items = Baskets::where('user_id', Auth::user()->id)->whereNull('deleted_at')->get();
+		// dd($items);
+        // var_dump($items); exit;
+		$this->data['items'] =  '';
+
+		return $this->loadTheme('carts.index', $this->data);
     }
 
     /**
@@ -100,33 +109,47 @@ class BasketController extends Controller
 		return redirect('/product/'. $slug);
     }
 
-	/**
-	 * Check product inventory
-	 *
-	 * @param Product $product      product object
-	 * @param int     $itemQuantity qty
-	 *
-	 * @return int
-	 */
-	private function _checkProductInventory($product, $itemQuantity)
+	public function addCart(Request $request)
 	{
-		if ($product->productInventory->qty < $itemQuantity) {
-			throw new \App\Exceptions\OutOfStockException('The product '. $product->sku .' is out of stock');
+		$cek_basket = Baskets::where('product_id', $request->product_id)
+								->where('user_id', Auth::user()->id )
+								->whereNull('deleted_at')
+								->first();
+
+		$cek_toko   = Product::where('id', $request->product_id)->first();
+
+		if ($cek_toko->user_id == Auth::user()->id) {
+			$responseCode = 304;
+			$responseData['status'] = false;
+			$responseData['message'] = 'Yaahh.. sayang sekali, anda tidak bisa membeli produk dari toko anda !';
+		} else {
+			DB::beginTransaction();
+			if ($cek_basket) {
+				$cek_basket->qty = $cek_basket->qty + $request->qty;
+				$cek_basket->save();
+				$responseCode = 200;
+				$responseData['status'] = true;
+				$responseData['message'] = 'Yeaah.. berhasil menambahkan jumlah produk !';
+
+				DB::commit();
+			} else {
+				$data = new Baskets;
+				$data->product_id = $request->product_id;
+				$data->user_id = Auth::user()->id;
+				$data->qty = $request->qty;
+				$data->is_checked = 1;
+
+				$data->save();
+				$responseCode = 200;
+				$responseData['status'] = true;
+				$responseData['message'] = 'Yeaah.. Berhasil menambahkan produk ke keranjang !';
+
+				DB::commit();
+			}
 		}
-	}
-
-	/**
-	 * Get cart item by card item id
-	 *
-	 * @param string $cartID cart ID
-	 *
-	 * @return array
-	 */
-	private function _getCartItem($cartID)
-	{
-		$items = \Cart::getContent();
-
-		return $items[$cartID];
+		
+		$response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response);
 	}
 
     /**
@@ -193,4 +216,142 @@ class BasketController extends Controller
     {
         //
     }
+
+	public function addProduct($id, Request $request)
+	{
+		dd($id);
+	}
+
+	public function listProduk(Request $reqest)
+	{
+		$items = Baskets::select(DB::raw("baskets.product_id, 
+										baskets.id as id_basket,
+										baskets.user_id, 
+										baskets.qty, 
+										baskets.is_checked, 
+										products.name,
+										products.price,
+										product_images.small as gambar, 
+										shops.name as nama_toko
+										"))
+							->where('baskets.user_id', Auth::user()->id)
+							->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+							->leftJoin('product_brands', 'product_brands.product_id', '=', 'products.id')
+							->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
+							->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
+							->leftJoin('brands', 'brands.id', '=', 'product_brands.brand_id')
+							->leftJoin('shops', 'shops.user_id', '=', 'products.user_id')
+							->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
+								img'), 
+							function($join)
+							{
+							$join->on('products.id', '=', 'img.product_id');
+							})
+							->join('product_images', 'product_images.id', 'img.max_id')
+							->whereNull('baskets.deleted_at')
+							->get();
+		$responseData['produk'] = $items;
+		$responseCode = 200;
+
+		$response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response, $responseCode);
+	}
+
+	public function deleteList(Request $request)
+	{
+		$baskets = Baskets::findOrFail($request->id);
+
+		DB::beginTransaction();
+		try {
+			$baskets->delete();
+			DB::commit();
+			$responseCode = 200;
+			$responseData['status'] = true;
+			$responseData['message'] = 'Yeaah.. berhasil mengeluarkan produk dari keranjang !';
+        } catch (Exception $e) {
+            DB::rollBack();
+            $responseCode = 304;
+			$responseData['status'] = false;
+			$responseData['message'] = 'Gagal mengeluarkan produk dari keranjang !';
+        }
+
+		$response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response, $responseCode);
+	}
+
+	public function editQty(Request $request)
+	{
+		$baskets = Baskets::findOrFail($request->id);
+
+		DB::beginTransaction();
+		try {
+			$baskets->qty = $request->qty;
+			$baskets->save();
+			DB::commit();
+			$responseCode = 200;
+			$responseData['status'] = true;
+			$responseData['message'] = 'Yeaah.. berhasil mengupdate jumlah barang !';
+        } catch (Exception $e) {
+            DB::rollBack();
+            $responseCode = 304;
+			$responseData['status'] = false;
+			$responseData['message'] = 'Gagal mengeluarkan mengupdate jumlah barang !';
+        }
+
+		$response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response, $responseCode);
+	}
+
+	public function cekShop(Request $request)
+	{
+		$basket_cek = Baskets::where('user_id', Auth::user()->id)
+								->where('is_checked', 1)
+								->limit(1)
+								->whereNull('deleted_at')
+								->first();
+		$produk_basket =  Product::where('id', $basket_cek->product_id)->first();
+		$produk = Product::where('id', $request->id_produk)->first();
+		$baskets = Baskets::findOrFail($request->id);
+		DB::beginTransaction();
+		if ($produk->shop_id == $produk_basket->shop_id ) {
+			try {
+				$baskets->is_checked = 1;
+				$baskets->save();
+				DB::commit();
+				$responseCode = 200;
+				$responseData['status'] = true;
+				$responseData['message'] = 'Yeaah.. berhasil mengupdate keranjang !';
+			} catch (Exception $e) {
+				DB::rollBack();
+				$responseCode = 304;
+				$responseData['status'] = false;
+				$responseData['message'] = 'Gagal mengeluarkan mengupdate keranjang !';
+			}
+		}else{
+			$del_baskets = Baskets::where('user_id', Auth::user()->id)->whereNull('deleted_at')->get();
+			try {
+				foreach ($del_baskets as $value) {
+					$data_baskets = Baskets::findOrFail($value->id);
+					$data_baskets->is_checked = null;
+					$data_baskets->save();
+				}
+				
+				$baskets->is_checked = 1;
+
+				$baskets->save();
+				DB::commit();
+				$responseCode = 200;
+				$responseData['status'] = true;
+				$responseData['message'] = 'Yeaah.. berhasil mengupdate keranjang !';
+			} catch (Exception $e) {
+				DB::rollBack();
+				$responseCode = 304;
+				$responseData['status'] = false;
+				$responseData['message'] = 'Gagal mengeluarkan mengupdate keranjang !';
+			}
+		}
+
+		$response = \General::helpResponse($responseCode, $responseData);
+		return response()->json($response, $responseCode);
+	}
 }

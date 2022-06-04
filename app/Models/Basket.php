@@ -12,13 +12,10 @@ class Basket extends Model
     protected $fillable = [
         'id',
         'session_id',
-        'name',
-        'prod_id',
-        'price',
-        'quantity',
-        'shop_id',
-        'customer_id',
-        'ip_address',
+        'product_id',
+        'user_id',
+        'qty',
+        'is_checked',
         'attributes',
     ];
 

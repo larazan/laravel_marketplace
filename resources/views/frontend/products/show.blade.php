@@ -93,7 +93,7 @@
                                 <div class="short-desc mb-30">
                                     <p class="font-lg">{{ \Illuminate\Support\Str::words($product->description, '25') }}.</p>
                                 </div>
-                                {!! Form::open(['url' => 'carts']) !!}
+                                <form id="shopForm">
 					                    {{ Form::hidden('product_id', $product->id) }}
 
                                         @if ($product->type == 'configurable')
@@ -128,12 +128,12 @@
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a> -->
                                             </div>
                                             <div class="product-extra-link2">
-                                                <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                <button type="button" class="button button-add-to-cart" onclick="save()"><i class="fi-rs-shopping-cart"></i>Beli</button>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                 <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                             </div>
                                         </div>
-                                        {!! Form::close() !!}
+                                </form>
                                         <div class="font-xs">
                                             <ul class="mr-50 float-start">
                                                 <!-- <li class="mb-5">Type: <span class="text-brand"></span></li> -->
@@ -340,6 +340,53 @@
         'question'
         )
     }
+
+    function save()
+    {        
+        var form = $('#shopForm')[0];
+        var data = new FormData(form);
+        var id = $('[name="product_id"]').val();
+
+        Swal.fire({
+        title: 'Tambahkan ke keranjag?',
+        text: "Ayo tambahkan produk kesayanganmu sekarang..",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Iya '
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                enctype: 'multipart/form-data',
+                url: "{{ url('carts/add-cart') }}",
+                data: data,
+                dataType: "JSON",
+                processData: false, // false, it prevent jQuery form transforming the data into a query string
+                contentType: false, 
+                cache: false,
+                timeout: 600000,
+                success: function (response) {
+                    if (response.code == 200) {
+                        toastr.success(response.data.message)
+                    }else{
+                        toastr.error(response.data.message)
+                    }
+
+                },
+                error: function (e) {
+
+                }
+            });
+        }
+        })
+
+    }
+
     
 </script>
 @endpush
