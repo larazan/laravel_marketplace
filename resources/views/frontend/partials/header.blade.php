@@ -1,7 +1,7 @@
 @php
     if (isset(Auth::user()->id)) {
         $jml_wishlist = \App\Models\Favorite::where('user_id', Auth::user()->id)->get()->count();
-        $jml_basket = \App\Models\Baskets::where('user_id', Auth::user()->id)->get()->whereNull('deleted_at')->count();
+        $jml_basket = \App\Models\Baskets::where('user_id', Auth::user()->id)->whereNull('is_checked')->get()->whereNull('deleted_at')->count();
     }
     
 @endphp

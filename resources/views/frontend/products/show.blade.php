@@ -502,15 +502,9 @@
                 timeout: 600000,
                 success: function (response) {
                     if (response.code == 200) {
-                        var alert = alert_success(id, response.data.message)
-                        $('#alert-container').html(alert);
-
-                        dismiss_alert(id);
+                        toastr.success(response.data.message)
                     }else{
-                        var alert = alert_danger(id, response.data.message)
-                        $('#alert-container').html(alert);
-
-                        dismiss_alert(id);
+                        toastr.error(response.data.message)
                     }
 
                 },

@@ -1,3 +1,20 @@
+toastr.options = {
+	'closeButton': true,
+	'debug': false,
+	'newestOnTop': false,
+	'progressBar': false,
+	'positionClass': 'toast-top-right',
+	'preventDuplicates': false,
+	'showDuration': '1000',
+	'hideDuration': '1000',
+	'timeOut': '5000',
+	'extendedTimeOut': '1000',
+	'showEasing': 'swing',
+	'hideEasing': 'linear',
+	'showMethod': 'fadeIn',
+	'hideMethod': 'fadeOut',
+}
+
 var preventLeaving = function () {        
 	window.onbeforeunload = function() {
 		return "Are you sure you want to navigate away?";
