@@ -91,9 +91,6 @@ Route::group(
 	}
 );
 
-<<<<<<< HEAD
-Route::get('orders/checkout', [Order::class, 'checkout']);
-=======
 Route::group(
 	['prefix' => 'orders', 'middleware' => ['auth']],
 	function () {
@@ -101,12 +98,11 @@ Route::group(
 	}
 );
 
-// Route::get('orders/checkout', [Order::class, 'checkout']);
->>>>>>> 91712fd608f8f4d68cb26fc9014da2928418a1fc
-// Route::post('orders/checkout', [Order::class, 'doCheckout']);
-// Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
-// Route::post('orders/set-shipping', [Order::class, 'setShipping']);
-// Route::get('orders/received/{orderID}', [Order::class, 'received']);
+Route::get('orders/checkout', [Order::class, 'checkout']);
+Route::post('orders/checkout', [Order::class, 'doCheckout']);
+Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
+Route::post('orders/set-shipping', [Order::class, 'setShipping']);
+Route::get('orders/received/{orderID}', [Order::class, 'received']);
 Route::get('orders/cities', [Order::class, 'cities']);
 // Route::get('orders', [Order::class, 'index']);
 // Route::get('orders/{orderID}', [Order::class, 'show']);

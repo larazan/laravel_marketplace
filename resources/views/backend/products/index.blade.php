@@ -83,7 +83,7 @@
                         <span>{{ $product->sku }}</span>
                     </div>
                     <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                        <a href="{{ url('product/'. $product->slug) }}" class="btn btn-sm btn-light font-sm rounded"> <i class=fi-rs-eye"></i> Show </a>
+                        <a href="{{ url('product/'. $product->slug) }}" class="btn btn-sm btn-light font-sm rounded" target="_blank"> <i class=fi-rs-eye"></i> Show </a>
                         <a href="{{ url('user/products/'. $product->id .'/edit') }}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> Edit </a>
                         <!-- <a href="#" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> Delete </a> -->
                         {!! Form::open(['url' => 'user/products/'. $product->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}

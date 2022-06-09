@@ -178,17 +178,29 @@ class ShopController extends Controller
         $shopImage = Shop::where(['id' => $id])->first();
 		$path = 'storage/';
 		
-        if (file_exists($path.$shopImage->original)) {
-            unlink($path.$shopImage->original);
+        // if (file_exists($path.$shopImage->original)) {
+        //     unlink($path.$shopImage->original);
+		// }
+		
+		// if (file_exists($path.$shopImage->medium)) {
+        //     unlink($path.$shopImage->medium);
+        // }
+
+        // if (file_exists($path.$shopImage->small)) {
+        //     unlink($path.$shopImage->small);
+        // }
+
+        if (Storage::exists($path.$shopImage->original)) {
+            Storage::delete($path.$shopImage->original);
 		}
 		
-		if (file_exists($path.$shopImage->medium)) {
-            unlink($path.$shopImage->medium);
+		if (Storage::exists($path.$shopImage->medium)) {
+            Storage::delete($path.$shopImage->medium);
         }
 
-        if (file_exists($path.$shopImage->small)) {
-            unlink($path.$shopImage->small);
-        }
+        if (Storage::exists($path.$shopImage->small)) {
+            Storage::delete($path.$shopImage->small);
+        }        
 
         return true;
     }

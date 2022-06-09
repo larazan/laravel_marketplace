@@ -18,9 +18,9 @@ class CreateBrandsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('status');
-            $table->string('original')->nullabel();
-            $table->string('extra_large')->nullabel();
-            $table->string('small')->nullabel();
+            $table->string('original')->nullable();
+            $table->string('extra_large')->nullable();
+            $table->string('small')->nullable();
             $table->timestamps();
         });
     }

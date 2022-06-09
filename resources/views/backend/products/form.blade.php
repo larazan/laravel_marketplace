@@ -45,7 +45,7 @@ $formTitle = !empty($product) ? 'Update' : 'Tambah Baru'
                         </div>
 
                         <div class="col-6 mb-3">
-                            {!! Form::label('weight', 'Berat', ['class' => 'form-label']) !!}
+                            {!! Form::label('weight', 'Berat (gram)', ['class' => 'form-label']) !!}
                             {!! Form::text('weight', null, ['class' => 'form-control', 'placeholder' => 'berat']) !!}
                         </div>
                         <div class="col-6 mb-3">

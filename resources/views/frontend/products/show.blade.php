@@ -95,6 +95,7 @@
                                 </div>
                                 <form id="shopForm">
 					                    {{ Form::hidden('product_id', $product->id) }}
+					                    {{ Form::hidden('price', $product->price) }}
 
                                         @if ($product->type == 'configurable')
                                         <div class="attr-detail attr-size mb-30">
@@ -120,9 +121,10 @@
                                             </ul> -->
                                         </div>
                                         @endif
+                                       
                                         <div class="detail-extralink mb-50">
                                             <div class="">
-                                            {!! Form::number('qty', 1, ['class' => 'cart-plus-minus-box', 'placeholder' => 'qty', 'min' => 1]) !!}
+                                            {!! Form::number('qty', 1, ['class' => 'form-control cart-plus-minus-box qty-val qty-input', 'id' => 'product-quantity', 'placeholder' => 'qty', 'min' => 1]) !!}
                                                 <!-- <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
                                                 <span class="qty-val">1</span>
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a> -->

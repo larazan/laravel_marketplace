@@ -39,7 +39,8 @@ class ShopController extends Controller
 		// var_dump($result);
 		// exit();
 
-		$shops = DB::table(DB::raw('shops s'))->get();
+		// $shops = DB::table(DB::raw('shops s'))->get();
+		$shops = Shop::active()->orderBy('id', 'DESC');
 
 		$shops = $this->_searchShops($shops, $request);
 

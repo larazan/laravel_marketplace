@@ -1,7 +1,13 @@
+@php
+    $settings = DB::table('settings')->get();            
+@endphp
 <aside class="navbar-aside" id="offcanvas_aside">
             <div class="aside-top">
                 <a href="/" class="brand-wrap">
-                    <img src="{{ URL::asset('dashboard/assets/imgs/theme/logo.svg') }}" class="logo" alt="Nest Dashboard" />
+                    @foreach($settings as $data) 
+                    <img src="{{ URL::asset($data->logo) }}" class="logo" alt="Nest Dashboard" />
+                    @endforeach
+                    <!-- <img src="{{ URL::asset('dashboard/assets/imgs/theme/logo.svg') }}" class="logo" alt="Nest Dashboard" /> -->
                 </a>
                 <div>
                     <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>

@@ -17,6 +17,7 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             'name' => 'gandum',
             'slug' => 'gandum',
+            'parent_id' => 0
         ]);
     }
 }

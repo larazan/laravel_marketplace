@@ -45,7 +45,7 @@
                 </div>
                 <div class="divider-2 mb-30"></div>
                 <div class="cart-action d-flex justify-content-between">
-                    <a class="btn "><i class="fi-rs-arrow-left mr-10"></i>Continue Shopping</a>
+                    <a href="{{ url('/') }}" class="btn "><i class="fi-rs-arrow-left mr-10"></i>Continue Shopping</a>
                     <a class="btn  mr-10 mb-sm-15"><i class="fi-rs-refresh mr-10"></i>Update Cart</a>
                 </div>
               
@@ -82,7 +82,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <a href="{{ url('orders') }}" class="btn mb-20 w-100" id="btn_checkout">Checkout<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a href="{{ url('orders/checkout') }}" class="btn mb-20 w-100" id="btn_checkout">Checkout<i class="fi-rs-sign-out ml-15"></i></a>
                 </div>
             </div>
         </div>

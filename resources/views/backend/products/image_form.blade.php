@@ -25,6 +25,8 @@
                     <button class="btn btn-primary" type="submit">Save</button>
                     <a href="{{ url('user/products/'.$productID.'/images') }}" class="btn btn-secondary btn-default">Back</a>
                 </div>
+
+                
                 
                 {!! Form::close() !!}
             </div>

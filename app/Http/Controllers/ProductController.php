@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-// namespace App\Helpers;
 
 use Illuminate\Http\Request;
+
+use App\Helpers\General;
 
 use App\Models\Product;
 use App\Models\ProductImage;

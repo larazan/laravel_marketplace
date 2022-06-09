@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Basket;
 use App\Models\OrderItem;
 use App\Models\Shipment;
 use App\Models\ProductInventory;
@@ -40,7 +41,7 @@ class OrderController extends Controller
 	public function index()
 	{
 
-		$items = Baskets::select(DB::raw("baskets.product_id, 
+		$items = Basket::select(DB::raw("baskets.product_id, 
 									baskets.id as id_basket,
 									baskets.user_id, 
 									baskets.qty, 
@@ -70,6 +71,13 @@ class OrderController extends Controller
 
 		$this->data['orders'] = $items;
 
+		$this->data['totalWeight'] = $this->_getTotalWeight() / 1000;
+		$this->data['tax'] = $this->_getTax();
+
+		$this->data['provinces'] = $this->getProvinces();
+		$this->data['cities'] = isset(Auth::user()->province_id) ? $this->getCities(Auth::user()->province_id) : [];
+		$this->data['user'] = Auth::user();
+
 		return $this->loadTheme('orders.checkout', $this->data);
 	}
 
@@ -95,14 +103,41 @@ class OrderController extends Controller
 	 */
 	public function checkout()
 	{
-		if (\Cart::isEmpty()) {
-			return redirect('carts');
-		}
+		// if (\Cart::isEmpty()) {
+		// 	return redirect('carts');
+		// }
 
-		\Cart::removeConditionsByType('shipping');
+		// \Cart::removeConditionsByType('shipping');
+		$items = Basket::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.user_id, 
+									baskets.qty, 
+									baskets.is_checked, 
+									products.name,
+									products.price,
+									product_images.small as gambar, 
+									shops.name as nama_toko
+									"))
+						->where('baskets.user_id', Auth::user()->id)
+						->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+						->leftJoin('product_brands', 'product_brands.product_id', '=', 'products.id')
+						->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
+						->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
+						->leftJoin('brands', 'brands.id', '=', 'product_brands.brand_id')
+						->leftJoin('shops', 'shops.user_id', '=', 'products.user_id')
+						->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
+							img'), 
+						function($join)
+						{
+						$join->on('products.id', '=', 'img.product_id');
+						})
+						->join('product_images', 'product_images.id', 'img.max_id')
+						->whereNull('baskets.deleted_at')
+						->where('baskets.is_checked', 1)
+						->get();
+
 		$this->_updateTax();
 
-		$items = \Cart::getContent();
 		$this->data['items'] = $items;
 		$this->data['totalWeight'] = $this->_getTotalWeight() / 1000;
 
@@ -306,18 +341,56 @@ class OrderController extends Controller
 	 */
 	private function _getTotalWeight()
 	{
-		if (\Cart::isEmpty()) {
-			return 0;
-		}
+		// if (\Cart::isEmpty()) {
+		// 	return 0;
+		// }
 
 		$totalWeight = 0;
-		$items = \Cart::getContent();
+		// $items = \Cart::getContent();
+		$items = Basket::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.user_id, 
+									baskets.qty, 
+									baskets.is_checked, 
+									products.weight
+									"))
+						->where('baskets.user_id', Auth::user()->id)
+						->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+						->whereNull('baskets.deleted_at')
+						->where('baskets.is_checked', 1)
+						->get();
 
 		foreach ($items as $item) {
-			$totalWeight += ($item->quantity * $item->associatedModel->weight);
+			$totalWeight += ($item->qty * $item->weight);
 		}
 
 		return $totalWeight;
+	}
+
+	private function _getTax()
+	{
+		$tax = 11 / 100;
+		$subtotal = 0;
+		$items = Basket::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.user_id, 
+									baskets.qty, 
+									baskets.is_checked, 
+									products.price
+									"))
+						->where('baskets.user_id', Auth::user()->id)
+						->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+						->whereNull('baskets.deleted_at')
+						->where('baskets.is_checked', 1)
+						->get();
+
+		foreach ($items as $item) {
+			$subtotal += ($item->qty * $item->price);
+		}
+
+		$totalTax = $subtotal * $tax;
+
+		return $totalTax;
 	}
 
 	/**

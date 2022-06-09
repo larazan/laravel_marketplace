@@ -3,20 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 use App\Models\Product;
 use App\Models\Order;
-use App\Models\Baskets;
-use App\Models\ProductInventory;
 use App\Models\Basket;
+use App\Models\Shop;
+use App\Models\ProductInventory;
 
 use Illuminate\Support\Facades\Session; 
 use App\Exceptions\OutOfStockException;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class BasketController extends Controller
+class CartController extends Controller
 {
+    /**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
     /**
      * Display a listing of the resource.
      *
@@ -24,11 +35,9 @@ class BasketController extends Controller
      */
     public function index()
     {
-        // $items = \Cart::getContent();
-		// $items = Baskets::where('user_id', Auth::user()->id)->whereNull('deleted_at')->get();
+        $items = \Cart::getContent();
 		// dd($items);
-        // var_dump($items); exit;
-		$this->data['items'] =  '';
+		$this->data['items'] =  $items;
 
 		return $this->loadTheme('carts.index', $this->data);
     }
@@ -52,11 +61,12 @@ class BasketController extends Controller
     public function store(Request $request)
     {
         $params = $request->except('_token');
+        // var_dump($params);exit;
 		
 		$product = Product::findOrFail($params['product_id']);
 		$slug = $product->slug;
 
-        $attributes = [];
+		$attributes = [];
 		if ($product->configurable()) {
 			$product = Product::from('products as p')
 				->whereRaw(
@@ -89,10 +99,16 @@ class BasketController extends Controller
 			$attributes['color'] = $params['color'];
 		}
 
-		$this->_checkProductInventory($product, $params['qty']);
+		$itemQuantity =  $this->_getItemQuantity(md5($product->id)) + $params['qty'];
+		$this->_checkProductInventory($product, $itemQuantity);
 		
+		$tim = Carbon::now()->timestamp;
+		$ses = Session::getId();
+		$userId = Auth::user()->id;
+		$ip = request()->ip();
+
 		$item = [
-			'id' => md5($product->id),
+			'id' => md5($product->id . $userId . $ip),
 			'name' => $product->name,
 			'price' => $product->price,
 			'quantity' => $params['qty'],
@@ -100,18 +116,92 @@ class BasketController extends Controller
 			'associatedModel' => $product,
 		];
 
-        if (Basket::create($item)) {
-            Session::flash('success', 'Product '. $item['name'] .' has been added to cart');
-        } else {
-            Session::flash('error', 'Product '. $item['name'] .' couldnt been added to cart');
-        }
-        
+		$item_cart = [
+			'id' => md5($product->id . $userId . $ip),
+			'session_id' => $ses,
+			'name' => $product->name,
+			'prod_id' => $product->id,
+			'price' => $product->price,
+			'quantity' => $params['qty'],
+			'shop_id' => $product->shop->id,
+			'customer_id' => $userId,
+			'ip_address' => $ip,
+			'attributes' => $attributes,
+		];
+
+		$productOwn = $this->_checkProductOwn($product->id);
+		if ($productOwn == true) {
+			Session::flash('error', 'Cannot buying own product');
+			return redirect('/product/'. $slug);
+		}
+
+		\Cart::add($item);
+
+		$productAlready = $this->_checkAlreadyIn($product->id);
+		if ($productAlready == true) {
+			// update basket
+			$basket = Basket::find(md5($product->id));
+			$basket->quantity = $params['qty'];
+			$basket->attributes = $attributes;
+			$basket->save();
+			// Basket::updateOrCreate(['id' => md5($product->id)], ['quantity' => $params['qty']]);
+		} else {
+			Basket::create($item_cart);
+		}
+
+		Session::flash('success', 'Product '. $item['name'] .' has been added to cart');
 		return redirect('/product/'. $slug);
     }
 
+	/**
+     * Add product to cart.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
 	public function addCart(Request $request)
 	{
-		$cek_basket = Baskets::where('product_id', $request->product_id)
+		$userId = Auth::user()->id;
+		$ip = request()->ip();
+		$ses = Session::getId();
+
+		$product = Product::findOrFail($request->product_id);
+
+		$attributes = [];
+		if ($product->configurable()) {
+			$product = Product::from('products as p')
+				->whereRaw(
+					"p.parent_id = :parent_product_id
+				and (select pav.text_value 
+						from product_attribute_values pav
+						join attributes a on a.id = pav.attribute_id
+						where a.code = :size_code
+						and pav.product_id = p.id
+						limit 1
+					) = :size_value
+				and (select pav.text_value 
+						from product_attribute_values pav
+						join attributes a on a.id = pav.attribute_id
+						where a.code = :color_code
+						and pav.product_id = p.id
+						limit 1
+					) = :color_value
+					",
+					[
+						'parent_product_id' => $request->product_id,
+						'size_code' => 'size',
+						'size_value' => $request->size,
+						'color_code' => 'color',
+						'color_value' => $request->color,
+					]
+				)->firstOrFail();
+
+			$attributes['size'] = $request->size;
+			$attributes['color'] = $request->color;
+		}
+
+		$cek_basket = Basket::where('product_id', $request->product_id)
 								->where('user_id', Auth::user()->id )
 								->whereNull('deleted_at')
 								->first();
@@ -133,13 +223,15 @@ class BasketController extends Controller
 
 				DB::commit();
 			} else {
-				$data = new Baskets;
+				$data = new Basket;
+				$data->id = md5($request->product_id . $userId);
+				$data->session_id = $ses;
 				$data->product_id = $request->product_id;
-				$data->price = $request->price;
 				$data->user_id = Auth::user()->id;
 				$data->qty = $request->qty;
 				$data->is_checked = 1;
-
+				$data->attributes = $attributes;
+				
 				$data->save();
 				$responseCode = 200;
 				$responseData['status'] = true;
@@ -149,8 +241,10 @@ class BasketController extends Controller
 			}
 		}
 		
+
 		$response = \General::helpResponse($responseCode, $responseData);
 		return response()->json($response);
+
 	}
 
     /**
@@ -174,6 +268,82 @@ class BasketController extends Controller
     {
         //
     }
+
+    /**
+	 * Get total quantity per item in the cart
+	 *
+	 * @param string $itemId item ID
+	 *
+	 * @return int
+	 */
+	private function _getItemQuantity($itemId)
+	{
+		$items = \Cart::getContent();
+		$itemQuantity = 0;
+		if ($items) {
+			foreach ($items as $item) {
+				if ($item->id == $itemId) {
+					$itemQuantity = $item->quantity;
+					break;
+				}
+			}
+		}
+
+		return $itemQuantity;
+	}
+
+	private function _checkAlreadyIn($product_id)
+	{
+		$userId = Auth::user()->id;
+		$ip = request()->ip();
+		$id = md5($product_id . $userId . $ip);
+		$basket = Basket::findOrFail($id);
+		if ($basket) {
+			return true;
+		}
+	}
+
+	private function _checkProductOwn($product_id) 
+	{
+		$product = Product::findOrFail($product_id);
+		$shop_id = Shop::where('user_id', Auth::id())->first()->id;
+		// $own = Product::active()->where('shop_id', $shop_id)->first();
+		$own = $product->shop->id;
+
+		if ($own == $shop_id) {
+			return true;
+		}
+	}
+
+	/**
+	 * Check product inventory
+	 *
+	 * @param Product $product      product object
+	 * @param int     $itemQuantity qty
+	 *
+	 * @return int
+	 */
+	private function _checkProductInventory($product, $itemQuantity)
+	{
+		if ($product->productInventory->qty < $itemQuantity) {
+			throw new OutOfStockException('The product '. $product->sku .' is out of stock');
+		}
+	}
+
+	/**
+	 * Get cart item by card item id
+	 *
+	 * @param string $cartID cart ID
+	 *
+	 * @return array
+	 */
+	private function _getCartItem($cartID)
+	{
+		$items = \Cart::getContent();
+
+		return $items[$cartID];
+	}
+
 
     /**
      * Update the specified resource in storage.
@@ -200,6 +370,8 @@ class BasketController extends Controller
 						],
 					]
 				);
+
+				Basket::updateOrCreate(['id' => $cartID], ['quantity' => $item['quantity']]);
 			}
 
 			Session::flash('success', 'The cart has been updated');
@@ -214,13 +386,19 @@ class BasketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {  
+	
+        \Cart::remove($id);
+
+		$basket = Basket::findOrFail($id);
+		$basket->delete();
+
+		return redirect('carts');
     }
 
 	public function listProduk(Request $reqest)
 	{
-		$items = Baskets::select(DB::raw("baskets.product_id, 
+		$items = Basket::select(DB::raw("baskets.product_id, 
 										baskets.id as id_basket,
 										baskets.user_id, 
 										baskets.qty, 
@@ -255,7 +433,7 @@ class BasketController extends Controller
 
 	public function deleteList(Request $request)
 	{
-		$baskets = Baskets::findOrFail($request->id);
+		$baskets = Basket::findOrFail($request->id);
 
 		DB::beginTransaction();
 		try {
@@ -277,7 +455,7 @@ class BasketController extends Controller
 
 	public function editQty(Request $request)
 	{
-		$baskets = Baskets::findOrFail($request->id);
+		$baskets = Basket::findOrFail($request->id);
 
 		DB::beginTransaction();
 		try {
@@ -300,14 +478,14 @@ class BasketController extends Controller
 
 	public function cekShop(Request $request)
 	{
-		$basket_cek = Baskets::where('user_id', Auth::user()->id)
+		$basket_cek = Basket::where('user_id', Auth::user()->id)
 								->where('is_checked', 1)
 								->limit(1)
 								->whereNull('deleted_at')
 								->first();
 		$produk_basket =  Product::where('id', $basket_cek->product_id)->first();
 		$produk = Product::where('id', $request->id_produk)->first();
-		$baskets = Baskets::findOrFail($request->id);
+		$baskets = Basket::findOrFail($request->id);
 		DB::beginTransaction();
 		if ($produk->shop_id == $produk_basket->shop_id ) {
 			try {
@@ -324,10 +502,10 @@ class BasketController extends Controller
 				$responseData['message'] = 'Gagal mengeluarkan mengupdate keranjang !';
 			}
 		}else{
-			$del_baskets = Baskets::where('user_id', Auth::user()->id)->whereNull('deleted_at')->get();
+			$del_baskets = Basket::where('user_id', Auth::user()->id)->whereNull('deleted_at')->get();
 			try {
 				foreach ($del_baskets as $value) {
-					$data_baskets = Baskets::findOrFail($value->id);
+					$data_baskets = Basket::findOrFail($value->id);
 					$data_baskets->is_checked = null;
 					$data_baskets->save();
 				}

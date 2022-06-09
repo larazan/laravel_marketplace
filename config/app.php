@@ -243,6 +243,7 @@ return [
 
         'General' => App\Helpers\General::class,
         'LogActivity' => App\Helpers\LogActivity::class,
+        'Keranjang' => App\Helpers\Keranjang::class,
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,

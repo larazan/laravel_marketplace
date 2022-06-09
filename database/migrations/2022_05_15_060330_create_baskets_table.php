@@ -17,6 +17,7 @@ class CreateBasketsTable extends Migration
             $table->string('id');
             $table->string('session_id');
             $table->integer('product_id');
+            $table->decimal('price', 15, 2);
             $table->integer('user_id');
             $table->integer('is_checked')->nullable()->default(null);
             $table->integer('qty');

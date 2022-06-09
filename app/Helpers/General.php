@@ -178,7 +178,7 @@ class General
 		return $showAttributes;
 	}
 
-	function helpResponse($code, $data = NULL, $msg = '', $status = '', $note = NULL)
+	public static function helpResponse($code, $data = NULL, $msg = '', $status = '', $note = NULL)
 	{
 		switch ($code)
 		{

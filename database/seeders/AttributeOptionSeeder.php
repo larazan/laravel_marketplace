@@ -23,6 +23,18 @@ class AttributeOptionSeeder extends Seeder
                 'attribute_id' => 1,
                 'name' => 'Putih',
             ],
+            [
+                'attribute_id' => 2,
+                'name' => 'Kecil',
+            ],
+            [
+                'attribute_id' => 2,
+                'name' => 'Sedang',
+            ],
+            [
+                'attribute_id' => 2,
+                'name' => 'Besar',
+            ],
         ]);
     }
 }

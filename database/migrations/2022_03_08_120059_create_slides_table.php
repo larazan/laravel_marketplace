@@ -21,9 +21,9 @@ class CreateSlidesTable extends Migration
             $table->integer('position')->default(0);
             $table->string('status');
             $table->text('body')->nullable();
-            $table->string('original')->nullabel();
-            $table->string('extra_large')->nullabel();
-            $table->string('small')->nullabel();
+            $table->string('original')->nullable();
+            $table->string('extra_large')->nullable();
+            $table->string('small')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

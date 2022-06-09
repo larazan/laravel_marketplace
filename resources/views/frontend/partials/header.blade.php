@@ -5,6 +5,9 @@
     }
     
 @endphp
+@php
+    $settings = DB::table('settings')->get();            
+@endphp
 <header class="header-area header-style-1 header-height-2">
             <div class="mobile-promotion">
                 <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
@@ -14,7 +17,12 @@
                 <div class="container">
                     <div class="header-wrap">
                         <div class="logo logo-width-1">
-                            <a href="/"><img src="{{ asset('frontend/assets/imgs/sorgumku.svg') }}"  alt="logo" /></a>
+                            <a href="{{ url('/') }}">
+                            @foreach($settings as $data) 
+                    <img src="{{ URL::asset($data->logo) }}" class="logo" alt="Nest Dashboard" />
+                    @endforeach
+                                <!-- <img src="{{ asset('frontend/assets/imgs/sorgumku.svg') }}"  alt="logo" /> -->
+                            </a>
                         </div>
                         <div class="header-right">
                             <div class="search-style-2">
@@ -113,7 +121,11 @@
                 <div class="container">
                     <div class="header-wrap header-space-between position-relative">
                         <div class="logo logo-width-1 d-block d-lg-none">
-                            <a href="/"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                            <a href="{{ url('/') }}">
+                            @foreach($settings as $data) 
+                    <img src="{{ URL::asset($data->logo) }}" class="logo" alt="Nest Dashboard" />
+                    @endforeach
+                            </a>
                         </div>
                         <div class="header-nav d-none d-lg-flex">
                             <div class="main-categori-wrap d-none d-lg-block">
@@ -300,7 +312,7 @@
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="{{ url('carts') }}">
                                         <img alt="Nest" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-                                        <span class="pro-count white">{{ \Cart::getTotalQuantity() }}</span>
+                                        <span class="pro-count white">{{ Keranjang::totalCartItems() }}</span>
                                     </a>
                                     @include('frontend.partials.mini_cart')
                                 </div>

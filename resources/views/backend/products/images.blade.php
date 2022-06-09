@@ -59,9 +59,12 @@
                 </article>
             @endforelse
             <!-- itemlist  .// -->
+            
         </div>
         <!-- card-body end// -->
+        
     </div>
+    <a href="{{ url('user/products') }}" class="btn btn-secondary btn-default">Kembali</a>
     <!-- card end// -->
 </section>
 
