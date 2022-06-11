@@ -14,10 +14,10 @@ class Keranjang
     {
         if (Auth::check()) {
             $user_id = Auth::user()->id;
-            $contents = Basket::where('user_id', $user_id)->get();
+            $contents = Basket::where('user_id', $user_id)->first();
         } else {
             $session_id = Session::get('session_id');
-            $contents = Basket::where('session_id', $session_id)->get();
+            $contents = Basket::where('session_id', $session_id)->first();
         }
 
         if ($contents) {
@@ -122,6 +122,50 @@ class Keranjang
         
     }
 
+    public static function getTotalChecked($service = null, $cost = 0, $tax = 0)
+    {
+        $total = 0;
+
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+            $subtotal = 0;
+            
+		    $items = Basket::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.user_id, 
+									baskets.qty, 
+									baskets.is_checked, 
+									products.price
+									"))
+                            ->where('baskets.user_id', $user_id)
+                            ->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+                            ->whereNull('baskets.deleted_at')
+                            ->where('baskets.is_checked', 1)
+                            ->get();
+
+            foreach ($items as $item) {
+                $subtotal += ($item->qty * $item->price);
+            }
+        } else {
+            $subtotal = 0;
+        }
+
+        if ($cost > 0) {
+            $subtotal += $cost;
+        }
+
+        if ($tax > 0) {
+            $subtotal += $tax;
+        }
+
+        return $subtotal;
+    }
+
+    public static function condition()
+    {
+
+    }
+
     public static function pajak()
     {
         if (Auth::check()) {
@@ -150,5 +194,34 @@ class Keranjang
         } 
 
         return $totalTax;
+    }
+
+    public static function getOrigin()
+    {
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+            $items = Basket::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.user_id, 
+									baskets.is_checked, 
+									shops.name as nama_toko,
+                                    users.city_id
+									"))
+						->where('baskets.user_id', $user_id)
+						->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+						->leftJoin('shops', 'shops.user_id', '=', 'products.user_id')
+						->leftJoin('users', 'users.id', '=', 'products.user_id')
+						->whereNull('baskets.deleted_at')
+						->where('baskets.is_checked', 1)
+						->get();
+                
+            foreach ($items as $item) {
+                $city_id = $item->city_id;
+            }            
+        } else {
+            $city_id = null;
+        }
+
+        return $city_id;
     }
 }

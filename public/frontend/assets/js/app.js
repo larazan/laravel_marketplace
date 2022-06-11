@@ -1,17 +1,18 @@
-function getShippingCostOptions(city_id) {
+function getShippingCostOptions(city_id, city_origin) {
 	$.ajax({
 		type: 'POST',
 		url: '/orders/shipping-cost',
 		data: {
 			_token: $('meta[name="csrf-token"]').attr('content'),
-			city_id: city_id
+			city_id: city_id,
+			city_origin: city_origin
 		},
 		success: function (response) {
 			$('#shipping-cost-option').empty();
-			$('#shipping-cost-option').append('<option value>- Please Select -</option>');
+			$('#shipping-cost-option').append('<option class="form-control" value>- Please Select -</option>');
 
 			$.each(response.results, function(key, result){
-				$('#shipping-cost-option').append('<option value="'+ result.service.replace(/\s/g, '') +'">'+ result.service + ' | ' + result.cost + ' | ' + result.etd + '</option>');
+				$('#shipping-cost-option').append('<option class="form-control" value="'+ result.service.replace(/\s/g, '') +'">'+ result.service + ' | ' + result.cost + ' | ' + result.etd + '</option>');
 			});
 		}
 	});
@@ -89,21 +90,23 @@ $(document).on('click', '.quick-view', (e) => { //replaces function book()
 	});
 
 	// ======= Show Shipping Cost Options =========
+	var city_origin = $('#city-origin').val();
+
 	if ($('#city-id').val()) {
-		getShippingCostOptions($('#city-id').val());
+		getShippingCostOptions($('#city-id').val(), city_origin);
 	}
 
 	$('#city-id').on('change', function (e) {
 		var city_id = e.target.value;
 
 		if (!$('#ship-box').is(':checked')) {
-			getShippingCostOptions(city_id);
+			getShippingCostOptions(city_id, city_origin);
 		}
 	});
 
 	$('#shipping-city').on('change', function (e) {
 		var city_id = e.target.value;
-		getShippingCostOptions(city_id);
+		getShippingCostOptions(city_id, city_origin);
 	});
 
 	// ============ Set Shipping Cost ================

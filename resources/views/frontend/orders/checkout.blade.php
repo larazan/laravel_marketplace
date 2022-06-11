@@ -51,6 +51,7 @@
                             @php
                                 $total_per_produk = $item->price * $item->qty;
                             @endphp
+                            
                             <div class="p-3">
                                 <div class="row cart-item">
                                     <div class="col-3">
@@ -85,14 +86,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <p>Ongkos Kirim ({{ $totalWeight }} kg):</p>
-                                    </div>
-                                    <div class="col-6 text-end">
                                         <p class="price-text">
-                                            <span class="font-weight-bold">{{ \General::priceFormat($ongkir, 'Rp') }}</span>
+                                            <select id="shipping-cost-option" class="form-control" required name="shipping_service"></select>
                                         </p>
                                     </div>
+                                    <!-- <div class="col-12 text-end">
+                                        
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
@@ -107,10 +109,7 @@
                                         <p>Total:</p>
                                     </div>
                                     <div class="col-6 float-end">
-                                        @php
-                                        $total = $subtotal + $ongkir + $pajak;
-                                        @endphp
-                                        <p class="total-text raw-total-text mb-0" data-price="272.844"> {{ \General::priceFormat($total, 'Rp') }} </p>
+                                        <p class="total-text raw-total-text mb-0 total-amount" data-price=""> {{ \General::priceFormat(Keranjang::getTotalChecked(), 'Rp') }} </p>
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +217,7 @@
                                         </div>
                                         <div class="col-sm-6 col-12">
                                             <div class="form-group  ">
-                                    
+                                            {{ Form::hidden('city_origin', $item->city_id, ['id' => 'city-origin']) }}
 									        {!! Form::select('city_id', $cities, null, ['id' => 'city-id', 'placeholder' => '- Please Select -', 'required' => true, 'class' => 'form-control'])!!}
                                             </div>
                                         </div>
@@ -237,7 +236,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group mb-3">
-                                            <input type="checkbox" name="create_account" value="1" id="create_account">
+                                            <input id="ship-box" type="checkbox" name="ship_to"/>
                                             <label for="create_account" class="control-label" style="padding-left: 5px">Ship to a different address?</label>
                                         </div>
                                     </div>
@@ -246,7 +245,7 @@
                             </div>
                         </div>
                         <br>
-                        <div>
+                        <div id="ship-box-info">
                             <div class="customer-address-payment-form">
                                 
                                 <div class="address-form-wrapper">
@@ -420,3 +419,19 @@
     {!! Form::close() !!}
 
     @endsection
+
+    @push('style')
+        <style>
+            #ship-box-info {
+              display: none;
+            }
+        </style>
+    @endpush
+
+    @push('scripts')
+            <script>
+                $('#ship-box').on('click', function() {
+                    $('#ship-box-info').slideToggle(1000);
+                });
+            </script>
+    @endpush

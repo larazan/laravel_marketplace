@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
+use App\Helpers\Keranjang;
+
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Basket;
@@ -49,7 +51,8 @@ class OrderController extends Controller
 									products.name,
 									products.price,
 									product_images.small as gambar, 
-									shops.name as nama_toko
+									shops.name as nama_toko,
+									users.city_id
 									"))
 						->where('baskets.user_id', Auth::user()->id)
 						->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
@@ -58,6 +61,7 @@ class OrderController extends Controller
 						->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
 						->leftJoin('brands', 'brands.id', '=', 'product_brands.brand_id')
 						->leftJoin('shops', 'shops.user_id', '=', 'products.user_id')
+						->leftJoin('users', 'users.id', '=', 'products.user_id')
 						->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
 							img'), 
 						function($join)
@@ -69,6 +73,7 @@ class OrderController extends Controller
 						->where('baskets.is_checked', 1)
 						->get();
 
+		$this->_updateTax();				
 		$this->data['orders'] = $items;
 
 		$this->data['totalWeight'] = $this->_getTotalWeight() / 1000;
@@ -175,6 +180,7 @@ class OrderController extends Controller
 	public function shippingCost(Request $request)
 	{
 		$destination = $request->input('city_id');
+		// $origin = $request->input('city_origin');
 		
 		return $this->_getShippingCost($destination, $this->_getTotalWeight());
 	}
@@ -188,7 +194,7 @@ class OrderController extends Controller
 	 */
 	public function setShipping(Request $request)
 	{
-		\Cart::removeConditionsByType('shipping');
+		// \Cart::removeConditionsByType('shipping');
 
 		$shippingService = $request->get('shipping_service');
 		$destination = $request->get('city_id');
@@ -214,7 +220,8 @@ class OrderController extends Controller
 
 			$this->_addShippingCostToCart($selectedShipping['service'], $selectedShipping['cost']);
 
-			$data['total'] = number_format(\Cart::getTotal());
+			// $data['total'] = number_format(\Cart::getTotal());
+			$data['total'] = number_format(Keranjang::getTotalChecked());
 		} else {
 			$status = 400;
 			$message = 'Failed to set shipping cost';
@@ -268,16 +275,18 @@ class OrderController extends Controller
 	 */
 	private function _addShippingCostToCart($serviceName, $cost)
 	{
-		$condition = new \Darryldecode\Cart\CartCondition(
-			[
-				'name' => $serviceName,
-				'type' => 'shipping',
-				'target' => 'total',
-				'value' => '+'. $cost,
-			]
-		);
+		// $condition = new \Darryldecode\Cart\CartCondition(
+		// 	[
+		// 		'name' => $serviceName,
+		// 		'type' => 'shipping',
+		// 		'target' => 'total',
+		// 		'value' => '+'. $cost,
+		// 	]
+		// );
 
-		\Cart::condition($condition);
+		// \Cart::condition($condition);
+
+		Keranjang::getTotalChecked($serviceName, $cost);
 	}
 
 	/**
@@ -291,7 +300,7 @@ class OrderController extends Controller
 	private function _getShippingCost($destination, $weight)
 	{
 		$params = [
-			'origin' => env('RAJAONGKIR_ORIGIN'),
+			'origin' => Keranjang::getOrigin(),
 			'destination' => $destination,
 			'weight' => $weight,
 		];
@@ -341,12 +350,8 @@ class OrderController extends Controller
 	 */
 	private function _getTotalWeight()
 	{
-		// if (\Cart::isEmpty()) {
-		// 	return 0;
-		// }
-
 		$totalWeight = 0;
-		// $items = \Cart::getContent();
+		
 		$items = Basket::select(DB::raw("baskets.product_id, 
 									baskets.id as id_basket,
 									baskets.user_id, 
@@ -400,18 +405,22 @@ class OrderController extends Controller
 	 */
 	private function _updateTax()
 	{
-		\Cart::removeConditionsByType('tax');
+	// 	\Cart::removeConditionsByType('tax');
 
-		$condition = new \Darryldecode\Cart\CartCondition(
-			[
-				'name' => 'TAX 10%',
-				'type' => 'tax',
-				'target' => 'total',
-				'value' => '10%',
-			]
-		);
+	// 	$condition = new \Darryldecode\Cart\CartCondition(
+	// 		[
+	// 			'name' => 'TAX 10%',
+	// 			'type' => 'tax',
+	// 			'target' => 'total',
+	// 			'value' => '10%',
+	// 		]
+	// 	);
 
-		\Cart::condition($condition);
+	// 	\Cart::condition($condition);
+		$serviceName = null; 
+		$cost = 0;
+
+		Keranjang::getTotalChecked($serviceName, $cost, $this->_getTax());
 	}
 
 	/**
