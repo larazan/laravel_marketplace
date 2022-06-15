@@ -49,10 +49,14 @@ class Keranjang
 									baskets.id as id_basket,
 									baskets.user_id, 
 									baskets.qty, 
+									baskets.attributes, 
 									baskets.is_checked, 
 									products.name,
+									products.type,
 									products.slug,
 									products.price,
+									products.sku,
+									products.weight,
 									product_images.small as gambar, 
 									shops.name as nama_toko
 									"))
@@ -223,5 +227,32 @@ class Keranjang
         }
 
         return $city_id;
+    }
+
+    public static function clear()
+    {
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+           
+		    $items = Basket::select(DB::raw("baskets.id,
+									baskets.user_id, 
+									baskets.is_checked,
+                                    baskets.deleted_at 
+									"))
+                            ->where('baskets.user_id', $user_id)
+                            ->whereNull('baskets.deleted_at')
+                            ->where('baskets.is_checked', 1)
+                            ->get();
+
+            foreach ($items as $item) {
+                //  deleting basket 
+                Basket::find($item->id)->delete();
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

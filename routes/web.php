@@ -104,6 +104,7 @@ Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
 Route::post('orders/set-shipping', [Order::class, 'setShipping']);
 Route::get('orders/received/{orderID}', [Order::class, 'received']);
 Route::get('orders/cities', [Order::class, 'cities']);
+// Route::get('orders/clear', [Order::class, 'deleteItems']);
 // Route::get('orders', [Order::class, 'index']);
 // Route::get('orders/{orderID}', [Order::class, 'show']);
 
@@ -136,6 +137,7 @@ Route::get('/guide', [HomeController::class, 'guide']);
 Route::get('/policy', [HomeController::class, 'policy']);
 Route::get('/terms', [HomeController::class, 'terms']);
 Route::get('/received', [ReceivedController::class, 'index']);
+Route::get('/final', [ReceivedController::class, 'final']);
 
 Route::group(
 	['prefix' => 'user', 'middleware' => ['auth']],

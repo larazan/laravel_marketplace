@@ -33,6 +33,8 @@ class OrderController extends Controller
 		parent::__construct();
 
 		$this->middleware('auth');
+
+		$this->pajakPersen = 11;
 	}
 
 	/**
@@ -75,6 +77,7 @@ class OrderController extends Controller
 
 		$this->_updateTax();				
 		$this->data['orders'] = $items;
+		// 
 
 		$this->data['totalWeight'] = $this->_getTotalWeight() / 1000;
 		$this->data['tax'] = $this->_getTax();
@@ -143,14 +146,13 @@ class OrderController extends Controller
 
 		$this->_updateTax();
 
-		$this->data['items'] = $items;
+		$this->data['orders'] = $items;
 		$this->data['totalWeight'] = $this->_getTotalWeight() / 1000;
+		$this->data['tax'] = $this->_getTax();
 
 		$this->data['provinces'] = $this->getProvinces();
 		$this->data['cities'] = isset(Auth::user()->province_id) ? $this->getCities(Auth::user()->province_id) : [];
 		$this->data['user'] = Auth::user();
-
-
 
 		return $this->loadTheme('orders.checkout', $this->data);
 	}
@@ -374,7 +376,7 @@ class OrderController extends Controller
 
 	private function _getTax()
 	{
-		$tax = 11 / 100;
+		$tax = $this->pajakPersen / 100;
 		$subtotal = 0;
 		$items = Basket::select(DB::raw("baskets.product_id, 
 									baskets.id as id_basket,
@@ -438,7 +440,7 @@ class OrderController extends Controller
 			function () use ($params) {
 				$order = $this->_saveOrder($params);
 				$this->_saveOrderItems($order);
-				$this->_generatePaymentToken($order);
+				// $this->_generatePaymentToken($order);
 				$this->_saveShipment($order, $params);
 	
 				return $order;
@@ -446,15 +448,17 @@ class OrderController extends Controller
 		);
 
 		if ($order) {
-			\Cart::clear();
-			$this->_sendEmailOrderReceived($order);
-			$this->_sendEmailOrderRequest($order);
+			// \Cart::clear();
+			Keranjang::clear();
+			// $this->_sendEmailOrderReceived($order);
+			// $this->_sendEmailOrderRequest($order);
 
 			Session::flash('success', 'Thank you. Your order has been received!');
-			return redirect('orders/received/'. $order->id);
+			return redirect('orders/final/'. $order->id);
+			// return redirect('orders/received/'. $order->id);
 		}
 
-		return redirect('orders/checkout');
+		return redirect('orders');
 	}
 
 	/**
@@ -511,17 +515,19 @@ class OrderController extends Controller
 		$selectedShipping = $this->_getSelectedShipping($destination, $this->_getTotalWeight(), $params['shipping_service']);
 		
 		// add params shop id
-		$items = \Cart::getContent();
+		// $items = \Cart::getContent();
+		$items = Keranjang::getItems();
 		foreach ($items as $item) {
-			$product_id = $item->associatedModel->id;
+			// $product_id = $item->associatedModel->id;
+			$product_id = $item->product_id;
 		}
 		$product = Product::findOrFail($product_id)->first();
 		$shop_id = $product->shop->id;
 		// $shop_id = $params['shop_id'];
 
-		$baseTotalPrice = \Cart::getSubTotal();
-		$taxAmount = \Cart::getCondition('TAX 10%')->getCalculatedValue(\Cart::getSubTotal());
-		$taxPercent = (float)\Cart::getCondition('TAX 10%')->getValue();
+		$baseTotalPrice = Keranjang::subTotal();   // \Cart::getSubTotal();
+		$taxAmount = Keranjang::pajak(); // \Cart::getCondition('TAX 10%')->getCalculatedValue(\Cart::getSubTotal());
+		$taxPercent = (float) $this->pajakPersen; // \Cart::getCondition('TAX 10%')->getValue();
 		$shippingCost = $selectedShipping['cost'];
 		$discountAmount = 0;
 		$discountPercent = 0;
@@ -549,9 +555,9 @@ class OrderController extends Controller
 			'note' => $params['note'],
 			'customer_first_name' => $params['first_name'],
 			'customer_last_name' => $params['last_name'],
-			'customer_company' => $params['company'],
+			// 'customer_company' => $params['company'],
 			'customer_address1' => $params['address1'],
-			'customer_address2' => $params['address2'],
+			// 'customer_address2' => $params['address2'],
 			'customer_phone' => $params['phone'],
 			'customer_email' => $params['email'],
 			'customer_city_id' => $params['city_id'],
@@ -573,7 +579,7 @@ class OrderController extends Controller
 	 */
 	private function _saveOrderItems($order)
 	{
-		$cartItems = \Cart::getContent();
+		$cartItems = Keranjang::getItems(); // \Cart::getContent();
 
 		if ($order && $cartItems) {
 			foreach ($cartItems as $item) {
@@ -581,15 +587,15 @@ class OrderController extends Controller
 				$itemTaxPercent = 0;
 				$itemDiscountAmount = 0;
 				$itemDiscountPercent = 0;
-				$itemBaseTotal = $item->quantity * $item->price;
+				$itemBaseTotal = $item->qty * $item->price;
 				$itemSubTotal = $itemBaseTotal + $itemTaxAmount - $itemDiscountAmount;
 
 				$product = isset($item->associatedModel->parent) ? $item->associatedModel->parent : $item->associatedModel;
 
 				$orderItemParams = [
 					'order_id' => $order->id,
-					'product_id' => $item->associatedModel->id,
-					'qty' => $item->quantity,
+					'product_id' => $item->product_id,
+					'qty' => $item->qty,
 					'base_price' => $item->price,
 					'base_total' => $itemBaseTotal,
 					'tax_amount' => $itemTaxAmount,
@@ -597,10 +603,10 @@ class OrderController extends Controller
 					'discount_amount' => $itemDiscountAmount,
 					'discount_percent' => $itemDiscountPercent,
 					'sub_total' => $itemSubTotal,
-					'sku' => $item->associatedModel->sku,
-					'type' => $product->type,
+					'sku' => $item->sku,
+					'type' => $item->type,
 					'name' => $item->name,
-					'weight' => $item->associatedModel->weight,
+					'weight' => $item->weight,
 					'attributes' => json_encode($item->attributes),
 				];
 
@@ -625,9 +631,9 @@ class OrderController extends Controller
 	{
 		$shippingFirstName = isset($params['ship_to']) ? $params['shipping_first_name'] : $params['first_name'];
 		$shippingLastName = isset($params['ship_to']) ? $params['shipping_last_name'] : $params['last_name'];
-		$shippingCompany = isset($params['ship_to']) ? $params['shipping_company'] :$params['company'];
+		// $shippingCompany = isset($params['ship_to']) ? $params['shipping_company'] :$params['company'];
 		$shippingAddress1 = isset($params['ship_to']) ? $params['shipping_address1'] : $params['address1'];
-		$shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
+		// $shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
 		$shippingPhone = isset($params['ship_to']) ? $params['shipping_phone'] : $params['phone'];
 		$shippingEmail = isset($params['ship_to']) ? $params['shipping_email'] : $params['email'];
 		$shippingCityId = isset($params['ship_to']) ? $params['shipping_city_id'] : $params['city_id'];
@@ -638,12 +644,12 @@ class OrderController extends Controller
 			'user_id' => Auth::user()->id,
 			'order_id' => $order->id,
 			'status' => Shipment::PENDING,
-			'total_qty' => \Cart::getTotalQuantity(),
+			'total_qty' => Keranjang::totalCartItems(), // \Cart::getTotalQuantity(),
 			'total_weight' => $this->_getTotalWeight(),
 			'first_name' => $shippingFirstName,
 			'last_name' => $shippingLastName,
 			'address1' => $shippingAddress1,
-			'address2' => $shippingAddress2,
+			// 'address2' => $shippingAddress2,
 			'phone' => $shippingPhone,
 			'email' => $shippingEmail,
 			'city_id' => $shippingCityId,
@@ -703,4 +709,12 @@ class OrderController extends Controller
 
 		return $this->loadTheme('orders/received', $this->data);
 	}
+
+	public function deleteItems()
+	{
+		Keranjang::clear();
+
+		echo 'clear ok';
+	}
+
 }

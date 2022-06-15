@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+
+use App\Helpers\General;
 
 class Order extends Model
 {
@@ -15,6 +18,8 @@ class Order extends Model
 		'user_id',
 		'code',
 		'status',
+		'customer_id',
+		'shop_id',
 		'order_date',
 		'payment_due',
 		'payment_status',
@@ -42,6 +47,9 @@ class Order extends Model
 		'cancelled_by',
 		'cancelled_at',
 		'cancellation_note',
+		'opened',
+		'opened_cus',
+		'opened_shopper'
 	];
 
 	protected $appends = ['customer_full_name'];
@@ -114,9 +122,9 @@ class Order extends Model
 	 */
 	public static function generateCode()
 	{
-		$dateCode = self::ORDERCODE . '/' . date('Ymd') . '/' .\General::integerToRoman(date('m')). '/' .\General::integerToRoman(date('d')). '/';
+		$dateCode = self::ORDERCODE . '/' . date('Ymd') . '/' .General::integerToRoman(date('m')). '/' .General::integerToRoman(date('d')). '/';
 
-		$lastOrder = self::select([\DB::raw('MAX(orders.code) AS last_code')])
+		$lastOrder = self::select([DB::raw('MAX(orders.code) AS last_code')])
 			->where('code', 'like', $dateCode . '%')
 			->first();
 

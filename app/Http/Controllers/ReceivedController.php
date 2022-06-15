@@ -15,4 +15,9 @@ class ReceivedController extends Controller
         $this->data['time'] = Carbon::now()->timestamp; 
         return view('backend.orderout.received', $this->data);
     }
+
+    public function final()
+    {
+        return view('frontend.orders.final');
+    }
 }

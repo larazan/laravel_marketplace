@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -65,6 +66,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // $user = User::create([
+        //     'first_name' => trim($data['first_name']),
+        //     'last_name' => trim($data['last_name']),
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password']),
+        //     'email_verification_token' => Str::random(32)
+        // ]);
+            
+        // \Mail::to($user->email)->send(new VerificationEmail($user));
+
+        // session()->flash('message', 'Please check your email to activate your account');
+       
+        // return redirect()->back();
+
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],

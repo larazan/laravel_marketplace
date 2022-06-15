@@ -34,7 +34,10 @@
                         <div class="mt-3 bg-light mb-3">
                             <div class="p-2" style="background: antiquewhite;">
                                 <img src="https://nest.botble.com/storage/stores/3.png" alt="Young Shop" class="img-fluid rounded" width="30">
-                                <span class="font-weight-bold">{{ $orders[0]->nama_toko }}</span>
+                                @php
+                                    $shop_name = (!$orders) ? $orders[0]->nama_toko : ''
+                                @endphp
+                                <span class="font-weight-bold">{{ $shop_name }}</span>
                                 <div class="rating_wrap">
                                     <div class="rating">
                                         <div class="product_rate" style="width: 80%"></div>
@@ -47,10 +50,10 @@
                                 $ongkir = 0;
                                 $pajak = 0;
                             @endphp
-                            @foreach ($orders as $item)
-                            @php
-                                $total_per_produk = $item->price * $item->qty;
-                            @endphp
+                            @forelse ($orders as $item)
+                                @php
+                                    $total_per_produk = $item->price * $item->qty;
+                                @endphp
                             
                             <div class="p-3">
                                 <div class="row cart-item">
@@ -71,10 +74,12 @@
                                     </div>
                                 </div>
                             </div>
-                            @php
-                            $subtotal += $total_per_produk;
-                            @endphp
-                            @endforeach
+                                @php
+                                    $subtotal += $total_per_produk;
+                                @endphp
+                            @empty
+                            <div>no item</div>    
+                            @endforelse
                             <hr>
                             <div class="p-3">
                                 <div class="row">
@@ -113,7 +118,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="shipping-method-wrapper p-3">
+
+                            
+                            <!-- <div class="shipping-method-wrapper p-3">
                                 <div class="payment-checkout-form">
                                     <div class="mx-0">
                                         <h6>Shipping method:</h6>
@@ -137,15 +144,20 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
+                        
+                    </div>
+
+                    <div class="col-md-12 checkout-button-group">
+                        <button type="submit" class="btn payment-checkout-btn payment-checkout-btn-step float-end" data-processing-text="Processing. Please wait..." data-error-header="Error"> Checkout </button>
                     </div>
                 </div>
-                <hr>
+                
                 <div class="mt-3 mb-5">
-                    <div class="checkout-discount-section">
+                    <!-- <div class="checkout-discount-section">
                         <a href="#" class="btn-open-coupon-form">Kamu memiliki kupon diskon ?</a>
-                    </div>
+                    </div> -->
                     <div class="coupon-wrapper" style="display: none;">
                         <div class="row promo coupon coupon-section">
                             <div class="col-lg-8 col-md-8 col-8">
@@ -217,7 +229,10 @@
                                         </div>
                                         <div class="col-sm-6 col-12">
                                             <div class="form-group  ">
-                                            {{ Form::hidden('city_origin', $item->city_id, ['id' => 'city-origin']) }}
+                                                @php
+                                                    $city_id = (!$orders) ? $item->city_id : null
+                                                @endphp
+                                            {{ Form::hidden('city_origin', $city_id, ['id' => 'city-origin']) }}
 									        {!! Form::select('city_id', $cities, null, ['id' => 'city-id', 'placeholder' => '- Please Select -', 'required' => true, 'class' => 'form-control'])!!}
                                             </div>
                                         </div>
@@ -385,13 +400,13 @@
                                 </li>
                             </ul>
                         </div> -->
-                        <br>
+                        <!-- <br> -->
                         <div class="form-group mb-3 ">
                             <label for="description" class="control-label">Catatan Pesanan</label>
                             <br>
-                            {!! Form::textarea('note', null, ['class' => 'form-control', 'cols' => 30, 'rows' => 5,'placeholder' => 'Notes about your order, e.g. special notes for delivery.']) !!}
+                            {!! Form::textarea('note', null, ['class' => 'form-control', 'cols' => 30, 'rows' => 5]) !!}
                         </div>
-                        <div class="form-group mb-3">
+                        <!-- <div class="form-group mb-3">
                             <div class="row">
                                 <div class="col-md-6 d-none d-md-block" style="line-height: 53px">
                                     <a class="text-info" href="{{ url('carts') }}">
@@ -399,9 +414,7 @@
                                         <span class="d-inline-block back-to-cart">Kembali ke keranjang</span>
                                     </a>
                                 </div>
-                                <div class="col-md-6 checkout-button-group">
-                                    <button type="submit" class="btn payment-checkout-btn payment-checkout-btn-step float-end" data-processing-text="Processing. Please wait..." data-error-header="Error"> Checkout </button>
-                                </div>
+                                
                             </div>
                             <div class="d-block d-md-none back-to-cart-button-group">
                                 <a class="text-info" href="{{ url('carts') }}">
@@ -409,7 +422,9 @@
                                     <span class="d-inline-block">Kembali ke keranjang</span>
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
+
+                      
                         
                 </div>
             </div>
