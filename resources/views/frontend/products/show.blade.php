@@ -160,16 +160,16 @@
                         <div class="tab-style3">
                             <ul class="nav nav-tabs text-uppercase">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="Description-tab" data-bs-toggle="tab" href="#Description">Description</a>
+                                    <a class="nav-link active" id="Description-tab" data-bs-toggle="tab" href="#Description">Deskripsi</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" id="Additional-info-tab" data-bs-toggle="tab" href="#Additional-info">Additional info</a>
-                                </li>
+                                </li> -->
                                 <li class="nav-item">
                                     <a class="nav-link" id="Vendor-info-tab" data-bs-toggle="tab" href="#Vendor-info">Vendor</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Reviews (3)</a>
+                                    <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Review ({{ count($reviews) }})</a>
                                 </li>
                             </ul>
                             <div class="tab-content shop_info_tab entry-main-content">
@@ -178,7 +178,7 @@
                                     {{ $product->description }}
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="Additional-info">
+                                <!-- <div class="tab-pane fade" id="Additional-info">
                                     <table class="font-md">
                                         <tbody>
                                             <tr class="stand-up">
@@ -267,13 +267,17 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div> -->
                                 <div class="tab-pane fade" id="Vendor-info">
                                     <div class="vendor-logo d-flex mb-30">
-                                        <img src="assets/imgs/vendor/vendor-18.svg" alt="" />
+                                    @if ($shops->medium)
+                    <img src="{{ asset('storage/'.$shops->small) }}" alt="{{ $shops->name }}" />
+                    @else
+                    <img src="{{ asset('frontend/assets/imgs/vendor/vendor-17.png') }}" alt="{{ $shops->name }}" />
+                    @endif
                                         <div class="vendor-name ml-15">
                                             <h6>
-                                                <a href="vendor-details-2.html">Noodles Co.</a>
+                                                <a href="vendor-details-2.html">{{ $shops->name }}</a>
                                             </h6>
                                             <div class="product-rate-cover text-end">
                                                 <div class="product-rate d-inline-block">
@@ -284,24 +288,10 @@
                                         </div>
                                     </div>
                                     <ul class="contact-infor mb-50">
-                                        <li><img src="assets/imgs/theme/icons/icon-location.svg" alt="" /><strong>Address: </strong> <span>5171 W Campbell Ave undefined Kent, Utah 53127 United States</span></li>
-                                        <li><img src="assets/imgs/theme/icons/icon-contact.svg" alt="" /><strong>Contact Seller:</strong><span>(+91) - 540-025-553</span></li>
+                                        <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}" alt="" /><strong>Alamat: </strong> <span>{{ $shops->user->address1 }}</span></li>
+                                        <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Kontak: </strong><span>{{ $shops->user->phone }}</span></li>
                                     </ul>
-                                    <div class="d-flex mb-55">
-                                        <div class="mr-30">
-                                            <p class="text-brand font-xs">Rating</p>
-                                            <h4 class="mb-0">92%</h4>
-                                        </div>
-                                        <div class="mr-30">
-                                            <p class="text-brand font-xs">Ship on time</p>
-                                            <h4 class="mb-0">100%</h4>
-                                        </div>
-                                        <div>
-                                            <p class="text-brand font-xs">Chat response</p>
-                                            <h4 class="mb-0">89%</h4>
-                                        </div>
-                                    </div>
-                                    <p>Noodles & Company is an American fast-casual restaurant that offers international and American noodle dishes and pasta in addition to soups and salads. Noodles & Company was founded in 1995 by Aaron Kennedy and is headquartered in Broomfield, Colorado. The company went public in 2013 and recorded a $457 million revenue in 2017.In late 2018, there were 460 Noodles & Company locations across 29 states and Washington, D.C.</p>
+                                    <p>{{ $shops->description }}</p>
                                 </div>
                                 <div class="tab-pane fade" id="Reviews">
                                     @include('frontend.products.review')
@@ -319,10 +309,21 @@
 </main>
 @endsection
 
+@push('style')
+        <style>
+            #review-box {
+              display: none;
+            }
+        </style>
+    @endpush
 
 @push('scripts')
 <script src="{{ asset('frontend/assets/js/shop2.js?v=4.0') }}"></script>
 <script>
+    $('#review-button').on('click', function() {
+        $('#review-box').slideToggle(1000);
+    });
+
     $(document).ready(function() {
         // Swal.fire('Any fool can use a computer')
         // $('#preloader-active').hide();

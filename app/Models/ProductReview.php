@@ -11,8 +11,29 @@ class ProductReview extends Model
 
     protected $fillable=['user_id','product_id','rate','review','status'];
 
-    public function user_info(){
-        return $this->hasOne('App\User','id','user_id');
+    public const ACTIVE = 'active';
+	public const INACTIVE = 'inactive';
+
+	public const STATUSES = [
+		self::ACTIVE => 'Active',
+		self::INACTIVE => 'Inactive',
+	];
+    
+    /**
+	 * Scope active review
+	 *
+	 * @param Eloquent $query query builder
+	 *
+	 * @return Eloquent
+	 */
+	public function scopeActive($query)
+	{
+		return $query->where('status', 'active');
+	}
+
+    public function user_info()
+    {
+        return $this->hasOne('App\Models\User','id','user_id');
     }
 
     public static function getAllReview(){
@@ -23,6 +44,6 @@ class ProductReview extends Model
     }
 
     public function product(){
-        return $this->hasOne(Product::class,'id','product_id');
+        return $this->hasOne('App\Models\Product','id','product_id');
     }
 }

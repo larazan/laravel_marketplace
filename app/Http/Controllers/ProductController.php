@@ -8,10 +8,12 @@ use App\Helpers\General;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductReview;
 use App\Models\ProductAttributeValue;
 use App\Models\AttributeOption;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Shop;
 
 // use App\Helpers\General;
 
@@ -256,6 +258,9 @@ class ProductController extends Controller
 
 		$this->data['product'] = $product;
 		$this->data['products'] = $products;
+		$this->data['reviews'] = $this->_getReviews($product->id);
+		$this->data['shops'] = $this->_getShop($product->shop_id);
+
 		// build breadcrumb data array
 		$breadcrumbs_data['current_page_title'] = $product->name;
 		$breadcrumbs_data['breadcrumbs_array'] = $this->_generate_breadcrumbs_array($product->id);
@@ -377,6 +382,20 @@ class ProductController extends Controller
 		$product_image = ProductImage::where('product_id', $product->id)->get();
 
 		return $this->loadTheme('products.detail_produk', compact("product", "product_image"));
+	}
+
+	private function _getReviews($product)
+	{
+		$reviews = ProductReview::active()->where('product_id', $product)->get();
+
+		return $reviews;
+	}
+
+	private function _getShop($shop_id)
+	{
+		$shop = Shop::findOrFail($shop_id)->first();
+
+		return $shop;
 	}
 
 }

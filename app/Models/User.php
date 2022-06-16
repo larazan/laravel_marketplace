@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Shop');
     }
 
+    public function review()
+    {
+        return $this->hasMany('App\Models\ProductReview');
+    }
+
     /**
 	 * Define relationship with the Favorite
 	 *

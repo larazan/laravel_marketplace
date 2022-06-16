@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SubscribeController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LogActivityController;
+use App\Http\Controllers\Admin\ProductReviewController as ProductReview;
 
 
 use App\Http\Controllers\CkeditorFileUploadController;
@@ -216,6 +217,7 @@ Route::group(
 
 		Route::resource('brands', BrandController::class);
 		Route::resource('shops', ShopController::class);
+		Route::resource('reviews', ProductReview::class);
 
 		Route::resource('articles', ArticleController::class);
         Route::resource('category_articles', CategoryArticleController::class);

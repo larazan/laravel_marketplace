@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}" />
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/sweetalert2.min.css') }}" />
         <link media="all" type="text/css" rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/toastr.min.css') }}">
+        @stack('style')
     </head>
 
     <div id="alert-container">
