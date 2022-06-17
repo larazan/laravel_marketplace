@@ -124,8 +124,7 @@ Route::post('/check-subscriber-email', [UserSubscribeController::class, 'checkSu
 Route::post('/add-subscriber-email', [UserSubscribeController::class, 'addSubscriber']);
 
 // Product Review
-Route::resource('/review', ProductReviewController::class);
-Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
+Route::post('/reviews/create-review', [ProductReviewController::class, 'store'])->name('create-review');
 
 // Route::post('/review', [ReviewController::class, 'postReview']);
 // Route::post('/check-reviewer', [ReviewController::class, 'checkReviewer']);

@@ -240,11 +240,9 @@ class CartController extends Controller
 				DB::commit();
 			}
 		}
-		
 
 		$response = \General::helpResponse($responseCode, $responseData);
 		return response()->json($response);
-
 	}
 
     /**

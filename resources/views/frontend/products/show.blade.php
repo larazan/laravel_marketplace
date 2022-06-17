@@ -390,6 +390,49 @@
 
     }
 
+    function createReview()
+    {
+        var form = $('#commentForm')[0];
+        var data = new FormData(form);
+        var id = $('[name="product_id"]').val();
+
+        Swal.fire({
+            title: 'Tambah Review?',
+            text: "Silahkan mereview sekarang..",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya '
+            }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('reviews/create-review') }}",
+                data: data,
+                dataType: "JSON",
+                processData: false, // false, it prevent jQuery form transforming the data into a query string
+                contentType: false, 
+                cache: false,
+                timeout: 600000,
+                success: function (response) {
+                    if (response.code == 200) {
+                        toastr.success(response.data.message)
+                    }else{
+                        toastr.error(response.data.message)
+                    }
+
+                },
+                error: function (e) {
+
+                }
+            });
+        }
+        })
+    }
     
 </script>
 @endpush

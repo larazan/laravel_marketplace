@@ -9,16 +9,17 @@
         <div class="product-rate d-inline-block mb-30"></div>
         <div class="row">
             <div class="col-lg-8 col-md-12">
-                <form class="form-contact comment_form" action="#" id="commentForm">
+                <form class="form-contact comment_form" id="commentForm">
+                    {{ Form::hidden('product_id', $product->id) }}
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>
+                                <textarea class="form-control w-100" name="review" id="review" cols="30" rows="9" placeholder="Write Comment"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="button button-contactForm">Submit Review</button>
+                        <button type="button" class="button button-contactForm" onclick="createReview()">Submit Review</button>
                     </div>
                 </form>
             </div>

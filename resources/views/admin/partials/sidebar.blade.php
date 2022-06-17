@@ -62,6 +62,11 @@
 								<span class="nav-text">Attributes</span>
 								</a>
 							</li>
+							<li class="{{ ($currentAdminSubMenu == 'review') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/reviews')}}">
+								<span class="nav-text">Reviews</span>
+								</a>
+							</li>
 						</div>
 					</ul>
 				</li>
