@@ -631,9 +631,9 @@ class OrderController extends Controller
 	{
 		$shippingFirstName = isset($params['ship_to']) ? $params['shipping_first_name'] : $params['first_name'];
 		$shippingLastName = isset($params['ship_to']) ? $params['shipping_last_name'] : $params['last_name'];
-		// $shippingCompany = isset($params['ship_to']) ? $params['shipping_company'] :$params['company'];
+		$shippingCompany = isset($params['ship_to']) ? $params['shipping_company'] :$params['company'];
 		$shippingAddress1 = isset($params['ship_to']) ? $params['shipping_address1'] : $params['address1'];
-		// $shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
+		$shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
 		$shippingPhone = isset($params['ship_to']) ? $params['shipping_phone'] : $params['phone'];
 		$shippingEmail = isset($params['ship_to']) ? $params['shipping_email'] : $params['email'];
 		$shippingCityId = isset($params['ship_to']) ? $params['shipping_city_id'] : $params['city_id'];

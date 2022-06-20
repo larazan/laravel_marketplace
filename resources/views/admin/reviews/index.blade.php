@@ -28,8 +28,8 @@
                                     <tr>    
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $review->product->name }}</td>
-                                        <td>{{ $review->user->first_name .' '. $review->user->last_name }}</td>
-                                        <td>{{ $review->review }}</td>
+                                        <td>{{ $review->user_info->first_name .' '. $review->user_info->last_name }}</td>
+                                        <td>{{ \Illuminate\Support\Str::words($review->review, '20') }}</td>
                                         <td>{{ $review->rate }}</td>
                                         <td>{{ $review->status }}</td>
                                         <td>

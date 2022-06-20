@@ -39,7 +39,7 @@ class ProductReviewController extends Controller
             $data->save();
             $responseCode = 200;
             $responseData['status'] = true;
-            $responseData['message'] = 'Yeaah.. Berhasil menambahkan produk ke keranjang !';
+            $responseData['message'] = 'Yeaah.. Berhasil menambahkan review !';
 
             DB::commit();
         }

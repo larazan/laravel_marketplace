@@ -38,9 +38,9 @@
 										<td>{{ $order->status }}</td>
 										<td>{{ $order->payment_status }}</td>
 										<td>
-											@can('edit_orders')
+											
 												<a href="{{ url('admin/orders/'. $order->id) }}" class="btn btn-info btn-sm">show</a>
-											@endcan
+											
 										</td>
 									</tr>
 								@empty

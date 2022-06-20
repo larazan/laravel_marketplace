@@ -35,9 +35,9 @@
                                         <td>{{ $shipment->total_qty }}</td>
                                         <td>{{ \General::priceFormat($shipment->total_weight) }}</td>
                                         <td>
-                                            @can('edit_orders')
+                                            
                                                 <a href="{{ url('admin/orders/'. $shipment->order->id) }}" class="btn btn-info btn-sm">show</a>
-                                            @endcan
+                                            
                                         </td>
                                     </tr>
                                 @empty
