@@ -26,13 +26,11 @@ class OrderController extends Controller
 	}
     
     public function index() {
-        $orders = Order::forUser(Auth::user())
-			->orderBy('created_at', 'DESC')
+        $orders = Order::orderBy('created_at', 'DESC')
 			->paginate(10);
 
 		$this->data['orders'] = $orders;
 
-		// return $this->loadTheme('orders.index', $this->data);
         return $this->loadDashboard('orders.index', $this->data);
     }
 
@@ -77,7 +75,7 @@ class OrderController extends Controller
 
 		$this->data['orders'] = $orders->paginate(10);
 
-		return view('admin.orders.index', $this->data);
+		return $this->loadDashboard('orders.index', $this->data);
     }
 
 	/**
@@ -127,7 +125,6 @@ class OrderController extends Controller
 		$order = Order::forUser(Auth::user())->findOrFail($id);
 		$this->data['order'] = $order;
 
-		// return $this->loadTheme('orders.show', $this->data);
         return $this->loadDashboard('orders.detail', $this->data);
 	}
 

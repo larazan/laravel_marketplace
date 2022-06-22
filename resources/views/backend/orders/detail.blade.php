@@ -40,12 +40,11 @@
                         <div class="text">
                             <h6 class="mb-1">Customer</h6>
                             <p class="mb-1">
-                            {{ $order->customer_first_name }} {{ $order->customer_last_name }} <br />
-                            Email: {{ $order->customer_email }} <br />
-                            Phone: {{ $order->customer_phone }} <br />
-                            Postcode: {{ $order->customer_postcode }}
+                                {{ $order->customer_first_name }} {{ $order->customer_last_name }} <br />
+                                Email: {{ $order->customer_email }} <br />
+                                Phone: {{ $order->customer_phone }} <br />
+                                Postcode: {{ $order->customer_postcode }}
                             </p>
-                            <a href="#">View profile</a>
                         </div>
                     </article>
                 </div>
@@ -66,7 +65,6 @@
                                 <br> Phone: {{ $order->shipment->phone }}
                                 <br> Postcode: {{ $order->shipment->postcode }}
                             </address>
-                            <a href="#">Download info</a>
                         </div>
                     </article>
                 </div>
@@ -80,16 +78,15 @@
                         <div class="text">
                             <h6 class="mb-1">Details</h6>
                             <address>
-								ID: <span class="text-dark">#{{ $order->code }}</span>
-								<br> {{ \General::datetimeFormat($order->order_date) }}
-								<br> Status: {{ $order->status }} {{ $order->isCancelled() ? '('. \General::datetimeFormat($order->cancelled_at) .')' : null}}
-								@if ($order->isCancelled())
-									<br> Cancellation Note : {{ $order->cancellation_note}}
-								@endif
-								<br> Payment Status: {{ $order->payment_status }}
-								<br> Shipped by: {{ $order->shipping_service_name }}
-							</address>
-                            <a href="#">View profile</a>
+                                #{{ $order->code }}
+                                <br> {{ \General::datetimeFormat($order->order_date) }}
+                                <br> Status: {{ $order->status }} {{ $order->isCancelled() ? '('. \General::datetimeFormat($order->cancelled_at) .')' : null}}
+                                @if ($order->isCancelled())
+                                <br> Cancellation Note : {{ $order->cancellation_note}}
+                                @endif
+                                <br> Payment Status: {{ $order->payment_status }}
+                                <br> Shipped by: {{ $order->shipping_service_name }}
+                            </address>
                         </div>
                     </article>
                 </div>
@@ -111,29 +108,107 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse ($order->orderItems as $item)
+                                @forelse ($order->orderItems as $item)
                                 <tr>
                                     <td>{{ $item->sku }}</td>
-									<td>{{ $item->name }}</td>
+                                    <td>{{ $item->name }}</td>
                                     <td>{!! \General::showAttributes($item->attributes) !!}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>{{ \General::priceFormat($item->base_price) }}</td>
                                     <td>{{ \General::priceFormat($item->sub_total) }}</td>
                                 </tr>
-                            @empty
+                                @empty
                                 <tr>
                                     <td colspan="6">Order item not found!</td>
                                 </tr>
-                            @endforelse
-                                
+                                @endforelse
+
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td>
+                                        <h6 class="">Subtotal</h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="">{{ \General::priceFormat($order->base_total_price) }}</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td>
+                                        <h6>Pajak</h6>
+                                    </td>
+                                    <td>
+                                        <h6>{{ \General::priceFormat($order->tax_amount) }}</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td>
+                                        <h6>Ongkos Kirim</h6>
+                                    </td>
+                                    <td>
+                                        <h6>{{ \General::priceFormat($order->shipping_cost) }}</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td>
+                                        <h6>Total</h6>
+                                    </td>
+                                    <td>
+                                        <h6>{{ \General::priceFormat($order->grand_total) }}</h6>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
+
+
                     </div>
+
                     <!-- table-responsive// -->
+                    <div class="row ">
+                        <div class="col-lg-5 col-xl-4 col-xl-3 ml-sm-auto">
+
+                            @if (!$order->trashed())
+                            @if ($order->isPaid() && $order->isConfirmed())
+                            <a href="{{ url('user/shipments/'. $order->shipment->id .'/edit')}}" class="btn btn-block mt-2 btn-lg btn-primary btn-pill"> Procced to Shipment</a>
+                            @endif
+
+                            @if (in_array($order->status, [\App\Models\Order::CREATED, \App\Models\Order::CONFIRMED]))
+                            <a href="{{ url('user/orders/'. $order->id .'/cancel')}}" class="btn btn-block mt-2 btn-lg btn-secondary btn-pill delete"> Cancel</a>
+                            @endif
+
+                            @if ($order->isDelivered())
+                            <a href="#" class="btn btn-block mt-2 btn-lg btn-primary btn-pill" onclick="event.preventDefault();
+						document.getElementById('complete-form-{{ $order->id }}').submit();"> Mark as Completed</a>
+
+                            {!! Form::open(['url' => 'user/orders/complete/'. $order->id, 'id' => 'complete-form-'. $order->id, 'style' => 'display:none']) !!}
+                            {!! Form::close() !!}
+                            @endif
+
+                            @if (!in_array($order->status, [\App\Models\Order::DELIVERED, \App\Models\Order::COMPLETED]))
+                            <a href="#" class="btn btn-block mt-2 btn-lg btn-secondary btn-pill delete" order-id="{{ $order->id }}"> Remove</a>
+
+                            {!! Form::open(['url' => 'user/orders/'. $order->id, 'class' => 'delete', 'id' => 'delete-form-'. $order->id, 'style' => 'display:none']) !!}
+                            {!! Form::hidden('_method', 'DELETE') !!}
+                            {!! Form::close() !!}
+                            @endif
+                            @else
+                            <a href="{{ url('user/orders/restore/'. $order->id)}}" class="btn btn-block mt-2 btn-lg btn-primary btn-pill restore"> Restore</a>
+                            <a href="#" class="btn btn-block mt-2 btn-lg btn-secondary btn-pill delete" order-id="{{ $order->id }}"> Remove Permanently</a>
+
+                            {!! Form::open(['url' => 'user/orders/'. $order->id, 'class' => 'delete', 'id' => 'delete-form-'. $order->id, 'style' => 'display:none']) !!}
+                            {!! Form::hidden('_method', 'DELETE') !!}
+                            {!! Form::close() !!}
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <!-- col// -->
                 <div class="col-lg-1"></div>
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                     <div class="box shadow-sm bg-light">
                         <h6 class="mb-15">Payment info</h6>
                         <p>
@@ -149,7 +224,7 @@
                         </div>
                         <button class="btn btn-primary">Save note</button>
                     </div>
-                </div>
+                </div> -->
                 <!-- col// -->
             </div>
         </div>

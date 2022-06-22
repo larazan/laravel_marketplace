@@ -71,6 +71,7 @@
     </script>
     <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="0ab58ca346103f3edbff2076-|49" defer=""></script>
     <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+    <script src="{{ asset('frontend/assets/extends/js/energeek.js') }}"></script>
     @stack('scripts')
 </body>
 

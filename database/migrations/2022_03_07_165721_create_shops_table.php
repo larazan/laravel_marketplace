@@ -23,6 +23,7 @@ class CreateShopsTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->text('description')->nullable();
             $table->float('rating')->nullable();
+            $table->string('rekening')->nullable();
             $table->string('original')->nullable();
             $table->string('medium')->nullable();
             $table->string('small')->nullable();

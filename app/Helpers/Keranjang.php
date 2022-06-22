@@ -88,13 +88,47 @@ class Keranjang
     {
         if (Auth::check()) {
             $user_id = Auth::user()->id;
-            $subtot = Basket::where('user_id', $user_id)->sum('price');
+            $subtotal = 0;
+            $items = Basket::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.user_id, 
+									baskets.qty, 
+									baskets.is_checked, 
+									products.price
+									"))
+                            ->where('baskets.user_id', $user_id)
+                            ->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+                            ->whereNull('baskets.deleted_at')
+                            ->get();
+
+            foreach ($items as $item) {
+                $subtotal += ($item->qty * $item->price);
+            }
+    
+            return $subtotal;
+        
         } else {
             $session_id = Session::get('session_id');
-            $subtot = Basket::where('session_id', $session_id)->sum('price');
+            $subtotal = 0;
+            $items = Basket::select(DB::raw("baskets.product_id, 
+									baskets.id as id_basket,
+									baskets.session_id, 
+									baskets.qty, 
+									baskets.is_checked, 
+									products.price
+									"))
+                            ->where('baskets.session_id', $session_id)
+                            ->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
+                            ->whereNull('baskets.deleted_at')
+                            ->get();
+
+            foreach ($items as $item) {
+                $subtotal += ($item->qty * $item->price);
+            }
+    
+            return $subtotal;
         }
 
-        return $subtot;
     }
 
     public static function subTotalChecked()

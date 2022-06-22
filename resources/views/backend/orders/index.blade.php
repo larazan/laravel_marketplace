@@ -33,7 +33,7 @@
                     </thead>
                     <tbody>
                     @forelse ($orders as $order)
-                        <tr>
+                        <tr class="{{ ($order->opened_shopper == 1) ? '' : 'seal' }}">
                             <td>{{ $order->code }}</td>
                             <td><b>{{ $order->customer_full_name }}</b><br>{{ $order->customer_email }}</td>
                             <td>{{\General::priceFormat($order->grand_total) }}</td>
@@ -41,7 +41,7 @@
                             <td><span class="badge rounded-pill alert-warning">{{ $order->status }}</span></td>
                             <td>{{\General::datetimeFormat($order->order_date) }}</td>
                             <td class="text-end">
-                                <a href="{{ url('user/orders/'. $order->id) }}" class="btn btn-md rounded font-sm">Detail</a>
+                                <a href="{{ url('user/orders/detail/'. $order->id) }}" class="btn btn-md rounded font-sm">Detail</a>
                             </td>
                         </tr>
                         @empty
@@ -60,4 +60,13 @@
     {{ $orders->links('backend.partials.paginator') }}
 </section>
 
+@endsection
+
+@section('style')
+<style>
+ .seal {
+	background-color: #fbbf24;
+    border-bottom: 1px solid #fff;
+ }
+ </style>
 @endsection

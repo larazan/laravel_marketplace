@@ -42,6 +42,7 @@ use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SettingController as DSetting;
 use App\Http\Controllers\Dashboard\ShopController as DShop;
+use App\Http\Controllers\Dashboard\ShipmentController as DShipment;
 
 /*
 |--------------------------------------------------------------------------
@@ -170,6 +171,7 @@ Route::group(
 		Route::get('shop/edit', [DShop::class, 'edit']);
 		Route::put('shop/update', [DShop::class, 'update'])->name('updateShop');
 
+		Route::resource('shipments', DShipment::class);
 	}
 );
 

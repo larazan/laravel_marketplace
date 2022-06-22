@@ -29,18 +29,25 @@
                     </li>
                     <li class="menu-item {{ ($currentDashboardMenu == 'orders') ? 'active' : ''}}">
                         <a class="menu-link" href="{{ url('user/orders')}}">
-                            <i class="icon material-icons md-shopping_cart"></i>
+                            <i class="icon material-icons md-shopping_basket"></i>
                             <span class="text">Order Masuk</span>
                         </a>
                         
                     </li>
 
-                    <li class="menu-item {{ ($currentDashboardMenu == 'orders') ? 'active' : ''}}">
+                    <li class="menu-item {{ ($currentDashboardMenu == 'ordersout') ? 'active' : ''}}">
                         <a class="menu-link" href="{{ url('user/orders')}}">
                             <i class="icon material-icons md-shopping_cart"></i>
                             <span class="text">Order Keluar</span>
                         </a>
                         
+                    </li>
+
+                    <li class="menu-item {{ ($currentDashboardMenu == 'shipment') ? 'active' : ''}}">
+                        <a class="menu-link" href="{{ url('user/shipments')}}">
+                            <i class="icon material-icons md-local_shipping"></i>
+                            <span class="text">Pengiriman</span>
+                        </a>
                     </li>
                     
                    

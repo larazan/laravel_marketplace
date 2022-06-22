@@ -48,6 +48,20 @@
                                 </div>
                                 <!-- col.// -->
                             </div>
+
+                            <div class="row border-bottom mb-4 pb-4">
+                                <div class="col-md-5">
+                                    <h5>Rekening</h5>
+                                </div>
+                                <!-- col.// -->
+                                <div class="col-md-7">
+                                    <div class="mb-3">
+                                        {!! Form::text('rekening', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                    
+                                </div>
+                                <!-- col.// -->
+                            </div>
                             <!-- row.// -->
                             <div class="row border-bottom mb-4 pb-4">
                                 <div class="col-md-5">

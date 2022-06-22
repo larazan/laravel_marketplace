@@ -222,8 +222,13 @@ class OrderController extends Controller
 
 			$this->_addShippingCostToCart($selectedShipping['service'], $selectedShipping['cost']);
 
+			$tax = 11 / 100;
+			$pajak = Keranjang::getTotalChecked() * $tax;
+			$total_belanja = Keranjang::getTotalChecked() + $pajak;
+			$total = $total_belanja + $request->ongkir;
+
 			// $data['total'] = number_format(\Cart::getTotal());
-			$data['total'] = number_format(Keranjang::getTotalChecked());
+			$data['total'] = number_format($total);
 		} else {
 			$status = 400;
 			$message = 'Failed to set shipping cost';
@@ -525,7 +530,7 @@ class OrderController extends Controller
 		$shop_id = $product->shop->id;
 		// $shop_id = $params['shop_id'];
 
-		$baseTotalPrice = Keranjang::subTotal();   // \Cart::getSubTotal();
+		$baseTotalPrice = Keranjang::subTotalChecked();   // \Cart::getSubTotal();
 		$taxAmount = Keranjang::pajak(); // \Cart::getCondition('TAX 10%')->getCalculatedValue(\Cart::getSubTotal());
 		$taxPercent = (float) $this->pajakPersen; // \Cart::getCondition('TAX 10%')->getValue();
 		$shippingCost = $selectedShipping['cost'];
@@ -631,9 +636,9 @@ class OrderController extends Controller
 	{
 		$shippingFirstName = isset($params['ship_to']) ? $params['shipping_first_name'] : $params['first_name'];
 		$shippingLastName = isset($params['ship_to']) ? $params['shipping_last_name'] : $params['last_name'];
-		$shippingCompany = isset($params['ship_to']) ? $params['shipping_company'] :$params['company'];
+		// $shippingCompany = isset($params['ship_to']) ? $params['shipping_company'] :$params['company'];
 		$shippingAddress1 = isset($params['ship_to']) ? $params['shipping_address1'] : $params['address1'];
-		$shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
+		// $shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
 		$shippingPhone = isset($params['ship_to']) ? $params['shipping_phone'] : $params['phone'];
 		$shippingEmail = isset($params['ship_to']) ? $params['shipping_email'] : $params['email'];
 		$shippingCityId = isset($params['ship_to']) ? $params['shipping_city_id'] : $params['city_id'];

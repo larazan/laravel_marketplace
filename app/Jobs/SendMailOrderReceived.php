@@ -37,8 +37,11 @@ class SendMailOrderReceived implements ShouldQueue
     public function handle()
     {
         //
+        $tes = env('TES_EMAIL');
+
         $orderReceivedEmail = new \App\Mail\OrderReceived($this->order);
 		
-		Mail::to($this->user->email)->send($orderReceivedEmail);
+		Mail::to($tes)->send($orderReceivedEmail);
+		// Mail::to($this->user->email)->send($orderReceivedEmail);
     }
 }
