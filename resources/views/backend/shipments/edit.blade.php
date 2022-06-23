@@ -3,17 +3,19 @@
 @section('content')
 
 <section class="content-main">
-    <div class="row">
-        <div class="col-9">
-            <div class="content-header">
-                <h2 class="content-title">Order Shipment #{{ $shipment->order->code }}</h2>
-            </div>
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Order Shipment</h2>
+            <p>for Order ID: #{{ $shipment->order->code }}</p>
         </div>
+    </div>
+
+    <div class="card">
         <div class="col-lg-6">
-            @include('admin.partials.flash', ['$errors' => $errors])
+            @include('backend.partials.flash', ['$errors' => $errors])
             {!! Form::model($shipment, ['url' => ['user/shipments', $shipment->id], 'method' => 'PUT']) !!}
             {!! Form::hidden('id') !!}
-            <div class="card mb-4">
+            
                 <div class="card-body">
                     <div class="row gx-3">
                         <div class="col-6 mb-3">
@@ -76,20 +78,22 @@
                     </div>
 
                     <button class="btn btn-primary" type="submit">Submit</button>
-                    <a href="{{ url('user/orders/'. $shipment->order->id) }}" class="btn btn-secondary btn-default">Kembali</a>
+                    <a href="{{ url('user/orders/detail/'. $shipment->order->id) }}" class="btn btn-secondary btn-default">Kembali</a>
+                </div>
+                {!! Form::close() !!}
+        </div>
+    </div>
+
+    <div class="card">
+
+        <header class="card-header">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 mb-lg-0">
+                    <h4 class="text-muted">Order Detail</h4>
                 </div>
             </div>
-        </div>
-
-        <div class="card mb-4">
-            <header class="card-header">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
-                        <h4 class="text-muted">Order Detail</h4>
-                    </div>
-
-                </div>
-            </header>
+        </header>
+        <div class="card-body">
             <div class="row mb-50 mt-20 order-info-wrap">
                 <div class="col-md-6">
                     <article class="icontext align-items-start">
@@ -109,7 +113,6 @@
                     </article>
                 </div>
 
-                <!-- col// -->
                 <div class="col-md-6">
                     <article class="icontext align-items-start">
                         <span class="icon icon-sm rounded-circle bg-primary-light">
@@ -128,81 +131,81 @@
                         </div>
                     </article>
                 </div>
-                <!-- col// -->
+
             </div>
 
-            <div class="card-body">
-                <div class="col-lg-7">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Cost</th>
-                                    <th class="text-end">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($shipment->order->orderItems as $item)
-                                <tr>
-                                    <td>{{ $item->sku }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->qty }}</td>
-                                    <td>{{ \General::priceFormat($item->base_price) }}</td>
-                                    <td>{{ \General::priceFormat($item->sub_total) }}</td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="5">Order item not found!</td>
-                                </tr>
-                                @endforelse
 
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <td>
-                                        <h6 class="">Subtotal</h6>
-                                    </td>
-                                    <td>
-                                        <h6 class="">{{ \General::priceFormat($shipment->order->base_total_price) }}</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <td>
-                                        <h6>Pajak</h6>
-                                    </td>
-                                    <td>
-                                        <h6>{{ \General::priceFormat($shipment->order->tax_amount) }}</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <td>
-                                        <h6>Ongkos Kirim</h6>
-                                    </td>
-                                    <td>
-                                        <h6>{{ \General::priceFormat($shipment->order->shipping_cost) }}</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <td>
-                                        <h6>Total</h6>
-                                    </td>
-                                    <td>
-                                        <h6>{{ \General::priceFormat($shipment->order->grand_total) }}</h6>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+            <div class="col-lg-7">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Unit Cost</th>
+                                <th class="text-end2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($shipment->order->orderItems as $item)
+                            <tr>
+                                <td>{{ $item->sku }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->qty }}</td>
+                                <td>{{ \General::priceFormat($item->base_price) }}</td>
+                                <td>{{ \General::priceFormat($item->sub_total) }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5">Order item not found!</td>
+                            </tr>
+                            @endforelse
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    <h6 class="">Subtotal</h6>
+                                </td>
+                                <td>
+                                    <h6 class="">{{ \General::priceFormat($shipment->order->base_total_price) }}</h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    <h6>Pajak</h6>
+                                </td>
+                                <td>
+                                    <h6>{{ \General::priceFormat($shipment->order->tax_amount) }}</h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    <h6>Ongkos Kirim</h6>
+                                </td>
+                                <td>
+                                    <h6>{{ \General::priceFormat($shipment->order->shipping_cost) }}</h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    <h6>Total</h6>
+                                </td>
+                                <td>
+                                    <h6>{{ \General::priceFormat($shipment->order->grand_total) }}</h6>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 @endsection

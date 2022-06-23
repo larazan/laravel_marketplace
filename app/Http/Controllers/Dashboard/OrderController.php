@@ -241,6 +241,7 @@ class OrderController extends Controller
 			return redirect('user/orders');
 		}
 	}
+	
 
 	/**
 	 * Remove the specified resource from storage.
