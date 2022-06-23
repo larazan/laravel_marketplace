@@ -45,7 +45,7 @@
                             <td>{{ $shipment->total_qty }}</td>
                             <td>{{ \General::priceFormat($shipment->total_weight) }}</td>
                             <td>
-                                <a href="{{ url('user/orders/'. $shipment->order->id) }}" class="btn btn-md rounded font-sm">show</a>
+                                <a href="{{ url('user/orders/detail/'. $shipment->order->id) }}" class="btn btn-md rounded font-sm">show</a>
                             </td>
                         </tr>
                         @empty

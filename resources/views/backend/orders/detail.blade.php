@@ -172,6 +172,11 @@
                         <div class="col-lg-5 col-xl-4 col-xl-3 ml-sm-auto">
 
                             @if (!$order->trashed())
+
+                            @if ($order->isCreated())
+                            <a href="{{ url('user/orders/confirm/'. $order->id)}}" class="btn btn-block mt-2 btn-lg btn-primary btn-pill delete"> Confirm</a>
+                            @endif
+
                             @if ($order->isPaid() && $order->isConfirmed())
                             <a href="{{ url('user/shipments/'. $order->shipment->id .'/edit')}}" class="btn btn-block mt-2 btn-lg btn-primary btn-pill"> Procced to Shipment</a>
                             @endif

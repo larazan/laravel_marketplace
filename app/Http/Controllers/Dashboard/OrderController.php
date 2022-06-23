@@ -216,6 +216,33 @@ class OrderController extends Controller
 	}
 
 	/**
+	 * Marking order as confirmed
+	 *
+	 * @param Request $request request params
+	 * @param int     $id      order ID
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function doConfirm(Request $request, $id)
+	{
+		$order = Order::findOrFail($id);
+		
+		if (!$order->isCreated()) {
+			Session::flash('error', 'Mark as confirm the order can be done if the latest status is created');
+			return redirect('user/orders');
+		}
+
+		$order->status = Order::CONFIRMED;
+		$order->confirmed_by = Auth::user()->id;
+		$order->confirmed_at = now();
+		
+		if ($order->save()) {
+			Session::flash('success', 'The order has been marked as completed!');
+			return redirect('user/orders');
+		}
+	}
+
+	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param int $id order ID

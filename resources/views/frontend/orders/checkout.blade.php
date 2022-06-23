@@ -8,119 +8,119 @@
 @include('admin.partials.flash', ['$errors' => $errors])
 {!! Form::model($user, ['url' => 'orders/checkout', 'class' => 'checkout-form payment-checkout-form', 'id' => 'checkout-form']) !!}
 
-    <div class="container" id="main-checkout-product-info">
-        <div class="row">
-            <div class="order-1 order-md-2 col-lg-5 col-md-6 right">
-                <div class="d-block d-sm-none">
-                    <div class="checkout-logo">
-                        <div class="container">
-                            <a href="https://nest.botble.com" title="Nest - Laravel Multipurpose eCommerce Script">
-                                <img src="https://nest.botble.com/storage/general/logo.png" class="img-fluid" width="150" alt="Nest - Laravel Multipurpose eCommerce Script" />
-                            </a>
-                        </div>
+<div class="container" id="main-checkout-product-info">
+    <div class="row">
+        <div class="order-1 order-md-2 col-lg-5 col-md-6 right">
+            <div class="d-block d-sm-none">
+                <div class="checkout-logo">
+                    <div class="container">
+                        <a href="https://nest.botble.com" title="Nest - Laravel Multipurpose eCommerce Script">
+                            <img src="https://nest.botble.com/storage/general/logo.png" class="img-fluid" width="150" alt="Nest - Laravel Multipurpose eCommerce Script" />
+                        </a>
                     </div>
-                    <hr>
                 </div>
-                <div id="cart-item" class="position-relative">
-                    <div class="payment-info-loading" style="display: none;">
-                        <div class="payment-info-loading-content">
-                            <i class="fas fa-spinner fa-spin"></i>
-                        </div>
+                <hr>
+            </div>
+            <div id="cart-item" class="position-relative">
+                <div class="payment-info-loading" style="display: none;">
+                    <div class="payment-info-loading-content">
+                        <i class="fas fa-spinner fa-spin"></i>
                     </div>
-                    <div class="bg-light p-2">
-                        <p class="font-weight-bold mb-0">Informasi Belanja :</p>
-                    </div>
-                    <div class="checkout-products-marketplace" id="shipping-method-wrapper">
-                        <div class="mt-3 bg-light mb-3">
-                            <div class="p-2" style="background: antiquewhite;">
-                                <img src="https://nest.botble.com/storage/stores/3.png" alt="Young Shop" class="img-fluid rounded" width="30">
-                                @php
-                                    $shop_name = (!$orders) ? $orders[0]->nama_toko : ''
-                                @endphp
-                                <span class="font-weight-bold">{{ $shop_name }}</span>
-                                <div class="rating_wrap">
-                                    <div class="rating">
-                                        <div class="product_rate" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+                <div class="bg-light p-2">
+                    <p class="font-weight-bold mb-0">Informasi Belanja :</p>
+                </div>
+                <div class="checkout-products-marketplace" id="shipping-method-wrapper">
+                    <div class="mt-3 bg-light mb-3">
+                        <div class="p-2" style="background: antiquewhite;">
+                            <img src="https://nest.botble.com/storage/stores/3.png" alt="Young Shop" class="img-fluid rounded" width="30">
                             @php
-                                $subtotal = 0;
-                                $total_per_produ = 0;
-                                $ongkir = 0;
-                                $pajak = 0;
+                            $shop_name = (!$orders) ? $orders[0]->nama_toko : ''
                             @endphp
-                            @forelse ($orders as $item)
-                                @php
-                                    $total_per_produk = $item->price * $item->qty;
-                                @endphp
-                            
-                            <div class="p-3">
-                                <div class="row cart-item">
-                                    <div class="col-3">
-                                        <div class="checkout-product-img-wrapper">
-                                            <img class="item-thumb img-thumbnail img-rounded" src="{{ url('/storage/'.$item->gambar) }}" alt="All Natural Italian-Style Chicken Meatballs">
-                                            <span class="checkout-quantity">{{ $item->qty }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-5">
-                                        <p class="mb-0">{{ $item->name }}</p>
-                                        <p class="mb-0">
-                                            <small>(Boxes: 1 Box, Weight: 4KG)</small>
-                                        </p>
-                                    </div>
-                                    <div class="col-4 text-end">
-                                        <p>{{ \General::priceFormat($total_per_produk, 'Rp') }}</p>
-                                    </div>
+                            <span class="font-weight-bold">{{ $shop_name }}</span>
+                            <div class="rating_wrap">
+                                <div class="rating">
+                                    <div class="product_rate" style="width: 80%"></div>
                                 </div>
                             </div>
-                                @php
-                                    $subtotal += $total_per_produk;
-                                @endphp
-                            @empty
-                            <div>no item</div>    
-                            @endforelse
-                            <hr>
-                            <div class="p-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <p>Subtotal:</p>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <p class="price-text sub-total-text text-end"> {{ \General::priceFormat($subtotal, 'Rp') }} </p>
+                        </div>
+                        @php
+                        $subtotal = 0;
+                        $total_per_produ = 0;
+                        $ongkir = 0;
+                        $pajak = 0;
+                        @endphp
+                        @forelse ($orders as $item)
+                        @php
+                        $total_per_produk = $item->price * $item->qty;
+                        @endphp
+
+                        <div class="p-3">
+                            <div class="row cart-item">
+                                <div class="col-3">
+                                    <div class="checkout-product-img-wrapper">
+                                        <img class="item-thumb img-thumbnail img-rounded" src="{{ url('/storage/'.$item->gambar) }}" alt="All Natural Italian-Style Chicken Meatballs">
+                                        <span class="checkout-quantity">{{ $item->qty }}</span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p>Ongkos Kirim ({{ $totalWeight }} kg):</p>
-                                        <p class="price-text">
-                                            <select id="shipping-cost-option" class="form-control" required name="shipping_service"></select>
-                                        </p>
-                                    </div>
-                                    <!-- <div class="col-12 text-end">
+                                <div class="col-5">
+                                    <p class="mb-0">{{ $item->name }}</p>
+                                    <p class="mb-0">
+                                        <small>(Boxes: 1 Box, Weight: 4KG)</small>
+                                    </p>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <p>{{ \General::priceFormat($total_per_produk, 'Rp') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @php
+                        $subtotal += $total_per_produk;
+                        @endphp
+                        @empty
+                        <div>no item</div>
+                        @endforelse
+                        <hr>
+                        <div class="p-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Subtotal:</p>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <p class="price-text sub-total-text text-end"> {{ \General::priceFormat($subtotal, 'Rp') }} </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>Ongkos Kirim ({{ $totalWeight }} kg):</p>
+                                    <p class="price-text">
+                                        <select id="shipping-cost-option" class="form-control" required name="shipping_service"></select>
+                                    </p>
+                                </div>
+                                <!-- <div class="col-12 text-end">
                                         
                                     </div> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Pajak:</p>
                                 </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <p>Pajak:</p>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <p class="price-text tax-price-text">{{ \General::priceFormat($tax, 'Rp') }}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <p>Total:</p>
-                                    </div>
-                                    <div class="col-6 float-end">
-                                        <p class="total-text raw-total-text mb-0 total-amount" data-price=""> {{ \General::priceFormat(Keranjang::getTotalChecked(), 'Rp') }} </p>
-                                    </div>
+                                <div class="col-6 text-end">
+                                    <p class="price-text tax-price-text">{{ \General::priceFormat($tax, 'Rp') }}</p>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Total:</p>
+                                </div>
+                                <div class="col-6 float-end">
+                                    <p class="total-text raw-total-text mb-0 total-amount" data-price=""> {{ \General::priceFormat(Keranjang::getTotalChecked(), 'Rp') }} </p>
+                                </div>
+                            </div>
+                        </div>
 
-                            
-                            <!-- <div class="shipping-method-wrapper p-3">
+
+                        <!-- <div class="shipping-method-wrapper p-3">
                                 <div class="payment-checkout-form">
                                     <div class="mx-0">
                                         <h6>Shipping method:</h6>
@@ -145,178 +145,178 @@
                                     </div>
                                 </div>
                             </div> -->
-                        </div>
-                        
                     </div>
 
-                    <div class="col-md-12 checkout-button-group">
-                        <button type="submit" class="btn payment-checkout-btn payment-checkout-btn-step float-end" data-processing-text="Processing. Please wait..." data-error-header="Error"> Checkout </button>
-                    </div>
                 </div>
-                
-                <div class="mt-3 mb-5">
-                    <!-- <div class="checkout-discount-section">
-                        <a href="#" class="btn-open-coupon-form">Kamu memiliki kupon diskon ?</a>
-                    </div> -->
-                    <div class="coupon-wrapper" style="display: none;">
-                        <div class="row promo coupon coupon-section">
-                            <div class="col-lg-8 col-md-8 col-8">
-                                <input type="text" name="coupon_code" class="form-control coupon-code input-md checkout-input" value="" placeholder="Enter coupon code...">
-                                <div class="coupon-error-msg">
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-4 text-end">
-                                <button class="btn btn-md btn-gray btn-info apply-coupon-code float-end" data-url="https://nest.botble.com/coupon/apply" type="button" style="margin-top: 0;padding: 10px 20px;">
-																																									
-                                    <i class="fa fa-gift"></i> Apply </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
+
+                <div class="col-md-12 checkout-button-group">
+                    <button type="submit" class="btn payment-checkout-btn payment-checkout-btn-step float-end" data-processing-text="Processing. Please wait..." data-error-header="Error"> Checkout </button>
                 </div>
             </div>
-            <div class="col-lg-7 col-md-6 left">
-                <div class="d-none d-sm-block">
-                    <div class="checkout-logo">
-                        <div class="container">
-                            <a href="https://nest.botble.com" title="Nest - Laravel Multipurpose eCommerce Script">
-                                <img src="{{ asset('frontend/assets/imgs/sorgumku.svg') }}" class="img-fluid" width="200" alt="Sorgumku" />
-                            </a>
+
+            <div class="mt-3 mb-5">
+                <!-- <div class="checkout-discount-section">
+                        <a href="#" class="btn-open-coupon-form">Kamu memiliki kupon diskon ?</a>
+                    </div> -->
+                <div class="coupon-wrapper" style="display: none;">
+                    <div class="row promo coupon coupon-section">
+                        <div class="col-lg-8 col-md-8 col-8">
+                            <input type="text" name="coupon_code" class="form-control coupon-code input-md checkout-input" value="" placeholder="Enter coupon code...">
+                            <div class="coupon-error-msg">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4 text-end">
+                            <button class="btn btn-md btn-gray btn-info apply-coupon-code float-end" data-url="https://nest.botble.com/coupon/apply" type="button" style="margin-top: 0;padding: 10px 20px;">
+
+                                <i class="fa fa-gift"></i> Apply </button>
                         </div>
                     </div>
-                    <hr>
                 </div>
-                <div class="form-checkout">
-                   
-                        <div>
-                            <h5 class="checkout-payment-title">Informasi Pengiriman</h5>
-                            <input type="hidden" value="https://nest.botble.com/checkout/e6bdba4290b7429a533e2016a234d8f6/information" id="save-shipping-information-url">
-                            <div class="customer-address-payment-form">
-                                
-                                <div class="address-form-wrapper">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group  ">
-                                                {!! Form::text('first_name', null, ['required' => true, 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group  ">
-                                                {!! Form::text('last_name', null, ['required' => true, 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="row">
-                                        <div class="col-lg-8 col-12">
-                                            <div class="form-group  ">
-                                                {!! Form::text('email', null, ['placeholder' => 'Email', 'readonly' => true, 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-12">
-                                            <div class="form-group  ">
-                                                {!! Form::text('phone', null, ['required' => true, 'placeholder' => 'Phone', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        
-                                        <div class="col-sm-6 col-12">
-                                            <div class="form-group mb-3 ">
-                                            {!! Form::select('province_id', $provinces, Auth::user()->province_id, ['id' => 'province-id', 'placeholder' => '- Please Select - ', 'required' => true, 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-12">
-                                            <div class="form-group  ">
-                                                @php
-                                                    $city_id = (!$orders) ? $item->city_id : null
-                                                @endphp
-                                            {{ Form::hidden('city_origin', $city_id, ['id' => 'city-origin']) }}
-									        {!! Form::select('city_id', $cities, null, ['id' => 'city-id', 'placeholder' => '- Please Select -', 'required' => true, 'class' => 'form-control'])!!}
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group mb-3 ">
-                                            {!! Form::text('address1', null, ['required' => true, 'placeholder' => 'Home number and street name', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group mb-3 ">
-                                            {!! Form::number('postcode', null, ['required' => true, 'placeholder' => 'Postcode', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-6 left">
+            <div class="d-none d-sm-block">
+                <div class="checkout-logo">
+                    <div class="container">
+                        <a href="https://nest.botble.com" title="Nest - Laravel Multipurpose eCommerce Script">
+                            <img src="{{ asset('frontend/assets/imgs/sorgumku.svg') }}" class="img-fluid" width="200" alt="Sorgumku" />
+                        </a>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="form-checkout">
+
+                <div>
+                    <h5 class="checkout-payment-title">Informasi Pengiriman</h5>
+                    <input type="hidden" value="https://nest.botble.com/checkout/e6bdba4290b7429a533e2016a234d8f6/information" id="save-shipping-information-url">
+                    <div class="customer-address-payment-form">
+
+                        <div class="address-form-wrapper">
+                            <div class="row">
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('first_name', null, ['required' => true, 'class' => 'form-control']) !!}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group mb-3">
-                                            <input id="ship-box" type="checkbox" name="ship_to"/>
-                                            <label for="create_account" class="control-label" style="padding-left: 5px">Ship to a different address?</label>
-                                        </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('last_name', null, ['required' => true, 'class' => 'form-control']) !!}
                                     </div>
                                 </div>
-                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('email', null, ['placeholder' => 'Email', 'readonly' => true, 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('phone', null, ['required' => true, 'placeholder' => 'Phone', 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6 col-12">
+                                    <div class="form-group mb-3 ">
+                                        {!! Form::select('province_id', $provinces, Auth::user()->province_id, ['id' => 'province-id', 'placeholder' => '- Please Select - ', 'required' => true, 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="form-group  ">
+                                        @php
+                                        $city_id = (!$orders) ? $item->city_id : null
+                                        @endphp
+                                        {{ Form::hidden('city_origin', $city_id, ['id' => 'city-origin']) }}
+                                        {!! Form::select('city_id', $cities, null, ['id' => 'city-id', 'placeholder' => '- Please Select -', 'required' => true, 'class' => 'form-control'])!!}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-3 ">
+                                        {!! Form::text('address1', null, ['required' => true, 'placeholder' => 'Home number and street name', 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-3 ">
+                                        {!! Form::number('postcode', null, ['required' => true, 'placeholder' => 'Postcode', 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <br>
-                        <div id="ship-box-info">
-                            <div class="customer-address-payment-form">
-                                
-                                <div class="address-form-wrapper">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group  ">
-                                            {!! Form::text('shipping_first_name', null, ['class' => 'form-control', 'placeholder' => 'Firstname']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group  ">
-                                            {!! Form::text('shipping_last_name', null, ['class' => 'form-control', 'placeholder' => 'Lastname']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="row">
-                                        <div class="col-lg-8 col-12">
-                                            <div class="form-group  ">
-                                            {!! Form::text('shipping_email', null, ['placeholder' => 'Email', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-12">
-                                            <div class="form-group  ">
-                                            {!! Form::text('shipping_phone', null, ['placeholder' => 'Phone', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        
-                                        <div class="col-sm-6 col-12">
-                                            <div class="form-group mb-3 ">
-                                            {!! Form::select('shipping_province_id', $provinces, null, ['id' => 'shipping-province', 'placeholder' => '- Please Select - ', 'class' => 'form-control' ]) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-12">
-                                            <div class="form-group  ">
-									        {!! Form::select('shipping_city_id', [], null, ['id' => 'shipping-city','placeholder' => '- Please Select -', 'class' => 'form-control'])!!}
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group mb-3 ">
-                                            {!! Form::text('shipping_address1', null, ['placeholder' => 'Home number and street name', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group mb-3 ">
-                                            {!! Form::number('shipping_postcode', null, ['placeholder' => 'Postcode', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <input id="ship-box" type="checkbox" name="ship_to" />
+                                    <label for="create_account" class="control-label" style="padding-left: 5px">Ship to a different address?</label>
                                 </div>
-                    
                             </div>
                         </div>
-                        <!-- <div class="position-relative">
+
+                    </div>
+                </div>
+                <br>
+                <div id="ship-box-info">
+                    <div class="customer-address-payment-form">
+
+                        <div class="address-form-wrapper">
+                            <div class="row">
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('shipping_first_name', null, ['class' => 'form-control', 'placeholder' => 'Firstname']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('shipping_last_name', null, ['class' => 'form-control', 'placeholder' => 'Lastname']) !!}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('shipping_email', null, ['placeholder' => 'Email', 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::text('shipping_phone', null, ['placeholder' => 'Phone', 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6 col-12">
+                                    <div class="form-group mb-3 ">
+                                        {!! Form::select('shipping_province_id', $provinces, null, ['id' => 'shipping-province', 'placeholder' => '- Please Select - ', 'class' => 'form-control' ]) !!}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="form-group  ">
+                                        {!! Form::select('shipping_city_id', [], null, ['id' => 'shipping-city','placeholder' => '- Please Select -', 'class' => 'form-control'])!!}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-3 ">
+                                        {!! Form::text('shipping_address1', null, ['placeholder' => 'Home number and street name', 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-3 ">
+                                        {!! Form::number('shipping_postcode', null, ['placeholder' => 'Postcode', 'class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- <div class="position-relative">
                             <div class="payment-info-loading" style="display: none;">
                                 <div class="payment-info-loading-content">
                                     <i class="fas fa-spinner fa-spin"></i>
@@ -400,13 +400,13 @@
                                 </li>
                             </ul>
                         </div> -->
-                        <!-- <br> -->
-                        <div class="form-group mb-3 ">
-                            <label for="description" class="control-label">Catatan Pesanan</label>
-                            <br>
-                            {!! Form::textarea('note', null, ['class' => 'form-control', 'cols' => 30, 'rows' => 5]) !!}
-                        </div>
-                        <!-- <div class="form-group mb-3">
+                <!-- <br> -->
+                <div class="form-group mb-3 ">
+                    <label for="description" class="control-label">Catatan Pesanan</label>
+                    <br>
+                    {!! Form::textarea('note', null, ['class' => 'form-control', 'cols' => 30, 'rows' => 5]) !!}
+                </div>
+                <!-- <div class="form-group mb-3">
                             <div class="row">
                                 <div class="col-md-6 d-none d-md-block" style="line-height: 53px">
                                     <a class="text-info" href="{{ url('carts') }}">
@@ -424,29 +424,55 @@
                             </div>
                         </div> -->
 
-                      
-                        
-                </div>
+
+
             </div>
         </div>
     </div>
-   
-    {!! Form::close() !!}
+</div>
 
-    @endsection
+{!! Form::close() !!}
 
-    @push('style')
-        <style>
-            #ship-box-info {
-              display: none;
-            }
-        </style>
-    @endpush
+@endsection
 
-    @push('scripts')
-            <script>
-                $('#ship-box').on('click', function() {
-                    $('#ship-box-info').slideToggle(1000);
-                });
-            </script>
-    @endpush
+@push('style')
+<style>
+    #ship-box-info {
+        display: none;
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #299c77 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+    $('#ship-box').on('click', function() {
+        $('#ship-box-info').slideToggle(1000);
+    });
+</script>
+@endpush

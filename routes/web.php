@@ -37,6 +37,7 @@ use App\Http\Controllers\ReceivedController;
 
 use App\Http\Controllers\Dashboard\DashboardController as DDashboard;
 use App\Http\Controllers\Dashboard\OrderController as DOrder;
+use App\Http\Controllers\Dashboard\OrderOutController;
 use App\Http\Controllers\Dashboard\ProductController as DProduct;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\ProfileController;
@@ -171,7 +172,18 @@ Route::group(
 		Route::get('shop/edit', [DShop::class, 'edit']);
 		Route::put('shop/update', [DShop::class, 'update'])->name('updateShop');
 
+		Route::get('orders/trashed', [DOrder::class, 'trashed']);
+		Route::get('orders/restore/{orderID}', [DOrder::class, 'restore']);
+		Route::resource('orders', DOrder::class);
+		Route::get('orders/{orderID}/cancel', [DOrder::class, 'cancel']);
+		Route::put('orders/cancel/{orderID}', [DOrder::class, 'doCancel']);
+		Route::post('orders/complete/{orderID}', [DOrder::class, 'doComplete']);
+		Route::post('orders/confirm/{orderID}', [DOrder::class, 'doConfirm']);
+
 		Route::resource('shipments', DShipment::class);
+
+		Route::get('orderout', [OrderOutController::class, 'index']);
+		Route::get('orderout/received', [OrderOutController::class, 'received']);
 	}
 );
 
