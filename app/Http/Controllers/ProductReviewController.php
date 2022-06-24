@@ -33,7 +33,7 @@ class ProductReviewController extends Controller
             $data = new ProductReview();
             $data->product_id = $request->product_id;
             $data->user_id = Auth::user()->id;
-            $data->rate = $request->rate;
+            $data->rate = $request->rating;
             $data->review = $request->review;
             
             $data->save();

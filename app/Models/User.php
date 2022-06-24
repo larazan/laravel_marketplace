@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ProductReview');
     }
 
+    public function paymentConfirm()
+    {
+        return $this->hasMany('App\Models\PaymentConfirmation');
+    }
+
     /**
 	 * Define relationship with the Favorite
 	 *

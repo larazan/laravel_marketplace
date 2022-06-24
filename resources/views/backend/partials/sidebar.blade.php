@@ -38,7 +38,7 @@
                     <li class="menu-item {{ ($currentDashboardMenu == 'ordersout') ? 'active' : ''}}">
                         <a class="menu-link" href="{{ url('user/orderout')}}">
                             <i class="icon material-icons md-shopping_cart"></i>
-                            <span class="text">Order Keluar</span>
+                            <span class="text">Pesanan</span>
                         </a>
                         
                     </li>

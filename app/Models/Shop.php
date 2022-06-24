@@ -17,6 +17,8 @@ class Shop extends Model
 		'slug', 
 		'description',
 		'rekening', 
+		'atasnama', 
+		'bank', 
 		'original', 
 		'medium', 
 		'small'
@@ -35,6 +37,68 @@ class Shop extends Model
 		self::INACTIVE => 'inactive',
 	];
 
+	public const MANDIRI = 'Bank Mandiri';
+	public const BRI = 'BRI';
+	public const BNI = 'BNI';
+	public const PANIN = 'Panin Bank';
+	public const BCA = 'BCA';
+	public const CIMB = 'CIMB Niaga';
+	public const PERMATA = 'Bank Permata';
+	public const OCBC = 'OCBC NISP';
+	public const BTPN = 'BTPN';
+	public const DBS = 'DBS';
+	public const BUKOPIN = 'Bank Bukopin';
+	public const MEGA = 'Bank Mega';
+	public const MAYORA = 'Bank Mayora';
+	public const UOB = 'Bank UOB';
+	public const MAYAPADA = 'Bank Mayapada International';
+	public const AGRO = 'BRI Agro';
+	public const ARTHA = 'Bank Artha Graha';
+	public const COMMONWEALTH = 'Commonwealth Bank';
+	public const HSBC = 'HSBC Indonesia';
+	public const ICBC = 'ICBC Indonesia';
+	public const OKE = 'Bank Oke Indonesia';
+	public const MNC = 'MNC Bank';
+	public const STANDARD = 'Standard Chartered Bank Indonesia';
+	public const BNP = 'BNPParibas';
+	public const SINARMAS = 'Bank Sinarmas';
+	public const MAYBANK = 'Maybank Indonesia';
+	public const CITIBANK = 'Citibank Indonesia';
+	public const MUAMALAT = 'Bank Muamalat';
+	public const BJB = 'Bank BJB';
+	
+	public const BANKS = [
+		self::MANDIRI => 'Bank Mandiri',
+		self::BRI => 'BRI',
+		self::BNI => 'BNI',
+		self::PANIN => 'Panin Bank',
+		self::BCA => 'BCA',
+		self::CIMB => 'CIMB Niaga',
+		self::PERMATA => 'Bank Permata',
+		self::OCBC => 'OCBC NISP',
+		self::BTPN => 'BTPN',
+		self::DBS => 'DBS',
+		self::BUKOPIN => 'Bank Bukopin',
+		self::MEGA => 'Bank Mega',
+		self::MAYORA => 'Bank Mayora',
+		self::UOB => 'Bank UOB',
+		self::MAYAPADA => 'Bank Mayapada International',
+		self::AGRO => 'BRI Agro',
+		self::ARTHA => 'Bank Artha Graha',
+		self::COMMONWEALTH => 'Commonwealth Bank',
+		self::HSBC => 'HSBC Indonesia',
+		self::ICBC => 'ICBC Indonesia',
+		self::OKE => 'Bank Oke Indonesia',
+		self::MNC => 'MNC Bank',
+		self::STANDARD => 'Standard Chartered Bank Indonesia',
+		self::BNP => 'BNPParibas',
+		self::SINARMAS => 'Bank Sinarmas',
+		self::MAYBANK => 'Maybank Indonesia',
+		self::CITIBANK => 'Citibank Indonesia',
+		self::MUAMALAT => 'Bank Muamalat',
+		self::BJB => 'Bank BJB',
+	];
+
 	/**
 	 * Define relationship with the User
 	 *
@@ -51,13 +115,18 @@ class Shop extends Model
     }
 
 	/**
-	 * Define relationship with the Shipment
+	 * Define relationship with the 
 	 *
 	 * @return void
 	 */
 	public static function statuses()
 	{
 		return self::STATUSES;
+	}
+
+	public static function banks()
+	{
+		return self::BANKS;
 	}
 
     /**

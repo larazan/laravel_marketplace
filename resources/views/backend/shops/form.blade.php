@@ -54,9 +54,25 @@
                                     <h5>Rekening</h5>
                                 </div>
                                 <!-- col.// -->
+                                <div class="row col-md-7">
+                                    <div class="col-md-8 mb-3">
+                                        {!! Form::text('rekening', null, ['class' => 'form-control', 'placeholder' => 'No Rekening']) !!}
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        {!! Form::text('atasnama', null, ['class' => 'form-control', 'placeholder' => 'atasnama']) !!}
+                                    </div>
+                                </div>
+                                <!-- col.// -->
+                            </div>
+
+                            <div class="row border-bottom mb-4 pb-4">
+                                <div class="col-md-5">
+                                    <h5>Bank</h5>
+                                </div>
+                                <!-- col.// -->
                                 <div class="col-md-7">
                                     <div class="mb-3">
-                                        {!! Form::text('rekening', null, ['class' => 'form-control']) !!}
+                                    {!! Form::select('bank', $banks , null, ['class' => 'form-select', 'placeholder' => '-- Pilih Bank --']) !!}
                                     </div>
                                     
                                 </div>

@@ -24,6 +24,8 @@ class ShopController extends Controller
 		$this->middleware('auth');
         $this->data['currentDashboardMenu'] = 'vendors';
 		$this->data['currentDashboardSubMenu'] = '';
+
+        $this->data['banks'] = Shop::banks();
 	}
     
     public function index() {

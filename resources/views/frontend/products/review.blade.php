@@ -1,3 +1,7 @@
+    @php
+        $rating = 3;
+    @endphp
+    
     <!--Comments-->
     <div class="">
         <button class="btn btn-xs" id="review-button">Tambah Review</button>
@@ -6,11 +10,30 @@
      <!--comment form-->
      <div class="comment-form" id="review-box">
         <h4 class="mb-15">Add a review</h4>
-        <div class="product-rate d-inline-block mb-30"></div>
+        
+
+        
+        
         <div class="row">
             <div class="col-lg-8 col-md-12">
                 <form class="form-contact comment_form" id="commentForm">
                     {{ Form::hidden('product_id', $product->id) }}
+                    <div class="row">
+                        <div class="col-12">
+                        <div class="rate">
+                    <input type="radio" id="star5" class="rate" name="rating" value="5"/>
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" checked id="star4" class="rate" name="rating" value="4"/>
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" class="rate" name="rating" value="3"/>
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" class="rate" name="rating" value="2">
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" class="rate" name="rating" value="1"/>
+                    <label for="star1" title="text">1 star</label>
+                    </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
@@ -97,3 +120,43 @@
         </div>
     </div>
    
+
+@push('style')
+<style>
+.rate {
+         float: left;
+         height: 46px;
+         padding: 0 10px;
+         }
+         .rate:not(:checked) > input {
+         position:absolute;
+         display: none;
+         }
+         .rate:not(:checked) > label {
+         float:right;
+         width:1em;
+         overflow:hidden;
+         white-space:nowrap;
+         cursor:pointer;
+         font-size:30px;
+         color:#ccc;
+         }
+         .rate:not(:checked) > label:before {
+         content: '★ ';
+         }
+         .rate > input:checked ~ label {
+         color: #ffc700;
+         }
+         .rate:not(:checked) > label:hover,
+         .rate:not(:checked) > label:hover ~ label {
+         color: #deb217;
+         }
+         .rate > input:checked + label:hover,
+         .rate > input:checked + label:hover ~ label,
+         .rate > input:checked ~ label:hover,
+         .rate > input:checked ~ label:hover ~ label,
+         .rate > label:hover ~ input:checked ~ label {
+         color: #c59b08;
+         }
+</style>
+@endpush

@@ -183,7 +183,10 @@ Route::group(
 		Route::resource('shipments', DShipment::class);
 
 		Route::get('orderout', [OrderOutController::class, 'index']);
+		Route::get('orderout/detail/{orderID}', [OrderOutController::class, 'detail']);
 		Route::get('orderout/received', [OrderOutController::class, 'received']);
+		Route::get('orderout/confirm/{orderID}', [OrderOutController::class, 'confim_paid']);
+		Route::post('orderout/confim_paid/{orderID}', [OrderOutController::class, 'doConfirmPaid']);
 	}
 );
 

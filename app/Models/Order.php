@@ -93,6 +93,16 @@ class Order extends Model
 	}
 
 	/**
+	 * Define relationship with the PaymentConfirmation
+	 *
+	 * @return void
+	 */
+	public function paymentConfirmation()
+	{
+		return $this->belongsTo('App\Models\PaymentConfirmation');
+	}
+
+	/**
 	 * Define relationship with the User
 	 *
 	 * @return void

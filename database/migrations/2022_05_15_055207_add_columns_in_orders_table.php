@@ -21,6 +21,7 @@ class AddColumnsInOrdersTable extends Migration
             $table->integer('opened_shopper')->after('opened_cus')->default(0);
             $table->unsignedBigInteger('confirmed_by')->after('approved_at')->nullable();
 			$table->datetime('confirmed_at')->after('confirmed_by')->nullable();
+            $table->unsignedBigInteger('payment_confirm_id')->after('confirmed_at')->nullable();
         });
     }
 

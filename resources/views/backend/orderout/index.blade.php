@@ -5,17 +5,14 @@
 <section class="content-main">
     <div class="content-header">
         <div>
-            <h2 class="content-title card-title">Order List</h2>
+            <h2 class="content-title card-title">Daftar Pesanan</h2>
             <p>Lorem ipsum dolor sit amet.</p>
         </div>
-        <div>
-            <input type="text" placeholder="Search order ID" class="form-control bg-white" />
-        </div>
+        
     </div>
     @include('backend.partials.flash')
     <div class="card mb-4">
     
-		@include('backend.orders.filter')
         <!-- card-header end// -->
         <div class="card-body">
             <div class="table-responsive">
