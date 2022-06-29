@@ -6,14 +6,14 @@
             <div class="col-lg-12">
                 <div class="card card-default">
                     <div class="card-header card-header-border-bottom">
-                        <h2>Brands</h2>
+                        <h2>Ingredients</h2>
                     </div>
                     <div class="card-body">
                         @include('admin.partials.flash')
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <th>#</th>
-                                <th>Name</th>
+                                <th>Title</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </thead>
@@ -21,18 +21,16 @@
                                 @php
                                 $i = 1
                                 @endphp
-                                @forelse ($shops as $shop)
+                                @forelse ($ingredients as $ingredient)
                                     <tr>    
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $shop->name }}</td>
-                                        <td>{{ $shop->statusLabel() }}</td>
+                                        <td>{{ $ingredient->name }}</td>
+                                        <td>{{ $ingredient->status }}</td>
                                         <td>
                                             
-                                                <a href="{{ url('admin/shops/'. $shop->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
+                                                <a href="{{ url('admin/ingredients/'. $ingredient->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
                                             
-
-                                            
-                                                {!! Form::open(['url' => 'admin/shops/'. $shop->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
+                                                {!! Form::open(['url' => 'admin/ingredients/'. $ingredient->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
                                                 {!! Form::hidden('_method', 'DELETE') !!}
                                                 {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
                                                 {!! Form::close() !!}
@@ -48,13 +46,13 @@
                             </tbody>
                         </table>
                         <div class="pagination-style">
-                        {{ $shops->links() }}
+                        {{ $ingredients->links() }}
                         </div>
                     </div>
 
                     
                         <div class="card-footer text-right">
-                            <a href="{{ url('admin/shops/create') }}" class="btn btn-primary">Add New</a>
+                            <a href="{{ url('admin/ingredients/create') }}" class="btn btn-primary">Add New</a>
                         </div>
                     
                 </div>

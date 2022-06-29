@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,5 +39,9 @@ class AppServiceProvider extends ServiceProvider
 
             return ($minutes > 1) ? $minutes . ' minutes' : $minutes . ' minute';
         });
+
+        // Carbon::setLocale(config('app.locale'));
+        // config(['app.locale' => 'id']);
+	    Carbon::setLocale('id');
     }
 }

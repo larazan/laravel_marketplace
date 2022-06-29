@@ -33,7 +33,7 @@ class OrderOutController extends Controller
 
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'DESC')
+        $orders = Order::where('customer_id', Auth::user()->id)->orderBy('created_at', 'DESC')
 			->paginate(10);
         $this->data['orders'] = $orders;
 

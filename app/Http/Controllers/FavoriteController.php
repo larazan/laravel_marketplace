@@ -10,6 +10,10 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+
+use App\Mail\testEmail;
+use Illuminate\Support\Facades\Mail;
 
 class FavoriteController extends Controller
 {
@@ -163,5 +167,22 @@ class FavoriteController extends Controller
 		Session::flash('success', 'Your favorite has been removed');
 		
 		return redirect('favorites');
+    }
+
+    public function kirim()
+    {
+        Mail::to("nurcahyono320@gmail.com")->send(new testEmail());
+
+        return "email telah dikirim";
+    }
+
+    public function tes()
+    {
+        $tim = Carbon::now()->timestamp;
+        $ord = 'NV/20220620/VI/XX/00001';
+        $enc = md5($ord);
+        $now = Carbon::now();
+
+        return $now;
     }
 }

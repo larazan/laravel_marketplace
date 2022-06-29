@@ -40,14 +40,7 @@
             <!-- card-body.// -->
             <hr class="my-4" />
             <div class="row g-4">
-                <div class="col-md-12 col-lg-4 col-xl-2">
-                    <article class="box">
-                        <p class="mb-0 text-muted">Total penjualan:</p>
-                        <h5 class="text-success">238</h5>
-                        <p class="mb-0 text-muted">Revenue:</p>
-                        <h5 class="text-success mb-0">$2380</h5>
-                    </article>
-                </div>
+                
                 <!--  col.// -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <h6>Kontak</h6>
@@ -80,15 +73,25 @@
                     </p>
                     @endif
                 </div>
-                <!--  col.// -->
-                <div class="col-sm-6 col-xl-4 text-xl-end">
-                    <map class="mapbox position-relative d-inline-block">
-                        <img src="{{ URL::asset('dashboard/assets/imgs/misc/map.jpg') }}" class="rounded2" height="120" alt="map" />
-                        <span class="map-pin" style="top: 50px; left: 100px"></span>
-                        <button class="btn btn-sm btn-brand position-absolute bottom-0 end-0 mb-15 mr-15 font-xs">Large</button>
-                    </map>
+
+                <div class="col-md-12 col-lg-4 col-xl-2">
+                    <h6>Rekenig</h6>
+                    @if (!empty($shop))
+                    <p>
+                    {{ $shop->rekening }} <br />
+                    {{ $shop->bank }} <br />
+                        a/n {{ $shop->atasnama }}
+                    </p>
+                    @else
+                    <p>
+                        55501090111 <br />
+                        BCA <br />
+                        a/n ratri
+                    </p>
+                    @endif
                 </div>
                 <!--  col.// -->
+                
             </div>
             <!--  row.// -->
         </div>

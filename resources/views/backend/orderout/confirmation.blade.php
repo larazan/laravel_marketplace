@@ -13,7 +13,7 @@
     <div class="card">
         <div class="col-lg-6">
             @include('backend.partials.flash', ['$errors' => $errors])
-            {!! Form::model($order, ['url' => ['user/orderout/confim_paid', $order->id], 'method' => 'PUT',  'enctype' => 'multipart/form-data']) !!}
+            {!! Form::model($order, ['url' => ['user/orderout/confim_paid', $order->id], 'method' => 'POST',  'enctype' => 'multipart/form-data']) !!}
            
             {!! Form::hidden('id') !!}
             
@@ -22,7 +22,7 @@
                    
                         <div class="col-6 mb-3">
                             {!! Form::label('nominal', 'Nominal') !!}
-                            {!! Form::text('nominal', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('nominal', \General::priceFormat($order->grand_total), ['class' => 'form-control', 'readonly' => true]) !!}
                         </div>
 
                         <div class="col-6 mb-3">

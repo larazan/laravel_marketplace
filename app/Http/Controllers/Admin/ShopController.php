@@ -17,7 +17,7 @@ class ShopController extends Controller
 
         $this->data['currentAdminMenu'] = 'marketplace';
         $this->data['currentAdminSubMenu'] = 'shop';
-        $this->data['statuses'] = Shop::statuses();
+        $this->data['statuses'] = Shop::STATUSES;
     }
 
     /**

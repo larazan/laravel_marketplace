@@ -164,6 +164,7 @@ class CartController extends Controller
 	{
 		$userId = Auth::user()->id;
 		$ip = request()->ip();
+		$tim = Carbon::now()->timestamp;
 		$ses = Session::getId();
 
 		$product = Product::findOrFail($request->product_id);
@@ -224,7 +225,7 @@ class CartController extends Controller
 				DB::commit();
 			} else {
 				$data = new Basket;
-				$data->id = md5($request->product_id . $userId);
+				$data->id = md5($request->product_id . $userId . $tim);
 				$data->session_id = $ses;
 				$data->product_id = $request->product_id;
 				$data->user_id = Auth::user()->id;

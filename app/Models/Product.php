@@ -93,6 +93,11 @@ class Product extends Model
 		return $this->belongsToMany('App\Models\Brand', 'product_brands');
 	}
 
+	public function ingredients()
+	{
+		return $this->belongsToMany('App\Models\Ingredient', 'product_ingredients');
+	}
+
 	/**
 	 * Define relationship with the Variants
 	 *

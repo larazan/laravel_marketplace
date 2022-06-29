@@ -706,13 +706,13 @@ class OrderController extends Controller
 	 *
 	 * @return void
 	 */
-	public function received($orderId)
+	public function final($orderId)
 	{
 		$this->data['order'] = Order::where('id', $orderId)
 			->where('user_id', Auth::user()->id)
 			->firstOrFail();
 
-		return $this->loadTheme('orders/received', $this->data);
+		return $this->loadTheme('orders/final', $this->data);
 	}
 
 	public function deleteItems()

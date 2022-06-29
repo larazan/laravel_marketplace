@@ -72,8 +72,8 @@
                         </div>
 
                         <div class="mb-4">
-                            {!! Form::label('track_number', 'Track Number') !!}
-                            {!! Form::text('track_number', null, ['class' => 'form-control']) !!}
+                        <label for="track_number" class="required">Track Number <span>*</span></label>
+                            {!! Form::text('track_number', null, ['class' => 'form-control', 'required']) !!}
                         </div>
                     </div>
 
@@ -208,4 +208,13 @@
 
     </div>
 </section>
+@endsection
+
+@section('style')
+<style>
+.required span{
+    color: red;
+    text-transform: italic;
+}
+</style>
 @endsection

@@ -37,6 +37,7 @@ class ShipmentController extends Controller
     public function index()
     {
         $shipments = Shipment::join('orders', 'shipments.order_id', '=', 'orders.id')
+			->where('orders.shop_id', Auth::user()->id)
 			->whereRaw('orders.deleted_at IS NULL')
 			->orderBy('shipments.created_at', 'DESC')->paginate(10);
 		$this->data['shipments'] = $shipments;

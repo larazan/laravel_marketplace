@@ -16,7 +16,7 @@
         <header class="card-header">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
-                    <span> <i class="material-icons md-calendar_today"></i> <b>{{ \Carbon::now()->toDateTimeString() }}</b> </span> <br />
+                    <span> <i class="material-icons md-calendar_today"></i> <b>{{ \Illuminate\Support\Carbon::now()->toDateTimeString() }}</b> </span> <br />
                     <small class="text-muted">Order ID: #{{ $order->code }}</small>
                 </div>
                 <div class="col-lg-6 col-md-6 ms-auto text-md-end">
@@ -176,8 +176,8 @@
 
                             @if (!$order->trashed())
 
-                            @if ($order->isCreated() && $order->isConfirmed())
-                            <a href="{{ url('user/orderout/confim_paid/'. $order->id)}}" class="btn btn-block mt-2 btn-lg btn-primary btn-pill delete"> Confirm Paid</a>
+                            @if ($order->isConfirmed())
+                            <a href="{{ url('user/orderout/confirm/'. $order->id)}}" class="btn btn-block mt-2 btn-lg btn-primary btn-pill delete"> Confirm Paid</a>
                             @endif
 
                             @endif

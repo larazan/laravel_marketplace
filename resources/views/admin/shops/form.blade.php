@@ -26,14 +26,13 @@
 							{!! Form::text('name', null, ['class' => 'form-control']) !!}
 						</div>
 						
-                        <div class="form-group">
-							{!! Form::label('editor1', 'Body') !!}
-							{!! Form::textarea('editor1', null, ['class' => 'form-control editor1', 'rows' => 3, 'id' => 'editor']) !!}
-						</div>
-						
+						<div class="form-group">
+                                {!! Form::label('description', 'Description') !!}
+                                {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'description']) !!}
+                            </div>
 						<div class="form-group">
 							{!! Form::label('status', 'Status') !!}
-							{!! Form::select('status', $statuses , null, ['class' => 'form-control', 'placeholder' => '-- Set Status --']) !!}
+							{!! Form::select('is_active', $statuses , null, ['class' => 'form-control', 'placeholder' => '-- Set Status --']) !!}
 						</div>
 						<div class="form-footer pt-5 border-top">
 							<button type="submit" class="btn btn-primary btn-default">Save</button>

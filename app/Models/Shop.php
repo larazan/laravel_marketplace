@@ -124,6 +124,18 @@ class Shop extends Model
 		return self::STATUSES;
 	}
 
+	/**
+	 * Get status label
+	 *
+	 * @return string
+	 */
+	public function statusLabel()
+	{
+		$statuses = $this->statuses();
+
+		return isset($this->is_active) ? $statuses[$this->is_active] : null;
+	}
+
 	public static function banks()
 	{
 		return self::BANKS;

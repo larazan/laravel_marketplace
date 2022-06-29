@@ -177,7 +177,11 @@
                             @if (!$order->trashed())
 
                             @if ($order->isCreated())
-                            <a href="{{ url('user/orders/confirm/'. $order->id)}}" class="btn btn-block mt-2 btn-lg btn-primary btn-pill delete"> Confirm</a>
+                            <a href="#" class="btn btn-block mt-2 btn-lg btn-primary btn-pill delete" onclick="event.preventDefault();
+						document.getElementById('confirm-form-{{ $order->id }}').submit();"> Confirm</a>
+                            
+                            {!! Form::open(['url' => 'user/orders/confirm/'. $order->id, 'class' => 'confim', 'id' => 'confirm-form-'. $order->id, 'style' => 'display:none']) !!}
+                            {!! Form::close() !!}
                             @endif
 
                             @if ($order->isPaid() && $order->isConfirmed())

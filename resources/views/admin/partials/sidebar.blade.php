@@ -57,6 +57,11 @@
 								<span class="nav-text">Brands</span>
 								</a>
 							</li>
+							<li class="{{ ($currentAdminSubMenu == 'ingredient') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/ingredients')}}">
+								<span class="nav-text">Ingredients</span>
+								</a>
+							</li>
 							<li class="{{ ($currentAdminSubMenu == 'attribute') ? 'active' : ''}}">
 								<a class="sidenav-item-link" href="{{ url('admin/attributes')}}">
 								<span class="nav-text">Attributes</span>

@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\SubscribeController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LogActivityController;
 use App\Http\Controllers\Admin\ProductReviewController as ProductReview;
+use App\Http\Controllers\Admin\IngredientController;
 
 
 use App\Http\Controllers\CkeditorFileUploadController;
@@ -105,7 +106,7 @@ Route::get('orders/checkout', [Order::class, 'checkout']);
 Route::post('orders/checkout', [Order::class, 'doCheckout']);
 Route::post('orders/shipping-cost', [Order::class, 'shippingCost']);
 Route::post('orders/set-shipping', [Order::class, 'setShipping']);
-Route::get('orders/received/{orderID}', [Order::class, 'received']);
+Route::get('orders/final/{orderID}', [Order::class, 'final']);
 Route::get('orders/cities', [Order::class, 'cities']);
 // Route::get('orders/clear', [Order::class, 'deleteItems']);
 // Route::get('orders', [Order::class, 'index']);
@@ -117,6 +118,8 @@ Route::get('orders/cities', [Order::class, 'cities']);
 // Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
 
 Route::resource('favorites', FavoriteController::class);
+Route::get('/kirim', [FavoriteController::class, 'kirim']);
+Route::get('/tes', [FavoriteController::class, 'tes']);
 
 Route::get('/blogs', [Article::class, 'index']);
 Route::get('/blog/{slug}', [Article::class, 'show']);
@@ -237,7 +240,8 @@ Route::group(
 
 		Route::resource('articles', ArticleController::class);
         Route::resource('category_articles', CategoryArticleController::class);
-
+        Route::resource('ingredients', IngredientController::class);
+	
 		Route::get('subscribes', [SubscribeController::class, 'index']);
 
 		Route::get('setting', [SettingController::class, 'index']);
