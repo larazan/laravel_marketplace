@@ -25,6 +25,7 @@ use App\Models\ProductInventory;
 use App\Models\ProductAttributeValue;
 use App\Models\AttributeOption;
 use App\Models\Brand;
+use App\Models\Ingredient;
 use PhpParser\Node\Stmt\TryCatch;
 
 class ProductController extends Controller
@@ -80,14 +81,17 @@ class ProductController extends Controller
 
         $categories = Category::orderBy('name', 'DESC')->get();
 		$brands = Brand::pluck('name', 'id');
+		$ingredients = Ingredient::pluck('name', 'id');
 		$configurableAttributes = $this->_getConfigurableAttributes();
 
 		$this->data['shop_id'] = $shop->id;
 		$this->data['categories'] = $categories->toArray();
 		$this->data['brands'] = $brands;
+		$this->data['ingredients'] = $ingredients;
 		$this->data['product'] = null;
 		$this->data['productID'] = 0;
 		$this->data['brandID'] = null;
+		$this->data['ingredientsID'] = null;
 		$this->data['categoryIDs'] = [];
 		$this->data['configurableAttributes'] = $configurableAttributes;
 
@@ -121,9 +125,11 @@ class ProductController extends Controller
 			function () use ($params) {
 				$categoryIds = !empty($params['category_ids']) ? $params['category_ids'] : [];
 				$brandId = $params['brand_id'];
+				$ingredientId = $params['ingredient_id'];
 				$product = Product::create($params);
 				$product->categories()->sync($categoryIds);
 				$product->brands()->sync($brandId);
+				$product->ingredients()->sync($ingredientId);
 
 				if ($params['type'] == 'configurable') {
 					$this->_generateProductVariants($product, $params);
@@ -301,13 +307,16 @@ class ProductController extends Controller
 		$product->qty = isset($product->productInventory) ? $product->productInventory->qty : null;
         $categories = Category::orderBy('name', 'ASC')->get();
 		$brands = Brand::pluck('name', 'id');
+		$ingredients = Ingredient::pluck('name', 'id');
         
         $this->data['categories'] = $categories->toArray();
         $this->data['product'] = $product;
 		$this->data['brands'] = $brands;
+		$this->data['ingredients'] = $ingredients;
 		$this->data['productID'] = $product->id;
         $this->data['categoryIDs'] = $product->categories->pluck('id')->toArray();
 		$this->data['brandID'] = $product->brands->pluck('id');
+		$this->data['ingredientID'] = $product->ingredients->pluck('id');
 
         return $this->loadDashboard('products.form', $this->data);
     }
@@ -331,9 +340,11 @@ class ProductController extends Controller
 			function () use ($product, $params) {
 				$categoryIds = !empty($params['category_ids']) ? $params['category_ids'] : [];
 				$brandId = $params['brand_id'];
+				$ingredientId = $params['ingredient_id'];
 				$product->update($params);
 				$product->categories()->sync($categoryIds);
 				$product->brands()->sync($brandId);
+				$product->ingredients()->sync($ingredientId);
 
 				if ($product->type == 'configurable') {
 					$this->_updateProductVariants($params);

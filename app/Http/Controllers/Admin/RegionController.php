@@ -28,7 +28,7 @@ class RegionController extends Controller
      */
     public function index()
     {
-        $this->data['regions'] = Region::orderBy('name', 'DESC')->paginate(10);
+        $this->data['regions'] = Region::orderBy('id', 'DESC')->paginate(10);
 
         return view('admin.regions.index', $this->data);
     }
@@ -56,7 +56,7 @@ class RegionController extends Controller
     public function store(RegionRequest $request)
     {
         $params = $request->except('_token');
-        $params['slug'] = Str::slug($params['name']);
+        // dd($params);
 
 		if (Region::create($params)) {
 			Session::flash('success', 'Region has been created');
@@ -65,7 +65,7 @@ class RegionController extends Controller
 		}
 
         // add log
-        \LogActivity::addToLog('add region');
+        // \LogActivity::addToLog('add region');
 
 		return redirect('admin/regions');
     }

@@ -13,7 +13,7 @@ class RegionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,19 @@ class RegionRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $rules = [
+			'number' => 'required',
+			'province_id' => 'required',
+			'province_name' => 'required',
+			'city_id' => 'required',
+			'city_name' => 'required',
+		];
+       
+
+		// if ($this->method() == 'POST') {
+		// 	$rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif|max:4096';
+		// }
+
+		return $rules;
     }
 }

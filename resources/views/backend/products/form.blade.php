@@ -63,6 +63,10 @@ $formTitle = !empty($product) ? 'Update' : 'Tambah Baru'
                             {!! General::selectMultiLevel('category_ids[]', $categories, ['class' => 'form-control select-multiple', 'id' => 'category_ids', 'multiple' => true, 'selected' => !empty(old('category_ids')) ? old('category_ids') : $categoryIDs, 'placeholder' => '-- Pilih Kategori --']) !!}
                         </div>
                         <div class="mb-4">
+                            {!! Form::label('inredient', 'Bahan', ['class' => 'form-label']) !!}
+                            {!! Form::select('inredient_id', $inredients, !empty($product) ? $inredientID : null, ['class' => 'form-control', 'placeholder' => '-- Pilih Bahan --']) !!}
+                        </div>
+                        <div class="mb-4">
                             {!! Form::label('price', 'Harga', ['class' => 'form-label']) !!}
                             {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'harga']) !!}
                         </div>

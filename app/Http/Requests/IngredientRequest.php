@@ -13,7 +13,7 @@ class IngredientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,15 @@ class IngredientRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $rules = [
+			'name' => 'required|unique:brands,name',
+			'slug' => 'unique:brands,slug,',
+		];
+
+		// if ($this->method() == 'POST') {
+		// 	$rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif|max:4096';
+		// }
+
+		return $rules;
     }
 }

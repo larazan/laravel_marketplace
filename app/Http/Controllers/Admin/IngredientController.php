@@ -104,7 +104,8 @@ class IngredientController extends Controller
     public function update(IngredientRequest $request, $id)
     {
         $params = $request->except('_token');		
-
+        $params['slug'] = Str::slug($params['name']);
+        
 		$ingredient = Ingredient::findOrFail($id);
 		if ($ingredient->update($params)) {
 			Session::flash('success', 'Ingredient has been updated.');
