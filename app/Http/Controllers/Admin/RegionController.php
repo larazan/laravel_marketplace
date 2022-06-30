@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\RegionRequest;
 
-use App\Http\Requests\IngredientRequest;
-
-use App\Models\Ingredient;
+use App\Models\Region;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 
-class IngredientController extends Controller
+class RegionController extends Controller
 {
     public function __construct() {
         // parent::__construct();
 
-        $this->data['currentAdminMenu'] = 'catalog';
-        $this->data['currentAdminSubMenu'] = 'ingredient';
-        $this->data['statuses'] = Ingredient::STATUSES;
+        $this->data['currentAdminMenu'] = 'marketplace';
+        $this->data['currentAdminSubMenu'] = 'region';
+        $this->data['statuses'] = Region::STATUSES;
+        
     }
     
     /**
@@ -28,9 +28,9 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $this->data['ingredients'] = Ingredient::orderBy('name', 'DESC')->paginate(10);
+        $this->data['regions'] = Region::orderBy('name', 'DESC')->paginate(10);
 
-        return view('admin.ingredients.index', $this->data);
+        return view('admin.regions.index', $this->data);
     }
 
     /**
@@ -40,9 +40,11 @@ class IngredientController extends Controller
      */
     public function create()
     {
-        $this->data['ingredient'] = null;
+        $this->data['region'] = null;
+        $this->data['provinces'] = $this->getProvinces();
+		$this->data['cities'] = [];
 
-		return view('admin.ingredients.form', $this->data);
+		return view('admin.regions.form', $this->data);
     }
 
     /**
@@ -51,21 +53,21 @@ class IngredientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngredientRequest $request)
+    public function store(RegionRequest $request)
     {
         $params = $request->except('_token');
         $params['slug'] = Str::slug($params['name']);
 
-		if (Ingredient::create($params)) {
-			Session::flash('success', 'Ingredient has been created');
+		if (Region::create($params)) {
+			Session::flash('success', 'Region has been created');
 		} else {
-			Session::flash('error', 'Ingredient could not be created');
+			Session::flash('error', 'Region could not be created');
 		}
 
         // add log
-        \LogActivity::addToLog('add ingredient');
+        \LogActivity::addToLog('add region');
 
-		return redirect('admin/ingredients');
+		return redirect('admin/regions');
     }
 
     /**
@@ -87,11 +89,13 @@ class IngredientController extends Controller
      */
     public function edit($id)
     {
-        $ingredient = Ingredient::findOrFail($id);
+        $region = Region::findOrFail($id);
 
-		$this->data['ingredient'] = $ingredient;
+		$this->data['region'] = $region;
+        $this->data['provinces'] = $this->getProvinces();
+        $this->data['cities'] = isset($region->province_id) ? $this->getCities($region->province_id) : [];
 
-		return view('admin.ingredients.form', $this->data);
+		return view('admin.regions.form', $this->data);
     }
 
     /**
@@ -101,16 +105,16 @@ class IngredientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(IngredientRequest $request, $id)
+    public function update(RegionRequest $request, $id)
     {
         $params = $request->except('_token');		
 
-		$ingredient = Ingredient::findOrFail($id);
-		if ($ingredient->update($params)) {
-			Session::flash('success', 'Ingredient has been updated.');
+		$region = Region::findOrFail($id);
+		if ($region->update($params)) {
+			Session::flash('success', 'Region has been updated.');
 		}
 
-		return redirect('admin/ingredients');
+		return redirect('admin/regions');
     }
 
     /**
@@ -121,12 +125,12 @@ class IngredientController extends Controller
      */
     public function destroy($id)
     {
-        $ingredient  = Ingredient::findOrFail($id);
+        $region  = Region::findOrFail($id);
 
-		if ($ingredient->delete()) {
-			Session::flash('success', 'Ingredient has been deleted');
+		if ($region->delete()) {
+			Session::flash('success', 'Region has been deleted');
 		}
 
-		return redirect('admin/ingredients');
+		return redirect('admin/regions');
     }
 }

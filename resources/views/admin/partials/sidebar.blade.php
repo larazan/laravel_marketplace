@@ -90,7 +90,11 @@
 								<span class="nav-text">Shops List</span>
 								</a>
 							</li>
-							
+							<li class="{{ ($currentAdminSubMenu == 'region') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/regions')}}">
+								<span class="nav-text">Region List</span>
+								</a>
+							</li>
 							
 						</div>
 					</ul>

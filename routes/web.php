@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LogActivityController;
 use App\Http\Controllers\Admin\ProductReviewController as ProductReview;
 use App\Http\Controllers\Admin\IngredientController;
+use App\Http\Controllers\Admin\RegionController;
 
 
 use App\Http\Controllers\CkeditorFileUploadController;
@@ -241,6 +242,7 @@ Route::group(
 		Route::resource('articles', ArticleController::class);
         Route::resource('category_articles', CategoryArticleController::class);
         Route::resource('ingredients', IngredientController::class);
+        Route::resource('regions', RegionController::class);
 	
 		Route::get('subscribes', [SubscribeController::class, 'index']);
 
