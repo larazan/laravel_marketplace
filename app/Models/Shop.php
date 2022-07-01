@@ -158,6 +158,11 @@ class Shop extends Model
         return $this->hasMany(Product::class, 'shop_id');
     }
 
+	public function capitals()
+	{
+		return $this->belongsToMany(Capital::class, 'shop_capitals');
+	}
+
 	public function loadShop($start, $length, $slug='', $count=false)
 	{
 		$result = DB::table(DB::raw('products p'))

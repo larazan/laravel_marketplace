@@ -51,7 +51,7 @@
                             </tbody>
                         </table>
                         <div class="pagination-style">
-                        {{ $products->links() }}
+                        {{ $products->links('admin.partials.paginator') }}
                         </div>
                     </div>
                     

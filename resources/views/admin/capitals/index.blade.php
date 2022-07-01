@@ -6,49 +6,35 @@
             <div class="col-lg-12">
                 <div class="card card-default">
                     <div class="card-header card-header-border-bottom">
-                        <h2>Slides</h2>
+                        <h2>Cpitals</h2>
                     </div>
                     <div class="card-body">
                         @include('admin.partials.flash')
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <th>#</th>
-                                <th>Title</th>
-                                <th>Image</th>
-                                <th>Position</th>
+                                <th>Minimum</th>
+                                <th>Maximum</th>
+                                <th>Rank</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                            @php
+                                @php
                                 $i = 1
                                 @endphp
-                                @forelse ($slides as $slide)
+                                @forelse ($capitals as $capital)
                                     <tr>    
-                                    <td>{{ $i++ }}</td>
-                                        <td>{{ $slide->title }}</td>
-                                        <td><img src="{{ asset('storage/'. $slide->small) }}" /></td>
-                                        <td>
-                                            @if ($slide->prevSlide())
-                                                <a href="{{ url('admin/slides/'. $slide->id .'/up') }}">up</a>
-                                            @else
-                                                up
-                                            @endif
-                                             | 
-                                            @if ($slide->nextSlide())
-                                                <a href="{{ url('admin/slides/'. $slide->id .'/down') }}">down</a>
-                                            @else
-                                                down
-                                            @endif
-                                        </td>
-                                        <td>{{ $slide->status }}</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ \General::priceFormat($capital->mini) }}</td>
+                                        <td>{{ \General::priceFormat($capital->maxi) }}</td>
+                                        <td>{{ $capital->rank }}</td>
+                                        <td>{{ $capital->status }}</td>
                                         <td>
                                             
-                                                <a href="{{ url('admin/slides/'. $slide->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
+                                                <a href="{{ url('admin/capitals/'. $capital->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
                                             
-
-                                            
-                                                {!! Form::open(['url' => 'admin/slides/'. $slide->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
+                                                {!! Form::open(['url' => 'admin/capitals/'. $capital->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
                                                 {!! Form::hidden('_method', 'DELETE') !!}
                                                 {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
                                                 {!! Form::close() !!}
@@ -60,16 +46,17 @@
                                         <td colspan="6">No records found</td>
                                     </tr>
                                 @endforelse
+                                
                             </tbody>
                         </table>
                         <div class="pagination-style">
-                        {{ $slides->links('admin.partials.paginator') }}
+                        {{ $capitals->links('admin.partials.paginator') }}
                         </div>
                     </div>
 
                     
                         <div class="card-footer text-right">
-                            <a href="{{ url('admin/slides/create') }}" class="btn btn-primary">Add New</a>
+                            <a href="{{ url('admin/capitals/create') }}" class="btn btn-primary">Add New</a>
                         </div>
                     
                 </div>

@@ -48,7 +48,7 @@
                             </tbody>
                         </table>
                         <div class="pagination-style">
-                        {{ $regions->links() }}
+                        {{ $regions->links('admin.partials.paginator') }}
                         </div>
                     </div>
 

@@ -79,7 +79,7 @@
                 <li  class="has-sub {{ ($currentAdminMenu == 'marketplace') ? 'expand active' : ''}}">
 					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#shop"
 						aria-expanded="false" aria-controls="article">
-						<i class="mdi mdi-newspaper"></i>
+						<i class="mdi mdi-home"></i>
 						<span class="nav-text">Shops</span> <b class="caret"></b>
 					</a>
 					<ul  class="collapse {{ ($currentAdminMenu == 'marketplace') ? 'show' : ''}}"  id="shop"
@@ -92,7 +92,36 @@
 							</li>
 							<li class="{{ ($currentAdminSubMenu == 'region') ? 'active' : ''}}">
 								<a class="sidenav-item-link" href="{{ url('admin/regions')}}">
-								<span class="nav-text">Region List</span>
+								<span class="nav-text">Region Rank</span>
+								</a>
+							</li>
+							<li class="{{ ($currentAdminSubMenu == 'capital') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/capitals')}}">
+								<span class="nav-text">Capital Rank</span>
+								</a>
+							</li>
+							
+						</div>
+					</ul>
+				</li>
+
+				<li  class="has-sub {{ ($currentAdminMenu == 'calculate') ? 'expand active' : ''}}">
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#article"
+						aria-expanded="false" aria-controls="article">
+						<i class="mdi mdi-table"></i>
+						<span class="nav-text">Calculate</span> <b class="caret"></b>
+					</a>
+					<ul  class="collapse {{ ($currentAdminMenu == 'calculate') ? 'show' : ''}}"  id="article"
+						data-parent="#sidebar-menu">
+						<div class="sub-menu">
+							<li class="{{ ($currentAdminSubMenu == 'calculate') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/calculates')}}">
+								<span class="nav-text">Calculate</span>
+								</a>
+							</li>
+							<li class="{{ ($currentAdminSubMenu == 'clustering') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/clustering')}}">
+								<span class="nav-text">Clustering</span>
 								</a>
 							</li>
 							
@@ -239,7 +268,7 @@
 				<li  class="has-sub {{ ($currentAdminMenu == 'setting') ? 'active' : ''}}">
 					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#setting"
 						aria-expanded="false" aria-controls="article">
-						<i class="mdi mdi-newspaper"></i>
+						<i class="mdi mdi-wrench"></i>
 						<span class="nav-text">Setting</span> <b class="caret"></b>
 					</a>
 					<ul  class="collapse {{ ($currentAdminMenu == 'setting') ? 'show' : ''}}"  id="setting"

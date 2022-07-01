@@ -49,7 +49,7 @@
                             </tbody>
                         </table>
                         <div class="pagination-style">
-                        {{ $subscribes->links() }}
+                        {{ $subscribes->links('admin.partials.paginator') }}
                         </div>
                         
                     </div>

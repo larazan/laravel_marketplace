@@ -46,7 +46,7 @@
                             </tbody>
                         </table>
                         <div class="pagination-style">
-                        {{ $ingredients->links() }}
+                        {{ $ingredients->links('admin.partials.paginator') }}
                         </div>
                     </div>
 

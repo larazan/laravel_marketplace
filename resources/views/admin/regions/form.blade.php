@@ -33,7 +33,7 @@
 						</div>
 
                         <div class="form-group">
-                            {!! Form::label('city', 'Kota', ['class' => 'form-label']) !!}
+                            {!! Form::label('city', 'Kota / Kabupaten', ['class' => 'form-label']) !!}
                             {!! Form::select('city_id', $cities, null, ['class' => 'form-control', 'id' => 'user-city-id', 'placeholder' => '- Please Select -', 'required' => true])!!}
                             @error('city_id')
                             <span class="invalid-feedback" role="alert">
