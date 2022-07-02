@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Favorite;
 use App\Models\Product;
+use App\Models\Capital;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -183,6 +184,16 @@ class FavoriteController extends Controller
         $enc = md5($ord);
         $now = Carbon::now();
 
-        return $now;
+        $nomi = 1300000;
+        $r = 0;
+        $capitals = Capital::get();
+
+        foreach ($capitals as $capital) {
+            if (($nomi >= (int)$capital->mini) && ($nomi <= (int)$capital->maxi)) $r = (int)$capital->rank;
+        }
+
+        return $r;
+
+        // return $now;
     }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ShopRequest;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Shop;
+use App\Models\Capital;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 
@@ -40,6 +42,10 @@ class ShopController extends Controller
     public function create()
     {
         $this->data['shop'] = null;
+        $capitals = Capital::orderBy('rank', 'ASC')->get();
+
+        $this->data['capitals'] = $capitals;
+        $this->data['capitalID'] = null;
 
 		return view('admin.shops.form', $this->data);
     }
@@ -58,11 +64,22 @@ class ShopController extends Controller
         $params['description'] = $params['editor1'];
         $params['user_id'] = $request->user()->id;
 
-        if (Shop::create($params)) {
-            // var_dump($params);
-            Session::flash('success', 'Shop has been saved');
-            // $request->session()->flash('success', 'Difficulty has been saved!');
-        }
+        $shop = DB::transaction(
+			function () use ($params) {
+				$capitalId = $params['capital_id'];
+				$shop = Shop::create($params);
+				$shop->capitals()->sync($capitalId);
+
+				return $shop;
+			}
+		);
+
+		if ($shop) {
+			Session::flash('success', 'shop has been saved');
+		} else {
+			Session::flash('error', 'shop could not be saved');
+		}
+
         return redirect('admin/shops');
     }
 
@@ -87,10 +104,15 @@ class ShopController extends Controller
     {
         $shop = Shop::findOrFail($id);
         $shops = Shop::where('id', '!=', $id)->orderBy('name', 'DESC')->get();
+        $capitals = Capital::orderBy('rank', 'ASC')->get();
+
 
         $this->data['shops'] = $shops->toArray();
         $this->data['shop'] = $shop;
+        $this->data['capitals'] = $capitals;
         $this->data['editor1'] = $shop->description;
+        $this->data['capitalID'] = $shop->capitals->pluck('id');
+
         return view('admin.shops.form', $this->data);
     }
 
@@ -109,9 +131,23 @@ class ShopController extends Controller
         $params['user_id'] = $request->user()->id;
 
         $shop = Shop::findOrFail($id);
-        if ($shop->update($params)) {
-            Session::flash('success', 'Shop has been updated.');
-        }
+
+        $saved = false;
+		$saved = DB::transaction(
+			function () use ($shop, $params) {
+				$capitalId = $params['capital_id'];
+				$shop->update($params);
+				$shop->capitals()->sync($capitalId);
+
+				return true;
+			}
+		);
+
+		if ($saved) {
+			Session::flash('success', 'Shop has been saved');
+		} else {
+			Session::flash('error', 'Shop could not be saved');
+		}
 
         return redirect('admin/shops');
     }

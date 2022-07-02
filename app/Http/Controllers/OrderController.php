@@ -563,6 +563,7 @@ class OrderController extends Controller
 			// 'customer_company' => $params['company'],
 			'customer_address1' => $params['address1'],
 			// 'customer_address2' => $params['address2'],
+			'income_rank' => Keranjang::rank($grandTotal),
 			'customer_phone' => $params['phone'],
 			'customer_email' => $params['email'],
 			'customer_city_id' => $params['city_id'],

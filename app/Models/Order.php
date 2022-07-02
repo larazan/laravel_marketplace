@@ -49,7 +49,8 @@ class Order extends Model
 		'cancellation_note',
 		'opened',
 		'opened_cus',
-		'opened_shopper'
+		'opened_shopper',
+		'income_rank'
 	];
 
 	protected $appends = ['customer_full_name'];

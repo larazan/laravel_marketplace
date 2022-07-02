@@ -30,6 +30,15 @@
                                 {!! Form::label('description', 'Description') !!}
                                 {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'description']) !!}
                             </div>
+							<div class="form-group">
+                            {!! Form::label('capital', 'Capital') !!}
+							<select class="form-control" name="capital_id">
+								<option selected="selected" value="">-- Choose Capital --</option>
+								@foreach ($capitals as $capital)
+								<option value="{{ $capital->id }}" {{ $capitalID == $capital->id  ? 'selected' : ''}}>{{ \General::priceFormat($capital->mini) }} - {{ \General::priceFormat($capital->maxi) }}</option>
+								@endforeach
+							</select>
+						</div>
 						<div class="form-group">
 							{!! Form::label('status', 'Status') !!}
 							{!! Form::select('is_active', $statuses , null, ['class' => 'form-control', 'placeholder' => '-- Set Status --']) !!}

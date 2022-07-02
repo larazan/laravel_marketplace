@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Basket;
+use App\Models\Capital;
 
 class Keranjang
 {
@@ -288,5 +289,16 @@ class Keranjang
             return false;
         }
 
+    }
+
+    public static function rank($nomi)
+    {
+        $capitals = Capital::get();
+
+        foreach ($capitals as $capital) {
+            if (($nomi >= (int)$capital->mini) && ($nomi <= (int)$capital->maxi)) $r = (int)$capital->rank;
+        }
+
+        return $r;
     }
 }

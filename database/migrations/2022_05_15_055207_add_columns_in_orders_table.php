@@ -16,6 +16,7 @@ class AddColumnsInOrdersTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->integer('customer_id')->after('status');
 			$table->integer('shop_id')->after('customer_id');
+			$table->integer('income_rank')->after('grand_total');
 			$table->integer('opened')->after('shop_id')->default(0);
             $table->integer('opened_cus')->after('opened')->default(0);
             $table->integer('opened_shopper')->after('opened_cus')->default(0);
