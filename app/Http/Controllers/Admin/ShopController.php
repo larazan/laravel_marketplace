@@ -20,6 +20,7 @@ class ShopController extends Controller
         $this->data['currentAdminMenu'] = 'marketplace';
         $this->data['currentAdminSubMenu'] = 'shop';
         $this->data['statuses'] = Shop::STATUSES;
+        $this->data['banks'] = Shop::banks();
     }
 
     /**
@@ -102,9 +103,15 @@ class ShopController extends Controller
      */
     public function edit($id)
     {
+        if (empty($id)) {
+			return redirect('admin/shops/create');
+		}
+        
         $shop = Shop::findOrFail($id);
+        
         $shops = Shop::where('id', '!=', $id)->orderBy('name', 'DESC')->get();
         $capitals = Capital::orderBy('rank', 'ASC')->get();
+        // $capitals = Capital::pluck('mini', 'maxi', 'id');
 
 
         $this->data['shops'] = $shops->toArray();

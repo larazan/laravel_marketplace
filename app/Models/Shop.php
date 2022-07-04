@@ -160,8 +160,8 @@ class Shop extends Model
 
 	public function capitals()
 	{
-		return $this->belongsToMany(Capital::class, 'shop_capitals');
-	}
+        return $this->belongsToMany('App\Models\Capital', 'shop_capitals');
+    }
 
 	public function loadShop($start, $length, $slug='', $count=false)
 	{

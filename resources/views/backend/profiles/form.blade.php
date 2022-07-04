@@ -14,6 +14,7 @@
                         <span class="spinner"></span>
                     </div>
                 </div>
+                @include('admin.partials.flash', ['$errors' => $errors])
                 <div class="col-lg-9">
                     <section class="content-body p-xl-4">
                         {!! Form::model($user, ['method' => 'PUT', 'route' => ['updateProfile'] ]) !!}

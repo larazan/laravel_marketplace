@@ -37,6 +37,6 @@ class Capital extends Model
 
     public function shops()
 	{
-		return $this->belongsToMany(Shop::class, 'shop_capitals');
+		return $this->belongsToMany('App\Models\Shop', 'shop_capitals');
 	}
 }

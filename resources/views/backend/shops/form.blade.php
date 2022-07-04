@@ -9,7 +9,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row gx-5">
-                
+            @include('admin.partials.flash', ['$errors' => $errors])
                 <div class="col-lg-9">
                     <section class="content-body p-xl-4">
                         
