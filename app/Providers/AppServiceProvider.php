@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        date_default_timezone_set('Asia/Jakarta');
+        config(['app.locale' => 'id']);
+	    Carbon::setLocale('id');
+
         Str::macro('readDuration', function(...$text) {
             // $totalWords = str_word_count(implode(" ", $text));
             // $minutesToRead = round($totalWords / 200);
@@ -40,8 +44,6 @@ class AppServiceProvider extends ServiceProvider
             return ($minutes > 1) ? $minutes . ' minutes' : $minutes . ' minute';
         });
 
-        // Carbon::setLocale(config('app.locale'));
-        // config(['app.locale' => 'id']);
-	    Carbon::setLocale('id');
+        
     }
 }

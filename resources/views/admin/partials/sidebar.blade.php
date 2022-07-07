@@ -106,12 +106,12 @@
 				</li>
 
 				<li  class="has-sub {{ ($currentAdminMenu == 'calculate') ? 'expand active' : ''}}">
-					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#article"
-						aria-expanded="false" aria-controls="article">
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#calculate"
+						aria-expanded="false" aria-controls="calculate">
 						<i class="mdi mdi-table"></i>
 						<span class="nav-text">Calculate</span> <b class="caret"></b>
 					</a>
-					<ul  class="collapse {{ ($currentAdminMenu == 'calculate') ? 'show' : ''}}"  id="article"
+					<ul  class="collapse {{ ($currentAdminMenu == 'calculate') ? 'show' : ''}}"  id="calculate"
 						data-parent="#sidebar-menu">
 						<div class="sub-menu">
 							<li class="{{ ($currentAdminSubMenu == 'calculate') ? 'active' : ''}}">

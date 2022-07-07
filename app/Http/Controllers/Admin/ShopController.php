@@ -30,7 +30,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $this->data['shops'] = Shop::orderBy('name', 'DESC')->paginate(10);
+        $this->data['shops'] = Shop::orderBy('id', 'ASC')->paginate(10);
 
         return view('admin.shops.index', $this->data);
     }
@@ -130,12 +130,14 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ShopRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $params = $request->except('_token');
-        $params['slug'] = Str::slug($params['name']);
-        $params['description'] = $params['editor1'];
-        $params['user_id'] = $request->user()->id;
+        // dd($params);
+
+        // $params['slug'] = Str::slug($params['name']);
+        // $params['description'] = $params['editor1'];
+        // $params['user_id'] = $request->user()->id;
 
         $shop = Shop::findOrFail($id);
 

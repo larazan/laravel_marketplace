@@ -29,7 +29,7 @@
                                     <!-- col .// -->
                                     <div class="col-6 mb-3">
                                         {!! Form::label('last_name', 'Nama Belakang', ['class' => 'form-label']) !!}
-                                        {!! Form::text('last_name', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Nama Belakang']) !!}
+                                        {!! Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => 'Nama Belakang']) !!}
                                         @if ($errors->has('last_name')) <p class="help-block">{{ $errors->first('last_name') }}</p> @endif
                                     </div>
                                     <!-- col .// -->

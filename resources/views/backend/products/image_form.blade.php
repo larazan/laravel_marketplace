@@ -10,7 +10,7 @@
             </div>
         </div>
         @include('backend.partials.flash', ['$errors' => $errors])
-        <div class="col-lg-3">
+        <div class="col-lg-6">
             <div class="card mb-4">
                 <div class="card-header">
                     <h4>Media</h4>

@@ -3,68 +3,78 @@
 @section('content')
 
 <section class="content-main">
-    <div class="content-header">
-        <div>
-            <h2 class="content-title card-title">Gambar Produk</h2>
-            <!-- <p>Lorem ipsum dolor sit amet.</p> -->
-        </div>
-        <div>
-            <a href="{{ url('user/products/'.$productID.'/add-image') }}" class="btn btn-primary btn-sm rounded">Tambah Gambar</a>
-        </div>
-    </div>
-    @include('backend.partials.flash')
-    <div class="card mb-4">
-        <!-- <header class="card-header">
-            
-            @include('backend.products.menu')
-            
-        </header> -->
-        <!-- card-header end// -->
-        <div class="card-body">
-        <div class="row gx-3">
-                    @include('backend.products.menu')
-        </div>
-        @forelse ($productImages as $image)
-            <article class="itemlist">
-                <div class="row align-items-center">
-                    
-                    <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                        <a class="itemside" href="#">
-                            <div class="left">
-                                @if ($image->path)
-                                    <img src="{{ asset('storage/'.$image->path) }}" class="img-sm img-thumbnail" alt="Item" />
-                                @else
-                                    <img src="{{ URL::asset('dashboard/assets/imgs/items/1.jpg') }}" class="img-sm img-thumbnail" alt="Item" />
-                                @endif
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div class="col-lg-1 col-sm-2 col-4 col-date">
-                        <span>{{ $image->created_at }}</span>
-                    </div>
-                    <div class="col-lg-2 col-sm-2 col-4 col-action text-end">                        
-                        {!! Form::open(['url' => 'user/products/images/'. $image->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
-                        {!! Form::hidden('_method', 'DELETE') !!}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-sm font-sm btn-danger rounded']) !!}
-                        {!! Form::close() !!}
-                    </div>
+   
+    <div class="row">
+        <div class="col-9">
+            <div class="content-header">
+                <h2 class="content-title">Gambar Produk</h2>
+                <div>
+                    <a href="{{ url('user/products/'.$productID.'/add-image') }}" class="btn btn-primary btn-sm rounded">Tambah Gambar</a>
                 </div>
-                <!-- row .// -->
-            </article>
-            <!-- itemlist  .// -->
-            @empty
-                <article>
-                    <div>No records found</div>
-                </article>
-            @endforelse
-            <!-- itemlist  .// -->
-            
+            </div>
         </div>
-        <!-- card-body end// -->
-        
+        @include('backend.partials.flash')
+        <div class="col-9">
+            <div class="card mb-4">
+
+                <div class="card-body">
+                    <div class="row gx-3">
+                        @include('backend.products.menu')
+                        <div class="col-lg-9">
+                            <section class="content-body p-xl-4">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th scope="col">Gambar</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col" class="text-end">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($productImages as $image)
+                                            <tr>
+                                                <td>1</td>
+                                                <td>
+                                                    @if ($image->path)
+                                                    <img src="{{ asset('storage/'.$image->path) }}" class="img-sm img-thumbnail" alt="Item" />
+                                                    @else
+                                                    <img src="{{ URL::asset('dashboard/assets/imgs/items/1.jpg') }}" class="img-sm img-thumbnail" alt="Item" />
+                                                    @endif
+                                                </td>
+                                                <td>{{ $image->created_at }}</td>
+                                                <td class="text-end">
+                                                    {!! Form::open(['url' => 'user/products/images/'. $image->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
+                                                    {!! Form::hidden('_method', 'DELETE') !!}
+                                                    {!! Form::submit('Delete', ['class' => 'btn btn-sm font-sm btn-danger rounded']) !!}
+                                                    {!! Form::close() !!}
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            <article>
+                                                <tr>
+                                                    <td colspan="4">No records found</td>
+                                                </tr>
+                                            </article>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <a href="{{ url('user/products') }}" class="btn btn-secondary btn-default">Kembali</a>
+
+                            </section>
+                        </div>
+
+                    </div>
+                    <!-- card-body end// -->
+                </div>
+
+            </div>
+        </div>
     </div>
-    <a href="{{ url('user/products') }}" class="btn btn-secondary btn-default">Kembali</a>
+
     <!-- card end// -->
 </section>
 

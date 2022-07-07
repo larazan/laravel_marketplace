@@ -192,8 +192,8 @@ class FavoriteController extends Controller
             if (($nomi >= (int)$capital->mini) && ($nomi <= (int)$capital->maxi)) $r = (int)$capital->rank;
         }
 
-        return $r;
+        // return $r;
 
-        // return $now;
+        return $now;
     }
 }

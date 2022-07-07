@@ -31,8 +31,8 @@ class ProductRequest extends FormRequest
         if ($this->method() == 'PUT')
         {
             $type = '';
-            $sku = 'required|unique:products,sku,'. $this->get('id');
-            $name = 'required|unique:products,name,'. $this->get('id');
+            $sku = 'required';
+            $name = 'required';
             $status = 'required';
             
             if ($this->get('type') == 'simple') {
@@ -42,8 +42,8 @@ class ProductRequest extends FormRequest
             }
         } else {
             $type = 'required';
-            $sku = 'required|unique:products,sku';
-            $name = 'required|unique:products,name';
+            $sku = 'required';
+            $name = 'required';
         }
 
         return [
