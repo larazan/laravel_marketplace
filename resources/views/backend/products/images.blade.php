@@ -33,9 +33,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @php
+                                        $i = 1
+                                        @endphp
                                             @forelse ($productImages as $image)
                                             <tr>
-                                                <td>1</td>
+                                                <td>{{ $i++ }}</td>
                                                 <td>
                                                     @if ($image->path)
                                                     <img src="{{ asset('storage/'.$image->path) }}" class="img-sm img-thumbnail" alt="Item" />

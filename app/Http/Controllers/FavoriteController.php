@@ -16,6 +16,8 @@ use Illuminate\Support\Carbon;
 use App\Mail\testEmail;
 use Illuminate\Support\Facades\Mail;
 
+use App\Helpers\Keranjang;
+
 class FavoriteController extends Controller
 {
     /**
@@ -184,7 +186,7 @@ class FavoriteController extends Controller
         $enc = md5($ord);
         $now = Carbon::now();
 
-        $nomi = 1300000;
+        $nomi = 2300000;
         $r = 0;
         $capitals = Capital::get();
 
@@ -194,6 +196,8 @@ class FavoriteController extends Controller
 
         // return $r;
 
-        return $now;
+        $rank = Keranjang::rank($nomi);
+
+        return $rank;
     }
 }
