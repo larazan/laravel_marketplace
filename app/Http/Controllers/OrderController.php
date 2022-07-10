@@ -52,6 +52,7 @@ class OrderController extends Controller
 									baskets.is_checked, 
 									products.name,
 									products.price,
+									products.weight,
 									product_images.small as gambar, 
 									shops.name as nama_toko,
 									users.city_id
@@ -111,11 +112,6 @@ class OrderController extends Controller
 	 */
 	public function checkout()
 	{
-		// if (\Cart::isEmpty()) {
-		// 	return redirect('carts');
-		// }
-
-		// \Cart::removeConditionsByType('shipping');
 		$items = Basket::select(DB::raw("baskets.product_id, 
 									baskets.id as id_basket,
 									baskets.user_id, 
@@ -123,8 +119,10 @@ class OrderController extends Controller
 									baskets.is_checked, 
 									products.name,
 									products.price,
+									products.weight,
 									product_images.small as gambar, 
-									shops.name as nama_toko
+									shops.name as nama_toko,
+									users.city_id
 									"))
 						->where('baskets.user_id', Auth::user()->id)
 						->leftJoin('products', 'products.id', '=', 'baskets.product_id' )
@@ -133,6 +131,7 @@ class OrderController extends Controller
 						->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
 						->leftJoin('brands', 'brands.id', '=', 'product_brands.brand_id')
 						->leftJoin('shops', 'shops.user_id', '=', 'products.user_id')
+						->leftJoin('users', 'users.id', '=', 'products.user_id')
 						->leftJoin(DB::raw('(SELECT MAX(id) as max_id, product_id FROM product_images GROUP BY product_id  )
 							img'), 
 						function($join)
@@ -144,9 +143,10 @@ class OrderController extends Controller
 						->where('baskets.is_checked', 1)
 						->get();
 
-		$this->_updateTax();
-
+		$this->_updateTax();				
 		$this->data['orders'] = $items;
+		// 
+
 		$this->data['totalWeight'] = $this->_getTotalWeight() / 1000;
 		$this->data['tax'] = $this->_getTax();
 
@@ -526,8 +526,8 @@ class OrderController extends Controller
 			// $product_id = $item->associatedModel->id;
 			$product_id = $item->product_id;
 		}
-		$product = Product::findOrFail($product_id)->first();
-		$shop_id = $product->shop->id;
+		$product = Product::active()->where('id', $product_id)->first();
+		$shop_id = $product->shop_id;
 		// $shop_id = $params['shop_id'];
 
 		$baseTotalPrice = Keranjang::subTotalChecked();   // \Cart::getSubTotal();
@@ -563,7 +563,7 @@ class OrderController extends Controller
 			// 'customer_company' => $params['company'],
 			'customer_address1' => $params['address1'],
 			// 'customer_address2' => $params['address2'],
-			'income_rank' => Keranjang::rank($grandTotal),
+			'income_rank' => Keranjang::rank($baseTotalPrice),
 			'customer_phone' => $params['phone'],
 			'customer_email' => $params['email'],
 			'customer_city_id' => $params['city_id'],

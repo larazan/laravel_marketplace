@@ -66,7 +66,7 @@
                                 <div class="col-5">
                                     <p class="mb-0">{{ $item->name }}</p>
                                     <p class="mb-0">
-                                        <small>(Boxes: 1 Box, Weight: 4KG)</small>
+                                        <small>(Berat: {{$item->weight}} kg)</small>
                                     </p>
                                 </div>
                                 <div class="col-4 text-end">

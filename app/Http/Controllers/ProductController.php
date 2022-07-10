@@ -243,9 +243,10 @@ class ProductController extends Controller
 	 */
 	public function show($slug)
 	{
+		$arr = explode("_", $slug); 
 		$limit = 3;
 		$products = Product::active()->limit($limit)->get();
-		$product = Product::active()->where('slug', $slug)->first();
+		$product = Product::active()->where('slug', $arr[0])->where('rand_id', $arr[1])->first();
 
 		if (!$product) {
 			return redirect('products');
@@ -291,7 +292,8 @@ class ProductController extends Controller
 	 */
 	public function quickView($slug)
 	{
-		$product = Product::active()->where('slug', $slug)->firstOrFail();
+		$arr = explode("_", $slug);
+		$product = Product::active()->where('slug', $arr[0])->where('rand_id', $arr[1])->firstOrFail();
 		$product_image = ProductImage::where('product_id', $product->id)->get();
 
 		// if ($product->configurable()) {
@@ -378,7 +380,8 @@ class ProductController extends Controller
 	{
 		// $user = Auth::user();
 		// dd($user); die();
-		$product = Product::active()->where('slug', $slug)->firstOrFail();
+		$arr = explode("_", $slug);
+		$product = Product::active()->where('slug', $arr[0])->where('rand_id', $arr[1])->firstOrFail();
 		$product_image = ProductImage::where('product_id', $product->id)->get();
 
 		return $this->loadTheme('products.detail_produk', compact("product", "product_image"));
@@ -393,7 +396,7 @@ class ProductController extends Controller
 
 	private function _getShop($shop_id)
 	{
-		$shop = Shop::findOrFail($shop_id)->first();
+		$shop = Shop::active()->where('id', $shop_id)->first();
 
 		return $shop;
 	}

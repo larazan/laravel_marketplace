@@ -54,14 +54,14 @@
                 </p>
                 <p>
                     <span class="d-inline-block">Metode pembayaran:</span>
-                    <span class="order-customer-info-meta">Cash on delivery (COD)</span>
+                    <span class="order-customer-info-meta">Shipping</span>
                 </p>
                 <p>
                     <span class="d-inline-block">Status Pembayaran:</span>
                     <span class="order-customer-info-meta" style="text-transform: uppercase;"><span class="label-warning status-label">{{ $order->payment_status }}</span></span>
                 </p>
             </div>
-            <a href="https://nest.botble.com" class="btn payment-checkout-btn"> Continue shopping </a>
+            <a href="{{ url('/user/dashboard') }}" class="btn payment-checkout-btn"> Continue shopping </a>
         </div>
 
         <div class="col-lg-5 col-md-6 right">

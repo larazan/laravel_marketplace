@@ -17,68 +17,74 @@
         <div class="row">
             <div class="col-xl-10 col-lg-12 m-auto">
                 <div class="product-detail accordion-detail">
-                
-                    <div class="row mb-50 mt-30">
-                    @include('frontend.partials.flash')
-                        <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
-                        <div class="detail-gallery">
-                                        <span class="zoom-icon"><i class="fi-rs-search"></i></span>
-                                        <!-- MAIN SLIDES -->
-                                        <div class="product-image-slider">
-                                            @php
-                                            $i = 1
-                                            @endphp
-                                            @forelse ($product->productImages as $image)
-                                            @if ($image->large && $image->extra_large)
-                                            <figure class="border-radius-10">
-                                                <img src="{{ asset('storage/'.$image->large) }}" alt="{{ $product->name }}" />
-                                            </figure>
-                                            @else
-                                            <figure class="border-radius-10">
-                                                <img src="assets/imgs/shop/product-16-2.jpg" alt="product image" />
-                                            </figure>
-                                            @endif
 
-                                            @php
-                                            $i++
-                                            @endphp
-                                            @empty
-                                            No image found!
-                                            @endforelse
-                                        </div>
-                                        <!-- THUMBNAILS -->
-                                        <div class="slider-nav-thumbnails">
-                                            @php
-                                            $i = 1
-                                            @endphp
-                                            @forelse ($product->productImages as $image)
-                                            <div>
-                                                @if ($image->small)
-                                                <img src="{{ asset('storage/'.$image->small) }}" alt="{{ $product->name }}" />
-                                                @else
-                                                <img src="assets/imgs/shop/thumbnail-3.jpg" alt="product image" />
-                                                @endif
-                                            </div>
-                                            @php
-                                            $i++
-                                            @endphp
-                                            @empty
-                                            No image found!
-                                            @endforelse
-                                        </div>
+                    <div class="row mb-50 mt-30">
+                        @include('frontend.partials.flash')
+                        <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                            <div class="detail-gallery">
+                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                <!-- MAIN SLIDES -->
+                                <div class="product-image-slider">
+                                    @php
+                                    $i = 1
+                                    @endphp
+                                    @forelse ($product->productImages as $image)
+                                    @if ($image->large && $image->extra_large)
+                                    <figure class="border-radius-10">
+                                        <img src="{{ asset('storage/'.$image->large) }}" alt="{{ $product->name }}" />
+                                    </figure>
+                                    @else
+                                    <figure class="border-radius-10">
+                                        <img src="assets/imgs/shop/product-16-2.jpg" alt="product image" />
+                                    </figure>
+                                    @endif
+
+                                    @php
+                                    $i++
+                                    @endphp
+                                    @empty
+                                    No image found!
+                                    @endforelse
+                                </div>
+                                <!-- THUMBNAILS -->
+                                <div class="slider-nav-thumbnails">
+                                    @php
+                                    $i = 1
+                                    @endphp
+                                    @forelse ($product->productImages as $image)
+                                    <div>
+                                        @if ($image->small)
+                                        <img src="{{ asset('storage/'.$image->small) }}" alt="{{ $product->name }}" />
+                                        @else
+                                        <img src="assets/imgs/shop/thumbnail-3.jpg" alt="product image" />
+                                        @endif
                                     </div>
-                                    <!-- End Gallery -->
+                                    @php
+                                    $i++
+                                    @endphp
+                                    @empty
+                                    No image found!
+                                    @endforelse
+                                </div>
+                            </div>
+                            <!-- End Gallery -->
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="detail-info pr-30 pl-30">
-                                <span class="stock-status out-stock"> Sale Off </span>
-                                <h2 class="title-detail">{{ $product->name }}</h2>
+                                <!-- <span class="stock-status out-stock"> Sale Off </span> -->
+                                <h2 class="title-detail">{{ $product->name }} </h2>
                                 <div class="product-detail-rating">
                                     <div class="product-rate-cover text-end">
+
+                                        @php
+                                        $rate = count($reviews) / 5 * 100
+                                        @endphp
+
                                         <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width: 90%"></div>
+                                            <div class="product-rating" style="width: {{{$rate}}}%"></div>
                                         </div>
-                                        <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+
+                                        <span class="font-small ml-5 text-muted"> ({{ count($reviews) }} reviews)</span>
                                     </div>
                                 </div>
                                 <div class="clearfix product-price-cover">
@@ -94,64 +100,64 @@
                                     <p class="font-lg">{{ \Illuminate\Support\Str::words($product->description, '25') }}.</p>
                                 </div>
                                 <form id="shopForm">
-					                    {{ Form::hidden('product_id', $product->id) }}
-					                    {{ Form::hidden('price', $product->price) }}
+                                    {{ Form::hidden('product_id', $product->id) }}
+                                    {{ Form::hidden('price', $product->price) }}
 
-                                        @if ($product->type == 'configurable')
-                                        <div class="attr-detail attr-size mb-30">
-                                            <strong class="mr-10">Size: </strong>
-                                            {!! Form::select('size', $sizes , null, ['class' => 'select', 'placeholder' => '- Please Select -', 'required' => true]) !!}
-                                            <!-- <ul class="list-filter size-filter font-small">
+                                    @if ($product->type == 'configurable')
+                                    <div class="attr-detail attr-size mb-30">
+                                        <strong class="mr-10">Size: </strong>
+                                        {!! Form::select('size', $sizes , null, ['class' => 'select', 'placeholder' => '- Please Select -', 'required' => true]) !!}
+                                        <!-- <ul class="list-filter size-filter font-small">
                                                 <li><a href="#">50g</a></li>
                                                 <li class="active"><a href="#">60g</a></li>
                                                 <li><a href="#">80g</a></li>
                                                 <li><a href="#">100g</a></li>
                                                 <li><a href="#">150g</a></li>
                                             </ul> -->
-                                        </div>
-                                        <div class="attr-detail attr-size mb-30">
-                                            <strong class="mr-10">Color: </strong>
-                                            {!! Form::select('color', $colors , null, ['class' => 'select', 'placeholder' => '- Please Select -', 'required' => true]) !!}
-                                            <!-- <ul class="list-filter size-filter font-small">
+                                    </div>
+                                    <div class="attr-detail attr-size mb-30">
+                                        <strong class="mr-10">Color: </strong>
+                                        {!! Form::select('color', $colors , null, ['class' => 'select', 'placeholder' => '- Please Select -', 'required' => true]) !!}
+                                        <!-- <ul class="list-filter size-filter font-small">
                                                 <li><a href="#">50g</a></li>
                                                 <li class="active"><a href="#">60g</a></li>
                                                 <li><a href="#">80g</a></li>
                                                 <li><a href="#">100g</a></li>
                                                 <li><a href="#">150g</a></li>
                                             </ul> -->
-                                        </div>
-                                        @endif
-                                       
-                                        <div class="detail-extralink mb-50">
-                                            <div class="">
+                                    </div>
+                                    @endif
+
+                                    <div class="detail-extralink mb-50">
+                                        <div class="">
                                             {!! Form::number('qty', 1, ['class' => 'form-control cart-plus-minus-box qty-val qty-input', 'id' => 'product-quantity', 'placeholder' => 'qty', 'min' => 1]) !!}
-                                                <!-- <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                            <!-- <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
                                                 <span class="qty-val">1</span>
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a> -->
-                                            </div>
-                                            <div class="product-extra-link2">
-                                                <button type="button" class="button button-add-to-cart" onclick="save()"><i class="fi-rs-shopping-cart"></i>Beli</button>
-                                                <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                                <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                            </div>
                                         </div>
+                                        <div class="product-extra-link2">
+                                            <button type="button" class="button button-add-to-cart" onclick="save()"><i class="fi-rs-shopping-cart"></i>Beli</button>
+                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+                                        </div>
+                                    </div>
                                 </form>
-                                        <div class="font-xs">
-                                            <ul class="mr-50 float-start">
-                                                <!-- <li class="mb-5">Type: <span class="text-brand"></span></li> -->
-                                                <!-- <li class="mb-5">MFG:<span class="text-brand"> Jun 4.2021</span></li> -->
-                                                <!-- <li>LIFE: <span class="text-brand">70 days</span></li> -->
-                                            </ul>
-                                            <ul class="float-start">
-                                                <li class="mb-5">SKU: <a href="#">{{ $product->sku }}</a></li>
-                                                <li class="mb-5">Kategori: 
-                                                    @foreach ($product->categories as $category)
-                                                    <a href="{{ url('products?category='. $category->slug ) }}" rel="tag">{{ $category->name }}</a>, 
-                                                    @endforeach
-                                                </li>
-                                                <li>Stok:<span class="in-stock text-brand ml-5">{{ $product->productInventory->qty ?? '' }} Barang Tersedia</span></li>
-                                            </ul>
-                                        </div>
+                                <div class="font-xs">
+                                    <ul class="mr-50 float-start">
+                                        <!-- <li class="mb-5">Type: <span class="text-brand"></span></li> -->
+                                        <!-- <li class="mb-5">MFG:<span class="text-brand"> Jun 4.2021</span></li> -->
+                                        <!-- <li>LIFE: <span class="text-brand">70 days</span></li> -->
+                                    </ul>
+                                    <ul class="float-start">
+                                        <li class="mb-5">SKU: <a href="#">{{ $product->sku }}</a></li>
+                                        <li class="mb-5">Kategori:
+                                            @foreach ($product->categories as $category)
+                                            <a href="{{ url('products?category='. $category->slug ) }}" rel="tag">{{ $category->name }}</a>,
+                                            @endforeach
+                                        </li>
+                                        <li>Stok:<span class="in-stock text-brand ml-5">{{ $product->productInventory->qty ?? '' }} Barang Tersedia</span></li>
+                                    </ul>
+                                </div>
                             </div>
                             <!-- Detail Info -->
                         </div>
@@ -175,7 +181,7 @@
                             <div class="tab-content shop_info_tab entry-main-content">
                                 <div class="tab-pane fade show active" id="Description">
                                     <div class="">
-                                    {{ $product->description }}
+                                        {{ $product->description }}
                                     </div>
                                 </div>
                                 <!-- <div class="tab-pane fade" id="Additional-info">
@@ -270,11 +276,11 @@
                                 </div> -->
                                 <div class="tab-pane fade" id="Vendor-info">
                                     <div class="vendor-logo d-flex mb-30">
-                                    @if ($shops->medium)
-                    <img src="{{ asset('storage/'.$shops->small) }}" alt="{{ $shops->name }}" />
-                    @else
-                    <img src="{{ asset('frontend/assets/imgs/vendor/vendor-17.png') }}" alt="{{ $shops->name }}" />
-                    @endif
+                                        @if ($shops->medium)
+                                        <img src="{{ asset('storage/'.$shops->small) }}" alt="{{ $shops->name }}" />
+                                        @else
+                                        <img src="{{ asset('frontend/assets/imgs/vendor/vendor-17.png') }}" alt="{{ $shops->name }}" />
+                                        @endif
                                         <div class="vendor-name ml-15">
                                             <h6>
                                                 <a href="vendor-details-2.html">{{ $shops->name }}</a>
@@ -299,7 +305,7 @@
                             </div>
                         </div>
                     </div>
-                   <!-- related produk -->
+                    <!-- related produk -->
 
                     <!-- end related produk -->
                 </div>
@@ -310,12 +316,12 @@
 @endsection
 
 @push('style')
-        <style>
-            #review-box {
-              display: none;
-            }
-        </style>
-    @endpush
+<style>
+    #review-box {
+        display: none;
+    }
+</style>
+@endpush
 
 @push('scripts')
 <script src="{{ asset('frontend/assets/js/shop2.js?v=4.0') }}"></script>
@@ -330,68 +336,65 @@
         // productDetails();
         // $(".product-image-slider").slick("setPosition");
         // $(".slider-nav-thumbnails").slick("setPosition");
-        
+
         console.log('kesini dong');
     });
 
-    function addCart(id)
-    {
+    function addCart(id) {
         var qty = $('.qty-val').text();
         Swal.fire(
-        'Tambahkan produk?',
-        'Ayo tambahkan produk kesayanganmu sekarang..',
-        'question'
+            'Tambahkan produk?',
+            'Ayo tambahkan produk kesayanganmu sekarang..',
+            'question'
         )
     }
 
-    function save()
-    {        
+    function save() {
         var form = $('#shopForm')[0];
         var data = new FormData(form);
         var id = $('[name="product_id"]').val();
 
         Swal.fire({
-        title: 'Tambahkan ke keranjag?',
-        text: "Ayo tambahkan produk kesayanganmu sekarang..",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya '
+            title: 'Tambahkan ke keranjag?',
+            text: "Ayo tambahkan produk kesayanganmu sekarang..",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya '
         }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                enctype: 'multipart/form-data',
-                url: "{{ url('carts/add-cart') }}",
-                data: data,
-                dataType: "JSON",
-                processData: false, // false, it prevent jQuery form transforming the data into a query string
-                contentType: false, 
-                cache: false,
-                timeout: 600000,
-                success: function (response) {
-                    if (response.code == 200) {
-                        toastr.success(response.data.message)
-                    }else{
-                        toastr.error(response.data.message)
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    enctype: 'multipart/form-data',
+                    url: "{{ url('carts/add-cart') }}",
+                    data: data,
+                    dataType: "JSON",
+                    processData: false, // false, it prevent jQuery form transforming the data into a query string
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function(response) {
+                        if (response.code == 200) {
+                            toastr.success(response.data.message)
+                        } else {
+                            toastr.error(response.data.message)
+                        }
+
+                    },
+                    error: function(e) {
+
                     }
-
-                },
-                error: function (e) {
-
-                }
-            });
-        }
+                });
+            }
         })
 
     }
 
-    function createReview()
-    {
+    function createReview() {
         var form = $('#commentForm')[0];
         var data = new FormData(form);
         var id = $('[name="product_id"]').val();
@@ -404,35 +407,34 @@
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Iya '
-            }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ url('reviews/create-review') }}",
-                data: data,
-                dataType: "JSON",
-                processData: false, // false, it prevent jQuery form transforming the data into a query string
-                contentType: false, 
-                cache: false,
-                timeout: 600000,
-                success: function (response) {
-                    if (response.code == 200) {
-                        toastr.success(response.data.message)
-                    }else{
-                        toastr.error(response.data.message)
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('reviews/create-review') }}",
+                    data: data,
+                    dataType: "JSON",
+                    processData: false, // false, it prevent jQuery form transforming the data into a query string
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function(response) {
+                        if (response.code == 200) {
+                            toastr.success(response.data.message)
+                        } else {
+                            toastr.error(response.data.message)
+                        }
+
+                    },
+                    error: function(e) {
+
                     }
-
-                },
-                error: function (e) {
-
-                }
-            });
-        }
+                });
+            }
         })
     }
-    
 </script>
 @endpush

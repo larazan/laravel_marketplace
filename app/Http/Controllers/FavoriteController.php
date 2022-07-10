@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 use App\Mail\testEmail;
 use Illuminate\Support\Facades\Mail;
@@ -186,7 +187,7 @@ class FavoriteController extends Controller
         $enc = md5($ord);
         $now = Carbon::now();
 
-        $nomi = 2300000;
+        $nomi = '2300000';
         $r = 0;
         $capitals = Capital::get();
 
@@ -198,6 +199,10 @@ class FavoriteController extends Controller
 
         $rank = Keranjang::rank($nomi);
 
-        return $rank;
+        // return $rank;
+
+        $rand = Str::random(18);
+
+        return $rand;
     }
 }

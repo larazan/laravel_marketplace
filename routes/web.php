@@ -258,6 +258,7 @@ Route::group(
 		Route::get('logs', [LogActivityController::class, 'index']);
 		
 		Route::get('calculates', [CalculateController::class, 'index']);
+		Route::get('kmeans', [CalculateController::class, 'kmeans']); 
 	}
 );
 

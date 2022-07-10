@@ -113,13 +113,14 @@ class ProductController extends Controller
     {
 		$user_id = Auth::user()->id;
 		$shop_id = Shop::where('user_id', $user_id)->first()->id;
+		$rand = Str::random(18);
 
         $params = $request->except('_token');
         // var_dump($params); exit;
 		$params['slug'] = Str::slug($params['name']);
 		$params['user_id'] = $user_id;
 		$params['shop_id'] = $shop_id;
-
+		$params['rand_id'] = $rand_id;
 
 		$product = DB::transaction(
 			function () use ($params) {

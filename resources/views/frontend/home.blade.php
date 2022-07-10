@@ -295,7 +295,7 @@
                         let rowData = obj.data.barang[i];
                         var img =  base_url+'storage/'+rowData['gambar'];
                         var imgZonk = base_url+'frontend/assets/imgs/shop/product-1-2.jpg';
-                        var slugUrl = base_url+'product/'+rowData['slug'];
+                        var slugUrl = base_url+'product/'+rowData['slug']+'_'+rowData['rand_id'];
                         var harga = helpCurrency2(rowData['price'], 'Rp');
                         template += `
                         <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
@@ -309,7 +309,7 @@
                                             <div class="product-action-1">
                                                 <a aria-label="Tambahkan ke wishlist" class="action-btn" onclick='addWishlist("${rowData['id_produk']}")'><i class="fi-rs-heart"></i></a>
                                                 <a aria-label="Compare" class="action-btn" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                                <a aria-label="Lihat Detail" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal" onclick='quickViewModal("${rowData['slug']}")'><i class="fi-rs-eye"></i></a>
+                                                <a aria-label="Lihat Detail" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal" onclick='quickViewModal("${rowData['slug']}_${rowData['rand_id']}")'><i class="fi-rs-eye"></i></a>
                                             </div>
                                             
                                         </div>

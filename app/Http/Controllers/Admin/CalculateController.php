@@ -28,6 +28,7 @@ class CalculateController extends Controller
 									orders.status, 
 									orders.payment_status, 
 									orders.income_rank, 
+									orders.deleted_at, 
 									order_items.product_id,
                                     users.city_id,
                                     regions.number,
@@ -39,8 +40,10 @@ class CalculateController extends Controller
 						->leftJoin('regions', 'regions.city_id', '=', 'users.city_id' )
 						->leftJoin('product_ingredients', 'product_ingredients.product_id', '=', 'order_items.product_id')
 						->leftJoin('shop_capitals', 'shop_capitals.shop_id', '=', 'orders.shop_id')
-						->where('orders.status', 'confirmed')
-						->where('orders.payment_status', 'paid')
+						->where('orders.status', 'created')
+						->where('orders.payment_status', 'unpaid')
+						->where('orders.deleted_at', null)
+                        ->orderBy('id_order', 'ASC')
 						->get();
 
         $this->data['items'] = $items;
@@ -53,8 +56,30 @@ class CalculateController extends Controller
         $data = [];
         $name = [];
 
-        $dataOrders = Order::all();
-        //dd($dataOrders);
+        $dataOrders = Order::select(DB::raw("orders.id as id_order,
+                                        orders.user_id, 
+                                        orders.shop_id, 
+                                        orders.status, 
+                                        orders.payment_status, 
+                                        orders.income_rank, 
+                                        orders.deleted_at, 
+                                        order_items.product_id,
+                                        users.city_id,
+                                        regions.number,
+                                        product_ingredients.ingredient_id,
+                                        shop_capitals.capital_id
+                                        "))
+                                ->leftJoin('order_items', 'order_items.order_id', '=', 'orders.id' )
+                                ->leftJoin('users', 'users.id', '=', 'orders.shop_id' )
+                                ->leftJoin('regions', 'regions.city_id', '=', 'users.city_id' )
+                                ->leftJoin('product_ingredients', 'product_ingredients.product_id', '=', 'order_items.product_id')
+                                ->leftJoin('shop_capitals', 'shop_capitals.shop_id', '=', 'orders.shop_id')
+                                ->where('orders.status', 'created')
+                                ->where('orders.payment_status', 'unpaid')
+                                ->where('orders.deleted_at', null)
+                                ->orderBy('id_order', 'ASC')
+                                ->get();
+        dd($dataOrders);
         //# looping change from collection array
         foreach($dataOrders as $row){
             $data[] = $row;
@@ -65,7 +90,7 @@ class CalculateController extends Controller
         $data = [];
         //# looping change array to row(indexing)
         foreach($dataOrders as $row){
-            $data[]=[
+            $data[] = [
                 $row['jumlahkejadian'],
                 $row['jumlahkorban'],
                 $row['jumlahkerusakan'],

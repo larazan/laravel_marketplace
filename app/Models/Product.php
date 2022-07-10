@@ -12,6 +12,7 @@ class Product extends Model
 
     // protected $fillable = ['name', 'description', 'price', 'image_url'];
     protected $fillable = [
+		'rand_id',
 		'parent_id',
 		'user_id',
 		'shop_id',
@@ -289,7 +290,7 @@ class Product extends Model
 	{
 		// DB::getQueryLog();
 		$result = DB::table(DB::raw('products p'))
-		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, p.sku, brands.name as nama_kategori, product_images.medium as gambar, shops.name as nama_toko"))
+		->select(DB::raw("p.id as id_produk, p.name as nama_produk, p.price, p.slug, p.rand_id, p.sku, brands.name as nama_kategori, product_images.medium as gambar, shops.name as nama_toko"))
 		->leftJoin('product_brands', 'product_brands.product_id', '=', 'p.id')
 		->leftJoin('product_categories', 'product_categories.product_id', '=', 'p.id')
 		->leftJoin('categories', 'categories.id', '=', 'product_categories.category_id')
