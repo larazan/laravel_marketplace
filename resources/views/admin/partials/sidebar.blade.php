@@ -100,6 +100,11 @@
 								<span class="nav-text">Capital Rank</span>
 								</a>
 							</li>
+							<li class="{{ ($currentAdminSubMenu == 'sell') ? 'active' : ''}}">
+								<a class="sidenav-item-link" href="{{ url('admin/sells')}}">
+								<span class="nav-text">Product Sell Rank</span>
+								</a>
+							</li>
 							
 						</div>
 					</ul>

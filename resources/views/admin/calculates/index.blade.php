@@ -13,6 +13,7 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <th>#</th>
+                                <th>Jenis Sorgum</th>
                                 <th>Kota</th>
                                 <th>Produk yang dijual</th>
                                 <th>Hasil Penjualan (Rp)</th>
@@ -26,17 +27,18 @@
                                 @forelse ($items as $item)
                                     <tr>    
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $item->number }}</td>
                                         <td>{{ $item->ingredient_id }}</td>
+                                        <td>{{ $item->number }}</td>
+                                        <td>{{ $item->prod_sell_number }}</td>
                                         <td>{{ $item->income_rank }}</td>
                                         <td>{{ $item->capital_id }}</td>
                                         <td>
                                             
-                                                <a href="{{ url('admin/items/'. $item->id_order .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
-                                                {!! Form::open(['url' => 'admin/items/'. $item->id_order, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
-                                                {!! Form::hidden('_method', 'DELETE') !!}
-                                                {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
-                                                {!! Form::close() !!}
+                                            <a href="{{ url('admin/items/'. $item->id_order .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
+                                            {!! Form::open(['url' => 'admin/items/'. $item->id_order, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
+                                            {!! Form::hidden('_method', 'DELETE') !!}
+                                            {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
+                                            {!! Form::close() !!}
         
                                         </td>
                                     </tr>

@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\IngredientController;
 use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\CapitalController;
 use App\Http\Controllers\Admin\CalculateController;
+use App\Http\Controllers\Admin\ProductSellController;
 
 
 use App\Http\Controllers\CkeditorFileUploadController;
@@ -246,6 +247,7 @@ Route::group(
         Route::resource('ingredients', IngredientController::class);
         Route::resource('regions', RegionController::class);
         Route::resource('capitals', CapitalController::class);
+        Route::resource('sells', ProductSellController::class);
 	
 		Route::get('subscribes', [SubscribeController::class, 'index']);
 

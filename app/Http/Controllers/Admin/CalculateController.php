@@ -33,12 +33,14 @@ class CalculateController extends Controller
                                     users.city_id,
                                     regions.number,
                                     product_ingredients.ingredient_id,
+                                    product_sells.prod_sell_number,
 									shop_capitals.capital_id
 									"))
 						->leftJoin('order_items', 'order_items.order_id', '=', 'orders.id' )
 						->leftJoin('users', 'users.id', '=', 'orders.shop_id' )
 						->leftJoin('regions', 'regions.city_id', '=', 'users.city_id' )
 						->leftJoin('product_ingredients', 'product_ingredients.product_id', '=', 'order_items.product_id')
+                        ->leftJoin('product_sells', 'product_sells.product_id', '=', 'order_items.product_id')
 						->leftJoin('shop_capitals', 'shop_capitals.shop_id', '=', 'orders.shop_id')
 						->where('orders.status', 'created')
 						->where('orders.payment_status', 'unpaid')
@@ -52,6 +54,8 @@ class CalculateController extends Controller
     }
 
     public function kmeans(){ 
+        $currentAdminMenu = 'calculate';
+        $currentAdminSubMenu = 'clustering';
         //init var data array       
         $data = [];
         $name = [];
@@ -67,23 +71,25 @@ class CalculateController extends Controller
                                         users.city_id,
                                         regions.number,
                                         product_ingredients.ingredient_id,
+                                        product_sells.prod_sell_number,
                                         shop_capitals.capital_id
                                         "))
                                 ->leftJoin('order_items', 'order_items.order_id', '=', 'orders.id' )
                                 ->leftJoin('users', 'users.id', '=', 'orders.shop_id' )
                                 ->leftJoin('regions', 'regions.city_id', '=', 'users.city_id' )
                                 ->leftJoin('product_ingredients', 'product_ingredients.product_id', '=', 'order_items.product_id')
+                                ->leftJoin('product_sells', 'product_sells.product_id', '=', 'order_items.product_id')
                                 ->leftJoin('shop_capitals', 'shop_capitals.shop_id', '=', 'orders.shop_id')
                                 ->where('orders.status', 'created')
                                 ->where('orders.payment_status', 'unpaid')
                                 ->where('orders.deleted_at', null)
                                 ->orderBy('id_order', 'ASC')
                                 ->get();
-        dd($dataOrders);
+        // dd($dataOrders);
         //# looping change from collection array
         foreach($dataOrders as $row){
             $data[] = $row;
-            $name[] = $row['namawilayah'];
+            $name[] = $row['number'];
         }
         //dd($name);
         //dd($earlydata);
@@ -91,48 +97,49 @@ class CalculateController extends Controller
         //# looping change array to row(indexing)
         foreach($dataOrders as $row){
             $data[] = [
-                $row['jumlahkejadian'],
-                $row['jumlahkorban'],
-                $row['jumlahkerusakan'],
-                $row['namawilayah'],
+                $row['ingredient_id'],
+                $row['number'],
+                $row['prod_sell_number'],
+                $row['income_rank'],
+                $row['capital_id'],
             ];            
         }
-        //dd($earlydata);
+        // dd($data);
 
         //# set K based on method,I set 3
-        $cluster = 3;
+        $cluster = 5;
 
         //# var centroid call method earlyCentroid
-        $centroid=$this->earlyCentroid($data,$cluster);
+        $centroid = $this->earlyCentroid($data, $cluster);
         // dd($centroid[0]);                        
-        $hasil_iterasi=[];
-        $hasil_cluster=[];
-        $itr=0;        
+        $hasil_iterasi = [];
+        $hasil_cluster = [];
+        $itr = 0;        
 
         //-----------------K-MEANS-------------------
         while (true) {
             $iterasi = array();
             foreach ($data as $key => $valuedata) {
                 //dd($valuedata);
-                $iterasi[$key]['data']=$valuedata;
+                $iterasi[$key]['data'] = $valuedata;
                 //dd($valuedata);
                 //# value centroid => earlycentroid
                 foreach ($centroid[$itr] as $key_centroid => $valuecentroid) {
                     //dd($valuecentroid);
                     //# array 2d jarak
-                    $iterasi[$key]['jarak_ke_centroid'][]=$this->distance($valuedata,$valuecentroid);
+                    $iterasi[$key]['jarak_ke_centroid'][] = $this->distance($valuedata,$valuecentroid);
                     //dd($iterasi);
                 }
                 //# array 2d jarak terdekat
-                $iterasi[$key]['jarak_terdekat']=$this->nearDistance($iterasi[$key]['jarak_ke_centroid'],$centroid);
+                $iterasi[$key]['jarak_terdekat'] = $this->nearDistance($iterasi[$key]['jarak_ke_centroid'],$centroid);
                 //dd($iterasi);
             }
             //# push two array into 1 array
             array_push($hasil_iterasi, $iterasi);        
             //dd($hasil_iterasi, $iterasi , $hasil_cluster); 
-            $centroid[++$itr]=$this->newCentroid($iterasi,$hasil_cluster);
+            $centroid[++$itr] = $this->newCentroid($iterasi, $hasil_cluster);
             //dd($centroid);
-            $lanjutkan=$this->centroidChange($centroid,$itr);
+            $lanjutkan = $this->centroidChange($centroid, $itr);
             $boolval = boolval($lanjutkan) ? 'ya' : 'tidak';
             //# checking if centroid not change it will break        
             if(!$lanjutkan)
@@ -150,57 +157,61 @@ class CalculateController extends Controller
             $dcentroid1 = $value["jarak_ke_centroid"][0];
             $dcentroid2 = $value["jarak_ke_centroid"][1];
             $dcentroid3 = $value["jarak_ke_centroid"][2];
+            $dcentroid4 = $value["jarak_ke_centroid"][3];
+            $dcentroid5 = $value["jarak_ke_centroid"][4];
             $mindistance = $value["jarak_terdekat"]["value"];
             $clusterall = $value["jarak_terdekat"]["cluster"];        
-            Order::saveHelper($dcentroid1, $dcentroid2, $dcentroid3,$mindistance,$clusterall);
+            Order::saveHelper($dcentroid1, $dcentroid2, $dcentroid3, $dcentroid4, $dcentroid5, $mindistance,$clusterall);
         }
         //dd(end($hasil_iterasi));
 
         //------------------------DAVIES BOULDIN INDEX------------------
         //# var rs call method from model(collection) then change to array
-        $rs = Order::groupClusterHelper()->toArray();        
+        // $rs = Order::groupClusterHelper()->toArray();        
         //dd($rs);
         //# var ssw call method sumsquareWithin with param $rs
-        $ssw = $this->sumsquareWithin($rs);
+        // $ssw = $this->sumsquareWithin($rs);
         //# var ssb call method sumsquareWithin with param $result_centroid
-        $ssb = $this->sumsquareBetween($result_centroid);
+        // $ssb = $this->sumsquareBetween($result_centroid);
         //# var ratio call method sumsquareWithin with param $rs
-        $ratio = $this->ratioDBI($ssw,$ssb);
+        // $ratio = $this->ratioDBI($ssw,$ssb);
 
         //------------------------PURITY--------------------------
         //# var Purity call method from model(collection) then change to array
-        $puritysr = Order::groupingSameValueCluster()->groupBy('cluster')->toArray();
+        // $puritysr = Order::groupingSameValueCluster()->groupBy('cluster')->toArray();
         //dd($puritysr);
-        $purity = $this->purity($puritysr,$data);
+        // $purity = $this->purity($puritysr,$data);
         //dd($purity);
         // $test = array_count_values($purity);
         
         //dd($test);
         
-        return view('admin.disasterkmeans',compact('cluster','centroid','data','valuedata','valuecentroid','hasil_iterasi','name','ratio','purity'));
+        return view('admin.calculates.kmeans',compact('cluster','centroid','data','valuedata','valuecentroid','hasil_iterasi','name', 'currentAdminMenu', 'currentAdminSubMenu'));
     }
 
-    public function earlyCentroid($data,$cluster){
+    public function earlyCentroid($data, $cluster){
         // dd($data);
         $randCentroid = [];
         for ($i=0; $i < $cluster; $i++) { 
             # code...
-            $temp=[2,12,23];
+            $temp = [3, 10, 16, 23, 32];
             while(in_array($randCentroid, [$temp])){
-                $temp=rand(0,(count($data)-1));
+                $temp = rand(0,(count($data)-1));
             }                        
             $centroid[0][] = [
                 $data[$temp[$i]][0],
                 $data[$temp[$i]][1],
                 $data[$temp[$i]][2],
+                $data[$temp[$i]][3],
+                $data[$temp[$i]][4],
             ];                           
         }
         return $centroid;
     }
 
-    public function distance($data,$centroid){ 
+    public function distance($data, $centroid){ 
         // dd($centroid;
-        $resultDistance = sqrt(pow(($data[0]-$centroid[0]),2)+pow(($data[1]-$centroid[1]),2)+pow(($data[2]-$centroid[2]),2));
+        $resultDistance = sqrt(pow(($data[0]-$centroid[0]),2)+pow(($data[1]-$centroid[1]),2)+pow(($data[2]-$centroid[2]),2)+pow(($data[3]-$centroid[3]),2)+pow(($data[4]-$centroid[4]),2));
         // dd($resultDistance);             
         return $resultDistance;        
     }
@@ -233,6 +244,8 @@ class CalculateController extends Controller
             $hasil_cluster[($value['jarak_terdekat']['cluster']-1)][0][]= $value['data'][0];
             $hasil_cluster[($value['jarak_terdekat']['cluster']-1)][1][]= $value['data'][1];
             $hasil_cluster[($value['jarak_terdekat']['cluster']-1)][2][]= $value['data'][2];        
+            $hasil_cluster[($value['jarak_terdekat']['cluster']-1)][3][]= $value['data'][3];        
+            $hasil_cluster[($value['jarak_terdekat']['cluster']-1)][4][]= $value['data'][4];        
         }
         //dd($hasil_cluster);    
         $new_centroid = [];
@@ -243,6 +256,8 @@ class CalculateController extends Controller
                 array_sum($value[0])/count($value[0]),
                 array_sum($value[1])/count($value[1]),
                 array_sum($value[2])/count($value[2]),
+                array_sum($value[3])/count($value[3]),
+                array_sum($value[4])/count($value[4]),
             ];
         }
         //dd($new_centroid);
@@ -257,14 +272,14 @@ class CalculateController extends Controller
         $centroid_baru = $this->flatten_array($centroid[$itr]); //flatten array
         //dd($centroid[$itr]);
         //# comparing old centroid dan new centroid if change return true, if not change/value jumlah equal = 0 return false
-        $jumlah_sama=0;
-        for($i=0;$i<count($centroid_lama);$i++){
-            if($centroid_lama[$i]===$centroid_baru[$i]){
+        $jumlah_sama = 0;
+        for($i=0; $i<count($centroid_lama); $i++){
+            if($centroid_lama[$i] === $centroid_baru[$i]){
                 $jumlah_sama++;
             }
         }
         //dd($jumlah_sama);
-        return $jumlah_sama===count($centroid_lama) ? false : true; 
+        return $jumlah_sama === count($centroid_lama) ? false : true; 
     }
 
     function flatten_array($arg) {
@@ -279,7 +294,7 @@ class CalculateController extends Controller
         //dd(count($rs));        
         $result = 0;
         //looping based count param
-        for ($iterate=0; $iterate < count($rs) ; $iterate++) { 
+        for ($iterate = 0; $iterate < count($rs) ; $iterate++) { 
             $result += $rs[$iterate]->average;
         }
         //dd($result);
@@ -291,6 +306,7 @@ class CalculateController extends Controller
         $resultc1c2 = sqrt(pow(($result_centroid[0][0]-$result_centroid[1][0]),2)+pow(($result_centroid[0][1]-$result_centroid[1][1]),2)+pow(($result_centroid[0][2]-$result_centroid[1][2]),2));
         $resultc1c3 = sqrt(pow(($result_centroid[0][0]-$result_centroid[2][0]),2)+pow(($result_centroid[0][1]-$result_centroid[2][1]),2)+pow(($result_centroid[0][2]-$result_centroid[2][2]),2));
         $resultc2c3 = sqrt(pow(($result_centroid[1][0]-$result_centroid[2][0]),2)+pow(($result_centroid[1][1]-$result_centroid[2][1]),2)+pow(($result_centroid[1][2]-$result_centroid[2][2]),2));
+        
         $resultall = $resultc1c2+$resultc1c3+$resultc2c3;
         return $resultall;        
     } 

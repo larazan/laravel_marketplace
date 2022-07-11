@@ -237,4 +237,38 @@ class Order extends Model
 	{
 		return "{$this->customer_first_name} {$this->customer_last_name}";
 	}
+
+	//! saveHelper func saving to database
+	public static function saveHelper($dcentroid1, $dcentroid2, $dcentroid3, $dcentroid4, $dcentroid5, $mindistance, $clusterall){
+		return DB::table('centroids')->insert([
+	    	'distancecentroid1'		=> $dcentroid1,
+	    	'distancecentroid2'		=> $dcentroid2,
+	    	'distancecentroid3'		=> $dcentroid3,
+	    	'distancecentroid4'		=> $dcentroid4,
+	    	'distancecentroid5'		=> $dcentroid5,
+	    	'mindistance'		=> $mindistance,
+	    	'cluster'		=> $clusterall,	    			
+    	]);
+	}
+
+	public static function deleteHelper(){
+		return DB::select("TRUNCATE Table centroids");
+	}
+
+	//! groupby
+	public static function groupClusterHelper(){
+		//return DB::table('centroids')->groupBy('cluster',2);
+		return DB::table('centroids')
+					->select(DB::raw('cluster as cluster'), DB::raw('avg(mindistance) as average'))
+					->groupBy(DB::raw('cluster') )
+					->get();
+		//return DB::select('select distancecentroid2,cluster from centroids group by cluster');	 
+	}
+	//! geouping count same value on cluster
+	public static function groupingSameValueCluster(){				
+		return DB::table('centroids')
+					->select('cluster',DB::raw('mindistance as "mindistance"'),DB::raw('count(*) as count'))					
+					->groupBy('cluster',DB::raw('mindistance'))					
+					->get();
+	}
 }
