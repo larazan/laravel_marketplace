@@ -125,7 +125,7 @@
 								</a>
 							</li>
 							<li class="{{ ($currentAdminSubMenu == 'clustering') ? 'active' : ''}}">
-								<a class="sidenav-item-link" href="{{ url('admin/clustering')}}">
+								<a class="sidenav-item-link" href="{{ url('admin/kmeans')}}">
 								<span class="nav-text">Clustering</span>
 								</a>
 							</li>

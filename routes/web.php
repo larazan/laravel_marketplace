@@ -261,6 +261,7 @@ Route::group(
 		
 		Route::get('calculates', [CalculateController::class, 'index']);
 		Route::get('kmeans', [CalculateController::class, 'kmeans']); 
+		Route::get('jarak', [CalculateController::class, 'jarak']); 
 	}
 );
 

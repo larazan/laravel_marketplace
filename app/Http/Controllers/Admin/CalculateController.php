@@ -120,19 +120,19 @@ class CalculateController extends Controller
         while (true) {
             $iterasi = array();
             foreach ($data as $key => $valuedata) {
-                //dd($valuedata);
+                // dd($valuedata);
                 $iterasi[$key]['data'] = $valuedata;
-                //dd($valuedata);
+                // dd($valuedata);
                 //# value centroid => earlycentroid
                 foreach ($centroid[$itr] as $key_centroid => $valuecentroid) {
-                    //dd($valuecentroid);
+                    // dd($valuecentroid);
                     //# array 2d jarak
                     $iterasi[$key]['jarak_ke_centroid'][] = $this->distance($valuedata,$valuecentroid);
-                    //dd($iterasi);
+                    // dd($iterasi);
                 }
                 //# array 2d jarak terdekat
                 $iterasi[$key]['jarak_terdekat'] = $this->nearDistance($iterasi[$key]['jarak_ke_centroid'],$centroid);
-                //dd($iterasi);
+                // dd($iterasi);
             }
             //# push two array into 1 array
             array_push($hasil_iterasi, $iterasi);        
@@ -328,5 +328,18 @@ class CalculateController extends Controller
         $puritytotal = array_sum($alldata)/count($data);
         //dd($alldata);
         return $puritytotal;
+    }
+
+    public function jarak(){ 
+        $data = [4,2,1,1,2];
+        // $centroid = [1,1,1,2,1];
+        // $centroid = [1,3,1,4,1];
+        // $centroid = [4,3,2,3,2];
+        $centroid = [4,3,1,4,2];
+        // $centroid = [2,2,1,2,4];
+        // dd($centroid;
+        $resultDistance = sqrt(pow(($data[0]-$centroid[0]),2)+pow(($data[1]-$centroid[1]),2)+pow(($data[2]-$centroid[2]),2)+pow(($data[3]-$centroid[3]),2)+pow(($data[4]-$centroid[4]),2));
+        dd($resultDistance);             
+        // return $resultDistance;        
     }
 }
