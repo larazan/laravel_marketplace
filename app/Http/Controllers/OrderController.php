@@ -12,6 +12,7 @@ use App\Models\Basket;
 use App\Models\OrderItem;
 use App\Models\Shipment;
 use App\Models\ProductInventory;
+use App\Models\Capital;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -563,7 +564,7 @@ class OrderController extends Controller
 			// 'customer_company' => $params['company'],
 			'customer_address1' => $params['address1'],
 			// 'customer_address2' => $params['address2'],
-			'income_rank' => Keranjang::rank($baseTotalPrice),
+			'income_rank' => $this->_rank($baseTotalPrice),
 			'customer_phone' => $params['phone'],
 			'customer_email' => $params['email'],
 			'customer_city_id' => $params['city_id'],
@@ -723,4 +724,17 @@ class OrderController extends Controller
 		echo 'clear ok';
 	}
 
+	private function _rank($nomi)
+    {
+        $capitals = Capital::get();
+
+        foreach ($capitals as $capital) {
+            if (($nomi >= (int)$capital->mini) && ($nomi <= (int)$capital->maxi)) 
+			{ 
+				$r = (int)$capital->rank;
+			}
+        }
+
+        return $r;
+    }
 }

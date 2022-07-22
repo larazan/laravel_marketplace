@@ -25,12 +25,12 @@
                                 @foreach ($value as $key_data => $value_data)
                                 <tr>    
                                     <td class="text-center" scope="row">{{ $key_data+1 }}</td>
-                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][0],2) }}</td>
-                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][1],2) }}</td>
-                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][2],2) }}</td>
-                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][3],2) }}</td>
-                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][4],2) }}</td>
-                                    <td>{{ number_format($value_data['jarak_terdekat']['value'],2) }}</td>										
+                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][0],3) }}</td>
+                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][1],3) }}</td>
+                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][2],3) }}</td>
+                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][3],3) }}</td>
+                                    <td class="text-center">{{ number_format($value_data['jarak_ke_centroid'][4],3) }}</td>
+                                    <td>{{ number_format($value_data['jarak_terdekat']['value'],3) }}</td>										
                                     <td>{{ $value_data['jarak_terdekat']['cluster'] }}</td>	
                                 </tr>
                                 @endforeach

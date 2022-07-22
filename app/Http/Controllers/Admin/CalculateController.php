@@ -42,8 +42,8 @@ class CalculateController extends Controller
 						->leftJoin('product_ingredients', 'product_ingredients.product_id', '=', 'order_items.product_id')
                         ->leftJoin('product_sells', 'product_sells.product_id', '=', 'order_items.product_id')
 						->leftJoin('shop_capitals', 'shop_capitals.shop_id', '=', 'orders.shop_id')
-						->where('orders.status', 'created')
-						->where('orders.payment_status', 'unpaid')
+						->where('orders.status', 'confirmed')
+						->where('orders.payment_status', 'paid')
 						->where('orders.deleted_at', null)
                         ->orderBy('id_order', 'ASC')
 						->get();
@@ -80,8 +80,8 @@ class CalculateController extends Controller
                                 ->leftJoin('product_ingredients', 'product_ingredients.product_id', '=', 'order_items.product_id')
                                 ->leftJoin('product_sells', 'product_sells.product_id', '=', 'order_items.product_id')
                                 ->leftJoin('shop_capitals', 'shop_capitals.shop_id', '=', 'orders.shop_id')
-                                ->where('orders.status', 'created')
-                                ->where('orders.payment_status', 'unpaid')
+                                ->where('orders.status', 'confirmed')
+                                ->where('orders.payment_status', 'paid')
                                 ->where('orders.deleted_at', null)
                                 ->orderBy('id_order', 'ASC')
                                 ->get();
@@ -332,11 +332,11 @@ class CalculateController extends Controller
 
     public function jarak(){ 
         $data = [4,2,1,1,2];
-        // $centroid = [1,1,1,2,1];
-        // $centroid = [1,3,1,4,1];
-        // $centroid = [4,3,2,3,2];
-        $centroid = [4,3,1,4,2];
-        // $centroid = [2,2,1,2,4];
+        // $centroid = [2,1,1,2,1];
+        // $centroid = [2,3,1,4,1];
+        // $centroid = [4,3,2,3,3];
+        // $centroid = [4,3,1,4,2];
+        $centroid = [1,2,1,2,4];
         // dd($centroid;
         $resultDistance = sqrt(pow(($data[0]-$centroid[0]),2)+pow(($data[1]-$centroid[1]),2)+pow(($data[2]-$centroid[2]),2)+pow(($data[3]-$centroid[3]),2)+pow(($data[4]-$centroid[4]),2));
         dd($resultDistance);             
